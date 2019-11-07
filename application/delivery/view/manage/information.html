@@ -1,0 +1,27 @@
+<dl>
+    <dt>用&nbsp;&nbsp;户&nbsp;&nbsp;名：</dt>
+    <dd>{$delivery_info.dlyp_name}</dd>
+</dl>
+<dl>
+    <dt>登&nbsp;&nbsp;记&nbsp;&nbsp;人：</dt>
+    <dd>{$delivery_info.dlyp_truename}&nbsp;&nbsp;(身份证号码{:encrypt_show($delivery_info['dlyp_idcard'], 2, 16)})</dd>
+</dl>
+<dl>
+    <dt>登记地址：</dt>
+    <dd>{$delivery_info.dlyp_area_info}&nbsp;{$delivery_info.dlyp_address}({$delivery_info.dlyp_addressname})</dd>
+</dl>
+<dl>
+    <dt>登记电话：</dt>
+    <dd>{$delivery_info.dlyp_mobile}(手机)&nbsp;&nbsp;&nbsp;&nbsp;{$delivery_info.dlyp_telephony}(座机)</dd>
+</dl>
+<dl>
+    <dt>运营状态：</dt>
+    <dd>{$delivery_state[$delivery_info['dlyp_state']]}</dd>
+</dl>
+{if $delivery_info.dlyp_failreason !='' }
+<dl>
+    <dt>失败原因：</dt>
+    <dd>{$delivery_info.dlyp_failreason}</dd>
+</dl>
+<a href="{:url('Manage/apply_again')}">再次申请</a>
+{/if}

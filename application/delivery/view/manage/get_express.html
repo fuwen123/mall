@@ -1,0 +1,14 @@
+<ul id="express_list"></ul>
+<script>
+$(function(){
+    $.getJSON('{$Think.DELIVERY_SITE_URL}/Manage/ajax_get_express.html?e_code={$Request.get.e_code}&shipping_code={$Request.get.shipping_code}',function(data){
+        if(data){
+            $.each(data, function(i, n){
+                $('#express_list').append('<li>' + n + '</li>');
+            });
+        }else{
+            $('#express_list').html('<li>暂无物流记录</li>');
+        }
+    });
+});
+</script>

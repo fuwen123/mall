@@ -1,0 +1,41 @@
+<form method="post" action="{:url('Manage/pickup_parcel')}" id="pickup_parcel_form">
+    <input type="hidden" name="order_id" value="{$Request.get.order_id}">
+    <dl class="dsdelivery-change-password" id="pickupParcel">
+        <dd>
+            <label class="phrases">请输入提货码</label>
+            <input class="input-txt" type="text" name="pickup_code" autocomplete="off">
+            <span></span>
+        </dd>
+        <dd>
+            <input type="submit" class="submit" value="提交">
+        </dd>
+    </dl>
+</form>
+<script>
+    $(function () {
+        //input焦点时隐藏/显示填写内容提示信息
+        $("#pickupParcel .input-txt").placeholder();
+        $('#pickup_parcel_form').validate({
+            errorPlacement: function (error, element) {
+                element.next().append(error);
+            },
+            submitHandler: function (form) {
+                ds_ajaxpost('pickup_parcel_form');
+            },
+            rules: {
+                pickup_code: {
+                    required: true,
+                    digits: true,
+                    rangelength: [4, 4]
+                }
+            },
+            messages: {
+                pickup_code: {
+                    required: '请输入提货码',
+                    digits: '请输入正确的提货码',
+                    rangelength: '请输入正确的提货码'
+                }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,45 @@
+<?php
+
+return [
+    'waybill_print' => '打印',
+    'waybill_design_help1' => '勾选需要打印的项目，勾选后可以用鼠标拖动确定项目的位置、宽度和高度，也可以点击项目后边的微调按钮手工录入',
+    'waybill_design_help2' => '设置完成后点击提交按钮完成设计',
+    'waybill_select_print' => '选择打印项',
+    'waybill_adjust' => '微调',
+    'waybill_offset_adjust' => '打印项偏移校正',
+    'waybill_offset_left' => '左偏移量',
+    'waybill_offset_top' => '上偏移量',
+    'waybill_width' => '宽',
+    'waybill_height' => '高',
+    'waybill_template_name' => '模板名称',
+    'waybill_template_name_tips' => '运单模板名称，最多10个字',
+    'waybill_express_tips' => '模板对应的物流公司',
+    'waybill_width_tips' => '运单宽度，单位为毫米(mm)',
+    'waybill_height_tips' => '运单高度，单位为毫米(mm)',
+    'waybill_offset_top_tips' => '运单模板上偏移量，单位为毫米(mm)',
+    'waybill_offset_left_tips' => '运单模板左偏移量，单位为毫米(mm)',
+    'waybill_image' => '模板图片',
+    'waybill_image_tips' => '请上传扫描好的运单图片，图片尺寸必须与快递单实际尺寸相符',
+    'waybill_usable_tips' => '请首先设计并测试模板然后再启用，启用后商家可以使用',
+    'waybill_name_required' => '模板名称不能为空',
+    'waybill_name_maxlength' => '模板名称最多10个字',
+    'waybill_width_required' => '宽度不能为空',
+    'waybill_width_digits' => '宽度必须为数字',
+    'waybill_height_required' => '高度不能为空',
+    'waybill_height_digits' => '高度必须为数字',
+    'waybill_top_required' => '上偏移量不能为空',
+    'waybill_top_number' => '上偏移量必须为数字',
+    'waybill_left_required' => '左偏移量不能为空',
+    'waybill_left_number' => '左偏移量必须为数字',
+    
+    'waybill_design' => '设计',
+    'waybill_text' => '测试',
+    
+    'waybill_index_help1' => '平台运单模板列表',
+    'waybill_index_help2' => '点击测试按钮可以对模板进行打印测试，点击编辑按钮可以对模板参数进行调整，点击设计按钮可以对运单模板布局进行设计',
+    'waybill_index_help3' => '设计完成后在编辑中修改模板状态为启用后，商家就可以绑定该模板进行运单打印了',
+    'waybill_index_help4' => '点击删除按钮可以删除现有模板，删除后所有使用该模板的商家将自动解除绑定，请慎重操作',
+    
+    'waybill_not_exist' => '运单模板不存在',
+];
+     

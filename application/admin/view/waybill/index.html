@@ -1,0 +1,90 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_waybill}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+    <div class="explanation" id="explanation">
+        <div class="title" id="checkZoom">
+            <h4 title="{$Think.lang.ds_explanation_tip}">{$Think.lang.ds_explanation}</h4>
+            <span id="explanationZoom" title="{$Think.lang.ds_explanation_close}" class="arrow"></span>
+        </div>
+        <ul>
+            <li>{$Think.lang.waybill_index_help1}</li>
+            <li>{$Think.lang.waybill_index_help2}</li>
+            <li>{$Think.lang.waybill_index_help3}</li>
+            <li>{$Think.lang.waybill_index_help4}</li>
+        </ul>
+    </div>
+    
+    <!-- 列表 -->
+    <form id="list_form" method="post">
+        <table class="ds-default-table">
+            <thead>
+            <tr class="space">
+                <th colspan="15" class="nobg">{$Think.lang.ds_list}</th>
+            </tr>
+            <tr class="thead">
+                <th class="w12">&nbsp;</th>
+                <th>{$Think.lang.waybill_template_name}</th>
+                <th class="w200">{$Think.lang.ds_express}</th>
+                <th class="w270">{$Think.lang.waybill_image}</th>
+                <th class="w108 align-center">{$Think.lang.waybill_offset_top}</th>
+                <th class="w108 align-center">{$Think.lang.waybill_offset_left}</th>
+                <th class="w96 align-center">{$Think.lang.ds_enable}</th>
+                <th class="w240 align-center"><span>{$Think.lang.ds_handle}</span></th>
+            </tr>
+            </thead>
+            <tbody id="treet1">
+            {notempty name="waybill_list"}
+            {foreach name="waybill_list" item="value"}
+            <tr class="hover">
+                <td>&nbsp;</td>
+                <td>{$value.waybill_name}</td>
+                <td>{$value.express_name}</td>
+                <td>
+                    {present name="value.waybill_image_url"}
+                    <div class="waybill-img-thumb" style="display: inline-block">
+                        <a data-lightbox="lightbox-image" href="{$value.waybill_image_url}">
+                            <img src="{$value.waybill_image_url}" style="width: 40px">
+                        </a>
+                    </div>
+                    {/present}
+                    <div class="waybill-img-size" style="display: inline-block"><p>{$Think.lang.waybill_width}：{$value.waybill_width}(mm)</p>
+                        <p>{$Think.lang.waybill_height}：{$value.waybill_height}(mm)</p></div>
+                </td>
+                <td class="align-center">{$value.waybill_top}</td>
+                <td class="align-center">{$value.waybill_left}</td>
+                <td class="align-center yes-onoff">{$value.waybill_usable_text}</td>
+                <td class="nowrap align-center w240">
+                    <a href="{:url('Waybill/waybill_design',['waybill_id'=>$value.waybill_id])}" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.waybill_design}</a>
+                    <a href="{:url('Waybill/waybill_test',['waybill_id'=>$value.waybill_id])}" target="_blank" class="dsui-btn-view"><i class="iconfont"></i>{$Think.lang.waybill_text}</a>
+                    <a href="{:url('Waybill/waybill_edit',['waybill_id'=>$value.waybill_id])}" class="dsui-btn-edit"><i class="iconfont"></i>{$Think.lang.ds_edit}</a>
+                    <a href="javascript:dsLayerConfirm('{:url('Waybill/waybill_del',['waybill_id'=>$value.waybill_id])}','{$Think.lang.ds_ensure_del}')" class="dsui-btn-del"><i class="iconfont"></i>{$Think.lang.ds_del}</a>
+                </td>
+            </tr>
+            {/foreach}
+            {else /}
+            <tr class="no_data">
+                <td colspan="16">{$Think.lang.ds_no_record}</td>
+            </tr>
+            {/notempty}
+            </tbody>
+        </table>
+        {$show_page}
+    </form>
+
+    <form id="del_form" action="{:url('Waybill/waybill_del')}" method="post">
+        <input type="hidden" id="del_waybill_id" name="waybill_id">
+    </form>
+</div>
+<link rel="stylesheet" href="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/css/lightbox.min.css">
+<script src="{$Think.PLUGINS_SITE_ROOT}/js/jquery.lightbox/js/lightbox.min.js"></script>

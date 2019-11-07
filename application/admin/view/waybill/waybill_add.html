@@ -1,0 +1,174 @@
+{include file="public/header" /}
+
+
+
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>{$Think.lang.ds_waybill}</h3>
+                <h5></h5>
+            </div>
+            {include file="public/admin_items" /}
+        </div>
+    </div>
+
+    <form id="add_form" method="post" action="{:url('Waybill/waybill_save')}" enctype="multipart/form-data">
+        <input type="hidden" name="waybill_id" value="{$waybill_info.waybill_id|default=''}">
+        <input type="hidden" name="old_waybill_image" value="{$waybill_info.waybill_image|default=''}">
+        <table class="ds-default-table">
+            <tbody>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_name">{$Think.lang.waybill_template_name}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_name|default=''}" name="waybill_name" id="waybill_name" class="txt"></td>
+                    <td class="vatop tips">{$Think.lang.waybill_template_name_tips}</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required">
+                        <label class="validation" for="waybill_name">{$Think.lang.ds_express}{$Think.lang.ds_colon}</label>
+                    </td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform">
+                        <select name="waybill_express">
+                            {notempty name="express_list"}
+                            {foreach name="express_list" item="value"}
+                            <option value="{$value.express_id}|{$value.express_name}" {present name="value.selected" }selected{present}>
+                                {$value.express_name}
+                            </option>
+                            {/foreach}
+                            {/notempty}
+                        </select>
+                    </td>
+                    <td class="vatop tips">{$Think.lang.waybill_express_tips}</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_width">{$Think.lang.waybill_width}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_width|default=''}" name="waybill_width" id="waybill_width" class="txt"></td>
+                    <td class="vatop tips">{$Think.lang.waybill_width_tips}</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_height">{$Think.lang.waybill_height}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_height|default=''}" name="waybill_height" id="waybill_height" class="txt"></td>
+                    <td class="vatop tips">{$Think.lang.waybill_height_tips}</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_top">{$Think.lang.waybill_offset_top}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_top|default='0'}" name="waybill_top" id="waybill_top" class="txt"></td>
+                    <td class="vatop tips">{$Think.lang.waybill_offset_top_tips}</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_left">{$Think.lang.waybill_offset_left}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform"><input type="text" value="{$waybill_info.waybill_left|default='0'}" name="waybill_left" id="waybill_left" class="txt"></td>
+                    <td class="vatop tips">{$Think.lang.waybill_offset_left_tips}</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_image">{$Think.lang.waybill_image}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform">
+                        {notempty name="waybill_info.waybill_image_url"}
+                        <span class="type-file-show">
+                            <img class="show_image" src="{$Think.ADMIN_SITE_ROOT}/images/preview.png">
+                            <div class="type-file-preview"><img width="500" src="{$waybill_info.waybill_image_url}"></div>
+                        </span>
+                        {/notempty}
+                        <span class="type-file-box">
+                            <input type='text' name='waybill_image_name' id='waybill_image_name' class='type-file-text'/>
+                            <input type='button' name='button' id='button1' value='上传' class='type-file-button'/>
+                            <input name="waybill_image" type="file" class="type-file-file" id="waybill_image" size="30" hidefocus="true" ds_type="change_seller_center_logo">
+                        </span>
+                    </td>
+                    <td class="vatop tips">{$Think.lang.waybill_image_tips}</td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2" class="required"><label class="validation" for="waybill_image">{$Think.lang.ds_enable}{$Think.lang.ds_colon}</label></td>
+                </tr>
+                <tr class="noborder">
+                    <td class="vatop rowform">
+                        <input id="waybill_usable_1" type="radio" name="waybill_usable" value="1" {if condition="isset($waybill_info.waybill_usable) && $waybill_info.waybill_usable eq '1'"}checked{/if}>
+                        <label for="waybill_usable_1">{$Think.lang.ds_yes}</label>
+                        <input id="waybill_usable_0" type="radio" name="waybill_usable" value="0" {if condition="isset($waybill_info.waybill_usable) && $waybill_info.waybill_usable neq '1'"}checked{/if}>
+                        <label for="waybill_usable_0">{$Think.lang.ds_no}</label>
+                    </td>
+                    <td class="vatop tips">{$Think.lang.waybill_usable_tips}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        <input class="btn" type="submit" value="{$Think.lang.ds_submit}"/>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#waybill_image").change(function(){
+            $("#waybill_image_name").val($(this).val());
+        });
+
+    });
+    $('#add_form').validate({
+        errorPlacement: function(error, element){
+            error.appendTo(element.parents('tr').prev().find('td:first'));
+        },
+        rules : {
+            waybill_name: {
+                required : true,
+                maxlength : 10
+            },
+            waybill_width: {
+                required : true,
+                digits: true
+            },
+            waybill_height: {
+                required : true,
+                digits: true
+            },
+            waybill_top: {
+                required : true,
+                number: true
+            },
+            waybill_left: {
+                required : true,
+                number: true
+            }
+        },
+        messages : {
+            waybill_name: {
+                required : "{$Think.lang.waybill_name_required}",
+                maxlength : "{$Think.lang.waybill_name_maxlength}"
+            },
+            waybill_width: {
+                required : "{$Think.lang.waybill_width_required}",
+                digits: "{$Think.lang.waybill_width_digits}"
+            },
+            waybill_height: {
+                required : "{$Think.lang.waybill_height_required}",
+                digits: "{$Think.lang.waybill_height_digits}"
+            },
+            waybill_top: {
+                required : "{$Think.lang.waybill_top_required}",
+                number: "{$Think.lang.waybill_top_number}"
+            },
+            waybill_left: {
+                required : "{$Think.lang.waybill_left_required}",
+                number: "{$Think.lang.waybill_left_number}"
+            }
+        }
+    });
+</script>
