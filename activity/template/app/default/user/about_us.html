@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>关于我们</title>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/distribut/css/main.css"/>
+		<script src="__STATIC__/js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style>
+		body{
+			width: auto;
+			max-width: 100%;
+			background-color: #F3F5F7;
+		}
+		.gywm-container{
+			text-align: center;
+		}
+		.tit-hd{
+			margin: 1rem 0 .6rem 0;
+			display: inline-block;
+			width: 4.6279rem;
+			height: 1.6881rem;
+		}
+		.tit-hd img{
+			width: 4.6279rem;
+			height: 1.6881rem;
+		}
+		.v-number{
+			font-size: .5rem;
+			color: #B0B1B3;
+		}
+		.qr-code-gywm{
+			margin: .6rem 0 .6rem;
+			display: inline-block;
+			width: 8rem;
+			height: 8rem;
+		}
+		.qr-code-gywm img{
+			width: 8rem;
+			height: 8rem;
+		}
+		.qr-code-dtl{
+			font-size: .5rem;
+			color: #959596;
+			margin-bottom: 3rem;
+		}
+		.copyright-dtl{
+			color: #B0B1B3;
+			font-size: .5rem;
+			line-height: .5rem;
+			margin-top: .25rem;
+		}
+	</style>
+	<body>
+		<div class="gywm-container">
+			<div class="tit-hd">
+				<img src="{$shop_info['store_logo']}" alt="" style="height: auto;">
+			</div>
+			<p class="v-number"></p>
+			<div class="qr-code-gywm"><img src="{$qrcode}" alt=""></div>
+			<p class="qr-code-dtl">扫描二维码，打开商城首页</p>
+			<p class="copyright-dtl">Copyright © 2016-2025 </p>
+			<p class="copyright-dtl">{$shop_info['store_name']|default=$Think.config.shop_info.copyright} 版权所有</p>
+		</div>
+	</body>
+</html>

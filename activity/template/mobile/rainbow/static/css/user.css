@@ -1,0 +1,215 @@
+body {
+  background-color: #fff;
+}
+header {
+  height: 1.17333333rem;
+  width: 100%;
+}
+header h1 {
+  padding-left: 1.22666667rem;
+  padding-right: 1.22666667rem;
+  font-size: 0.48rem;
+  color: #333;
+  text-align: center;
+  height: 1.17333333rem;
+  line-height: 1.17333333rem;
+}
+.account_info {
+  background: #fe4646 url("../images/account_bg@2x.png") no-repeat center center;
+  background-size: contain;
+}
+.account_info .account_info_data li {
+  float: left;
+  width: 33.333%;
+  padding: 0.37333333rem 0;
+}
+.account_info .account_info_data li em {
+  font-size: 0.4rem;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  display: block;
+}
+.account_info .account_info_data li span {
+  font-size: 0.29333333rem;
+  color: #fff;
+  text-align: center;
+  display: block;
+  margin-top: 0.06666667rem;
+}
+.account_info .module a {
+  float: left;
+  width: 33.333%;
+  height: 1.06666667rem;
+  font-size: 0.32rem;
+  color: #fff;
+  line-height: 1.06666667rem;
+  text-align: center;
+  position: relative;
+}
+.account_info .module a::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 0.26666667rem;
+  background-color: #fff;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+.account_info .module a:last-child::after {
+  height: 0;
+}
+.account_info .module a::before {
+  content: '';
+  float: left;
+  height: 100%;
+  transform: translateX(0.61333333rem);
+}
+.account_info .module a:nth-child(1)::before {
+  width: 0.36rem;
+  background: url("../images/cashout@2x.png") no-repeat center center;
+  background-size: contain;
+}
+.account_info .module a:nth-child(2)::before {
+  width: 0.36rem;
+  background: url("../images/invest@2x.png") no-repeat center center;
+  background-size: contain;
+}
+.account_info .module a:nth-child(3)::before {
+  width: 0.41333333rem;
+  background: url("../images/diamond@2x.png") no-repeat center center;
+  background-size: contain;
+}
+.account_detail .detail_tab li {
+  width: 33.333%;
+  height: 1.06666667rem;
+  background-color: #ebebeb;
+  font-size: 0.4rem;
+  color: #666;
+  line-height: 1.06666667rem;
+  text-align: center;
+  float: left;
+}
+.account_detail .detail_tab li.active {
+  background-color: #fff;
+  color: #1a1a1a;
+}
+.account_detail .detail_content ul li {
+  float: left;
+  height: 1.01333333rem;
+  width: 33.333%;
+  line-height: 1.01333333rem;
+  text-align: center;
+  position: relative;
+  font-size: 0.4rem;
+  color: #666;
+}
+.account_detail .detail_content ul li.active {
+  color: #1a1a1a;
+}
+.account_detail .detail_content ul li.active::before {
+  content: '';
+  height: 0.06666667rem;
+  width: 0.53333333rem;
+  background-color: #ff3535;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.account_detail .detail_content ul li::after {
+  content: '';
+  height: 0.26666667rem;
+  width: 1px;
+  background-color: #9f9f9f;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.account_detail .detail_content ul li:last-child::after {
+  height: 0;
+}
+.account_detail .detail_content .income_content_list {
+  height: 1.93333333rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 0.53333333rem;
+  padding-bottom: 0.37333333rem;
+}
+.account_detail .detail_content .income_content_list .left em {
+  display: block;
+  font-size: 0.4rem;
+  color: #333;
+  margin-bottom: 0.06666667rem;
+}
+.account_detail .detail_content .income_content_list span {
+  display: block;
+  font-size: 0.32rem;
+  color: #999;
+}
+.account_detail .detail_content .income_content_list .price {
+  font-size: 0.4rem;
+  color: #ff3535;
+  text-align: right;
+  margin-bottom: 0.06666667rem;
+}
+.account_detail .detail_content .detail_content_list {
+  padding: 0.53333rem 0 0.37333rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.account_detail .detail_content .detail_content_list .left em {
+  display: block;
+  font-size: 0.4rem;
+  color: #232326;
+}
+.account_detail .detail_content .detail_content_list .left span {
+  display: block;
+  margin-top: 0.10666667rem;
+  font-size: 0.32rem;
+  color: #999;
+}
+.account_detail .detail_content .detail_content_list .right > span {
+  display: block;
+  color: #ff3535;
+  font-size: 0.4rem;
+  text-align: right;
+}
+.account_detail .detail_content .detail_content_list .right > div {
+  margin-top: 0.10666667rem;
+  color: #ff3535;
+  font-size: 0.32rem;
+  text-align: right;
+}
+.account_detail .detail_content .detail_content_list .right > div span {
+  color: #ff3535;
+}
+footer {
+  position: fixed;
+  width: 100%;
+  height: 1.33333333rem;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+footer a {
+  margin-top: 0.2rem;
+  float: left;
+  width: 20%;
+  padding: 0 3%;
+  text-align: center;
+}
+footer a img {
+  display: block;
+  width: auto;
+  height: 0.56rem;
+  margin: 0 auto;
+}
+footer a span {
+  font-size: 0.29333333rem;
+}
+footer a span.active {
+  color: #ff3535;
+}
+/*# sourceMappingURL=user.css.map */

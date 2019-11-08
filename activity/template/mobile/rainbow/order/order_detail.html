@@ -1,0 +1,758 @@
+<include file="public/header" title="订单详情" body="g4"/>
+<include file="public/header_nav" title="订单详情" href="javascript:history.back(-1);"/>
+<script src="__PUBLIC__/static/js/clipboard.min.js"></script>
+<style>
+    .ord_list{
+        padding: 0;
+    }
+    .content{
+        background-color: #ffffff;
+    }
+    .classreturn{
+        height: 1.86rem;
+        line-height: 1.86rem;
+    }
+    .classreturn .content .search span{
+        font-size: 0.73rem;
+    }
+    .qqz{
+        border: none;
+        height: auto;
+        background-color: #f7f7f7;
+    }
+    .shopprice .img_or img{
+        width: 3.84rem;
+        height: 3.84rem;
+        margin-left: 0.53rem;
+    }
+    .shopprice .img_or{
+        margin-top: 0.55rem
+    }
+    .maleri30{
+        margin: 0;
+    }
+    .shopprice .fon_or{
+        margin: 0.58rem 0 0 0.62rem;
+    }
+    .shopprice .fon_or h2{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        font-size: 0.55rem;
+        font-weight: 500;
+        width: 9.96rem;
+        height: 0.65rem;
+        margin-top: 0;
+        color: #1d1d1d;
+    }
+    .shopprice .fon_or .csf{
+        font-size: 0.47rem;
+        color: #999999;
+        margin-top: 0.41rem;
+    }
+    .shopprice .fon_or{
+        width: 9.96rem;
+    }
+    .ma-to-20{
+        margin-top: 0;
+    }
+    .qqz a{
+        width: 100%;
+        background-color: #fff;
+        margin: 0;
+        height: 2.2rem;
+        padding: 0;
+        margin-top: 0.55rem;
+    }
+    .qqz a .cancel{
+        border: solid 0.02rem #cfcfcf;
+        display: inline-block;
+        width: 3.41rem;
+        height: 1.19rem;
+        margin: 0.53rem 0.64rem 0;
+        text-align: center;
+        line-height: 1.19rem;
+        color: #262626;
+    }
+    .shopprice .price_or{
+        margin-top: 0;
+        float: left;
+        margin-left: 0.62rem;
+        width: 9.58rem;
+        margin-top: 1.79rem;
+    }
+    .shopprice .price_or p{
+        width: 50%;
+        float: left;
+        margin-top: 0;
+    }
+    .shopprice .price_or p:first-child{
+        text-align: left;
+        font-weight: bold;
+    }
+    .shopprice .price_or p:last-child{
+        font-size: 0.64rem;
+        color: #1b1b1b;
+    }
+    .shopprice .price_or p:first-child span{
+        font-size: 0.64rem;
+        color: #ff2e2e;
+        vertical-align: bottom;
+    }
+    .shopprice .price_or p:first-child span.sm{
+        font-size: 0.47rem;
+    }
+    .tit{
+        border: none;
+        border-top: 0.34rem solid #f3f4f4;
+    }
+    .tit h2{
+        padding-left: 0.36rem;
+        border-left: 0.11rem solid #262626;
+        margin-left: 0.55rem;
+        font-size: 0.64rem;
+        font-weight: bold;
+    }
+    .co-bt{
+        width: 3.41rem;
+        height: 1.19rem;
+        border: solid 0.02rem #cfcfcf;
+        display: inline-block;
+        text-align: center;
+        line-height: 1.19rem;
+        margin: 0.53rem 0.64rem 0 0;
+    }
+    .xx-list p{
+        padding: 0;
+        height: 1.94rem;
+        line-height: 1.94rem;
+        border-bottom: solid 0.02rem #dddddd;
+        margin: 0 0.6rem;
+        color: #262626;
+        position: relative;
+    }
+    .xx-list p:last-child{
+        height: auto;
+    }
+    .m-board{
+        display: block;
+        width: 14.93rem;
+        height: 2.99rem;
+        background-color: #f2f2f2;
+        border: none;
+        line-height: 0.51rem;
+        font-size: 0.51rem;
+        padding: 0.47rem 0.62rem;
+        outline: none;
+    }
+    .xx-list p .fr span{
+        margin-left: 0.2rem;
+        font-weight: 500;
+    }
+    .cp-order{
+        width: 1.83rem;
+        height: 0.77rem;
+        border: solid 0.02rem #d4d4d4;
+        color: #999999;
+        float: right;
+        line-height: normal;
+        text-align: center;
+        margin-top: 0.55rem;
+        margin-right: 0.79rem;
+        cursor: pointer;
+    }
+</style>
+<!--订单详情自提s-->
+<notempty name="childOrder">
+	<div class="mypackeg information_dr ma-to-20">
+		<div class="maleri30">
+			<div class="xx-list">
+				<p class="p">
+					<span class="fl">订单编号</span>
+					<span class="fr" id="order_sn_html">{$order.order_sn}</span>
+				</p>
+				<p class="p" style="height: auto;">由于发货需要，该订单已被拆分，可点击下列新订单查看订单信息</p>
+			</div>
+		</div>
+	</div>
+	<foreach name="childOrder" item="order">
+					<div class="mypackeg ma-to-20 getmore">
+						<div class="packeg p">
+							<div>
+								<div class="fl">
+									<h1><span></span><span class="bgnum"></span></h1>
+									<p class="bgnum"><span>订单编号:</span><span>{$order.order_sn}</span></p>
+								</div>
+								<div class="fr">
+									<span>{$order['order_status_detail']}</span>
+								</div>
+							</div>
+						</div>
+						<div class="shop-mfive p">
+							<div class="maleri30 order-list-maleri30">
+								<volist name="order.order_goods" id="goods">
+									<div class="sc_list se_sclist paycloseto">
+										<a href="{:U('/Mobile/Order/order_detail',array('id'=>$order['order_id']))}">
+										<div class="shopimg fl">
+											<img src="{$goods[goods_id]|goods_thum_images=200,200}">
+										</div>
+										<div class="deleshow fr">
+											<div class="deletes">
+												<span class="similar-product-text">{$goods[goods_name]|getSubstr=0,20}</span>
+											</div>
+											<div class="deletes">
+												<span class="similar-product-text mt-spt">{$goods.spec_key_name}</span>
+											</div>
+											<div class="qxatten  wiconfine">
+													<notempty name="goods['return_goods']">
+														<div class="buttondde">
+														<a class="applyafts">已申请售后</a>
+														</div>
+														<else />
+														<if condition="($order.return_btn eq 1)">
+															<div class="buttondde">
+															<a class="afas" href="{:U('Mobile/Order/return_goods',['rec_id'=>$goods['rec_id']])}">申请售后</a>
+															</div>
+														</if>
+														<p class="weight"><span>x</span><span>{$goods[goods_num]}</span></p>
+													</notempty>
+											</div>
+
+											<div class="prices  wiconfine">
+												<p class="sc_pri"><span>￥</span><span>{$goods[member_goods_price]}</span></p>
+											</div>
+
+										</div>
+										</a>
+									</div>
+								</volist>
+							</div>
+						</div>
+						<div class="shop-rebuy-price p">
+							<div class="maleri30 order-list-maleri30">
+						<span class="price-alln">
+							<span class="threel" id="goodsnum">共{$order.count_goods_num}件商品</span>
+							<span class="red">￥{$order['total_amount']}</span>
+						</span>
+								<if condition="$order.pay_btn eq 1">
+									<a class="shop-rebuy paysoon" href="{:U('Mobile/Cart/cart4',array('order_id'=>$order['order_id']))}">立即付款</a>
+								</if>
+								<if condition="$order.cancel_btn eq 1">
+									<if condition="$order.pay_status eq 0">
+										<a class="shop-rebuy " onClick="cancel_order({$order.order_id})">取消订单</a>
+									</if>
+									<if condition="$order.pay_status eq 1">
+										<a class="shop-rebuy" href="{:U('Order/refund_order', ['order_id'=>$order['order_id']])}">取消订单</a>
+									</if>
+								</if>
+								<if condition="$order.receive_btn eq 1">
+									<a class="shop-rebuy paysoon" onclick="orderConfirm({$order.order_id})">确认收货</a>
+								</if>
+								<if condition="$order.comment_btn eq 1">
+									<a class="shop-rebuy" href="{:U('/Mobile/Order/comment')}">评价</a>
+								</if>
+								<if condition="$order.shipping_btn eq 1">
+									<a class="shop-rebuy" href="{:U('Mobile/Order/express',array('order_id'=>$order['order_id']))}">查看物流</a>
+								</if>
+							</div>
+						</div>
+					</div>
+		</foreach>
+<else />
+	<if condition="$order['shop_id'] gt 0">
+		<div class="details-list-wrap">
+			<div class="details-list maleri30 ">
+				<div class="details-list-header p">
+					<div class="details-list-a list-a-one fl"><a>{$order.order_status_detail}</a></div>
+					<div class="details-list-a list-a-two fl"><a href="tel:{$order['shop']['shop_phone']}">联系自提点</a></div>
+					<div class="details-list-img fr">
+						<a class="list-img-a"><img src="__STATIC__/images/z-tihuoma.png"/></a>
+						<p class="list-img-title" style="font-size: 0.372rem;text-align: center;">查看</p>
+					</div>
+				</div>
+				<!--扫货码 弹窗s-->
+				<div class="Scavenging-pop-wrap" style="display: none;">
+						<div class="package-pop-bg-opacity" ></div>
+						<div class="Scavenging-pop-head" >
+							<i></i>
+							<h5>查看提货码</h5>
+						</div>
+						<div class="Scavenging-pop" >
+							<div class="Scavenging-pop-header">
+								自提订单提货凭证
+							</div>
+							<div class="Scavenging-pop-img-one" style="margin-bottom: 25px;">
+								<img src="/index.php/Mobile/Order/getOrderBarCode?code={$order['shop_order'][0]['bar_code']}"/>
+							</div>
+							<!-- <p class="Scavenging-pop-img-title">提货码:{$order['shop_order'][0]['shop_order_id']}</p>-->
+							<if condition="$order.wxqr neq 1">
+							<div class="Scavenging-pop-img-two">
+								<img src="{$order.wxqr}"/>
+							</div>
+							</if>
+							<div class="Scavenging-pop-cont">
+								<ul>
+									<li>
+										提<b></b> 货<b></b>人：<em style="margin-right: 10px;">{$order['consignee']}</em><i>{$order['mobile']}</i>
+									</li>
+									<li>
+										提货地址：<em>{$order['full_address']}</em>
+									</li>
+									<li>
+										提货时间：<em>{$order['shop_order'][0]['take_time']}</em>
+									</li>
+								</ul>
+							</div>
+							<div class="Scavenging-pop-footer">
+								<ul>
+									<li>
+										订单编号：{$order['order_sn']}
+									</li>
+									<li>
+										实付金额：{$order.order_money}元
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="Scavenging-pop-close"></div>
+				 </div>
+				<!--扫货码 弹窗e-->
+				<!--扫货码 弹窗功能s-->
+				<script type="text/javascript">
+					$(".details-list-wrap .details-list-img").click(function  () {
+						$(".Scavenging-pop-wrap").show();
+					})
+					$(".Scavenging-pop-head i,.Scavenging-pop-close").click(function  () {
+						$(this).parents(".Scavenging-pop-wrap").hide();
+					})
+				</script>
+				<!--扫货码 弹窗e-->
+				<div class="details-progress">
+					<ul class="p">
+						<li class="fl">买家下单</li>
+						<li class="fl  {$order['pay_status']==0?'details-li-color':''} " >支付成功</li>
+						<li class='fl  <if condition="($order.shop_id neq 0 and $order[shipping_time] neq 0) or $order[shop_order][0][is_write_off] neq 1"> details-li-color</if>'>上门自提</li>
+						<li class="fl {$order['order_status']==4?'':'details-li-color'}">交易完成</li>
+					</ul>
+					<div class="progress-icon-wrap">
+						<dl class="p">
+							<dt class="fl"></dt>
+							<if condition="$order['pay_status'] eq 1">
+								<dt class="fl"></dt>
+								<else/>
+								<dd class="fl"></dd>
+							</if>
+							<if condition="($order.shop_id eq 0 and $order[shipping_time] eq 0) or $order[shop_order][0][is_write_off] eq 1">
+								<dt class="fl"></dt>
+								<else/>
+								<dd class="fl"></dd>
+							</if>
+							<if condition="$order[order_status] eq 4">
+								<dt class="fl"></dt>
+								<else/>
+								<dd class="fl"></dd>
+							</if>
+						</dl>
+						<div class="details-progress-icon">
+
+						</div>
+					</div>
+				</div>
+				<div class="invoice list7">
+					<div class="myorder p">
+						<div class="content30">
+							<a class="remain" href="javascript:void(0);">
+								<div class="order">
+									<div class="fl">
+										<span>自提时间</span>
+									</div>
+									<div class="fr">
+									<span class="invoice_Package" style="margin-top: 0.6rem;">
+										<input type="text" placeholder="{$order['shop_order'][0]['take_time']}" id="demo_datetime" />
+										 <em>【{$order['shop_order'][0]['take_time']|weekday_by_time_str}】</em>
+									</span>
+										<i class="Mright"></i>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="invoice list7">
+					<div class="myorder  p">
+						<div class="content30">
+							<a class="remain" href="javascript:void(0);">
+								<div class="order">
+									<div class="fl">
+										<span>自提地点</span>
+									</div>
+									<div class="fr">
+										<span class="invoice_Package" style="margin-top: 0.6rem;">{$order['shop']['shop_name']}(<em>{$order['address']}</em>)</span>
+										<i class="Mright"></i>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="invoice list7">
+					<div class="myorder myorder-two p">
+						<div class="content30">
+							<a class="remain" href="javascript:void(0);">
+								<div class="order">
+									<div class="fl">
+										<span>提货人</span>
+									</div>
+									<div class="fr">
+										<span class="invoice_Package" style="margin-top: 0.6rem;">{$order['consignee']}&nbsp;&nbsp;<em>{$order['mobile']}</em></span>
+										<i class="Mright"></i>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ttrebu">
+				<img src="__STATIC__/images/tt.png"/>
+			</div>
+			<div class="Pending-delivery">
+				{$order.order_status_detail}
+			</div>
+
+		</div>
+	</if>
+	<!-- 订单详情自提e-->
+	<!--订单商品列表-s-->
+	<div class="ord_list p">
+		<div class="maleri30">
+			<volist name="order.order_goods" id="good">
+				<a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$good[goods_id]))}">
+					<div class="shopprice">
+						<div class="img_or fl">
+							<img src="{$good[goods_id]|goods_thum_images=100,100}"/>
+						</div>
+						<div class="fon_or fl">
+							<h2 class="similar-product-text">{$good[goods_name]}</h2>
+							<!--<div><span class="bac">{$good['spec_key_name']}</span></div>-->
+							<p class="csf">{$good['spec_key_name']}</p>
+						</div>
+						<div class="price_or fr">
+							<p><span class="sm">￥</span><span id="mgp">{$good[goods_price]}</span></p>
+							<p>x{$good['goods_num']}</p>
+						</div>
+					</div>
+				</a>
+			</volist>
+		</div>
+	</div>
+	<script>
+		$('#mgp').html(parseFloat({$good['member_goods_price']}.toFixed(2)).toString().split('.')[0] + '.<span class="sm">' + parseFloat({$good['member_goods_price']}.toFixed(2).split('.')[1]) + '</span>')
+	</script>
+	<!--订单商品列表-e-->
+	<div class="qqz">
+		<div class="maleri30">
+			<if condition="($order.return_btn eq 1 && !$order['order_goods'][0]['return_goods'])">
+				<a href="{:U('Mobile/Order/return_goods',['rec_id'=>$order['order_goods'][0]['rec_id']])}">申请售后</a>
+			</if>
+			<if condition="$order.comment_btn eq 1">
+				<a class="shop-rebuy" href="{:U('/Mobile/Order/comment')}">评价</a>
+			</if>
+			<!--<a href="tel:{$tpshop_config['shop_info_phone']}">联系客服</a>-->
+			<!--<a href="/mobile/supplier/index/goods_id/{$order->orderGoods[0]->goods_id}/order_id/{$order.order_id}.html" class="kf" txt="沃购要跳为im">
+				联系客服
+			</a>-->
+			<if condition="$order['cancel_btn'] eq 1">
+				<a class="closeorder_butt" ><span class="co-bt">取消订单</span></a>
+			</if>
+			<if condition="$order['cancel_info'] eq 1">
+				<a class="" href="{:U('Order/cancel_order_info',['order_id'=>$order['order_id']])}"><span class="cancel">取消进度</span></a>
+			</if>
+		</div>
+	</div>
+	<div class="information_dr ma-to-20">
+		<div class="maleri30">
+			<div class="tit">
+				<!-- if condition="$order['pay_code'] eq 'cod'"><i class="tits-ions">货到付款</i></if -->
+				<h2>基本信息</h2>
+			</div>
+			<div class="xx-list">
+				<p class="p">
+					<span class="fl">订单编号</span>
+					<span class="fr" id="order_sn_html">{$order.order_sn}</span>
+					<!--<span class="cp-order">复制</span>-->
+				</p>
+				<p class="p">
+					<span class="fl">下单时间</span>
+					<span class="fr"><span>{:date('Y-m-d  H:i:s', $order.add_time)}</span></span>
+				</p>
+				<p class="p">
+					<span class="fl">收货地址</span>
+					<span class="fr" style="max-width: 10rem; line-height: 0.80rem;overflow: hidden;text-align: right;margin-top: 0.7rem;white-space: nowrap;text-overflow: ellipsis;">{$order.full_address}</span>
+				</p>
+				<p class="p">
+					<span class="fl">收货人</span>
+					<span class="fr"><span>{$order.consignee}</span><span>{$order.mobile}</span></span>
+				</p>
+				<p class="p">
+					<span class="fl">支付方式</span>
+					<span class="fr">
+						<if condition="$order[pay_status] eq 1 and empty($order.pay_name)">
+							在线支付
+							<else/>
+							{$order.pay_name}
+						</if>
+					</span>
+				</p>
+				<p class="p">
+					<span class="fl">配送方式</span>
+					<span class="fr">{$order.delivery_method}
+						<!--<if condition="$order['shop_id'] eq 0"><foreach name="order['delivery_doc']" item="v">{$v.shipping_name}</foreach></if>-->
+					</span>
+				</p>
+				<p class="p">
+					<span class="fl">发票类型</span>
+					<span class="fr">{$order.invoice_desc|default=''}</span>
+				</p>
+				<if condition="$order.invoice_desc neq '不开发票'">
+				<!--<p class="p">-->
+					<!--<span class="fl">发票抬头</span>-->
+					<!--<span class="fr">{$order.invoice_title|default=''}</span>-->
+				<!--</p>-->
+				<!--<p class="p">-->
+					<!--<span class="fl">纳税人识别号</span>-->
+					<!--<span class="fr">{$order.taxpayer|default='无'}</span>-->
+				<!--</p>-->
+				</if>
+				<p class="p">
+					<span class="fl">买家留言</span>
+					<span class="fr">{$order.user_note}</span>
+					<!--<textarea class="m-board" cols="30" rows="10" placeholder="选填：对本次交易的说明，没有则不显示，没有则不显示"></textarea>-->
+				</p>
+				<if condition="$order.cancel_reason">
+					<p class="p">
+						<span class="fl">取消原因</span>
+						<span class="fr">{$order.cancel_reason}</span>
+					</p>
+				</if>
+				<if condition="$order.prom_type eq 4">
+					<if condition="$order['pre_sell']['is_finished'] eq 3">
+						<p class="p">
+							<span class="fl">订单关闭</span>
+							<span class="fr">商家取消活动，返还订金</span>
+						</p>
+					</if>
+					<if condition="$order['pre_sell']['is_finished'] eq 2">
+						<if condition="time() gt $order['pre_sell']['pay_end_time'] AND $order['pay_status'] neq 1">
+							<p class="p">
+								<span class="fl">订单关闭</span>
+								<span class="fr">已过支付尾款时间</span>
+							</p>
+						</if>
+					</if>
+				</if>
+			</div>
+		</div>
+	</div>
+	<script>
+		var clipboard = new ClipboardJS('.cp-order', {
+			text: function() {
+
+				return $("#order_sn_html").html();
+			}
+		});
+
+		clipboard.on('success', function(e) {
+			console.log(e);
+		});
+
+		clipboard.on('error', function(e) {
+			console.log(e);
+		});
+	</script>
+	<div class="information_dr ma-to-20">
+		<div class="maleri30">
+			<div class="tit">
+				<h2>价格信息</h2>
+			</div>
+			<div class="xx-list">
+				<if condition="$order.prom_type neq 4">
+					<p class="p">
+						<span class="fl">商品总价</span>
+						<span class="fr"><span>￥{$order.goods_price}元</span>
+					</p>
+					<p class="p">
+						<span class="fl">运费</span>
+						<span class="fr"><span>￥</span><span>{$order.shipping_price}</span>元</span>
+					</p>
+					<p class="p">
+						<span class="fl">优惠券</span>
+						<span class="fr"><span>-￥</span><span>{$order.coupon_price}</span>元</span>
+					</p>
+					<p class="p">
+						<span class="fl">活动优惠</span>
+						<span class="fr"><span>-￥</span><span>{$order.order_prom_amount}</span>元</span>
+					</p>
+					<p class="p">
+						<span class="fl">积分</span>
+						<span class="fr"><span>-￥</span><span>{$order.integral_money}</span>元</span>
+					</p>
+				</if>
+				<p class="p">
+					<span class="fl">余额</span>
+					<span class="fr"><span>-￥</span><span>{$order.user_money}</span>元</span>
+				</p>
+				<!-- 预售商品 start -->
+				<if condition="$order.prom_type eq 4" >
+					<if condition="$order.paid_money gt 0">
+						<if condition="$order.pay_status eq 1">
+							<p class="p">
+								<span class="fl">已付尾款</span>
+								<span class="fr"><span>-￥</span><span>{$order.order_amount}</span>元</span>
+							</p>
+						</if>
+						<p class="p">
+							<span class="fl">已付订金</span>
+							<span class="fr"><span>-￥</span><span>{$order.paid_money}</span>元</span>
+						</p>
+						<p class="p">
+							<span class="fl">发货时间</span>
+							<span class="fr"><span>{$order['pre_sell']['delivery_time_desc']}</span></span>
+						</p>
+					</if>
+					<if condition="$order.pay_status eq 0 AND $order.pre_sell.deposit_price gt 0">
+						<p class="p">
+							<span class="fl">应付订金</span>
+							<span class="fr"><span>-￥</span><span>{$order.order_amount}</span>元</span>
+						</p>
+						<p class="p">
+							<span class="fl">尾款</span>
+							<span class="fr"><span>-￥</span><span>{$order.total_amount - $order.order_amount}</span>元</span>
+						</p>
+					</if>
+				</if>
+				<!-- 预售商品 end -->
+				<!--价格调整-->
+				<if condition="$order.discount gt 0">
+					<p class="p">
+						<span class="fl">价格调整:减</span>
+						<span class="fr "><span>-￥</span><span>{$order.discount}</span>元</span>
+					</p>
+
+					<elseif  condition="$order.discount lt 0"/>
+					<p class="p">
+						<span class="fl">价格调整:加</span>
+						<span class="fr "><span>+￥</span><span>{$order.discount * -1}</span>元</span>
+					</p>
+				</if>
+				<p class="p">
+					<span class="fl">应付金额</span>
+					<span class="fr red"><span>￥</span><span>{$order.order_money}</span>元</span>
+				</p>
+
+			</div>
+		</div>
+	</div>
+
+	<!--取消订单-s-->
+	<div class="losepay closeorder" style="display: none;">
+		<div class="maleri30">
+			<p class="con-lo">取消订单后,存在促销关系的子订单及优惠可能会一并取消。是否继续？</p>
+			<div class="qx-rebd">
+				<a class="ax">取消</a>
+				<if condition="$order.pay_status eq 0">
+					<a class="are" onclick="cancel_order({$order.order_id})">确定</a>
+				</if>
+				<if condition="$order.pay_status eq 1">
+					<a class="are" href="{:U('Order/refund_order', ['order_id'=>$order['order_id']])}">取消订单</a>
+				</if>
+			</div>
+		</div>
+	</div>
+	<!--取消订单-e-->
+
+	<div class="mask-filter-div" style="display: none;"></div>
+
+	<!--底部支付栏-s-->
+	<div class="payit ma-to-20">
+		<!--<div class="fl">-->
+		<!--<p><span class="pmo">实付金额：</span>-->
+		<!--<span>￥</span><span>{$order.order_amount+$order.shipping_price}</span>-->
+		<!--</p>-->
+		<!--<p class="lastime"><span>付款剩余时间：</span><span id="lasttime"></span></p>-->
+		<!--&lt;!&ndash;<p class="deel"><a href="{:U('Mobile/User/order_del',array('order_id'=>$order.order_id))}">删除订单</a></p>&ndash;&gt;-->
+		<!--</div>-->
+		<div class="fr s">
+			<if condition="$order['pay_btn'] eq 1">
+				<a href="{:U('Mobile/Cart/cart4',array('order_id'=>$order['order_id']))}">立即付款</a>
+			</if>
+			<if condition="$order['receive_btn'] eq 1">
+				<a href="{:U('Mobile/Order/order_confirm',array('id'=>$order['order_id']))}">收货确认</a>
+			</if>
+			<if condition="$order['shipping_btn'] eq 1">
+				<a href="{:U('Mobile/Order/express',array('order_id'=>$order['order_id']))}" >查看物流</a>
+			</if>
+			<if condition="$order.pay_tail_btn eq 1">
+				<a href="{:U('/Mobile/Cart/cart4',array('order_id'=>$order[order_id]))}">支付尾款</a>
+			</if>
+		</div>
+	</div>
+</notempty>
+<!--底部支付栏-d-->
+
+<script type="text/javascript">
+    //取消订单按钮
+    $('.closeorder_butt').click(function(){
+        $('.mask-filter-div').show();
+        $('.losepay').show();
+    })
+    //取消取消订单
+    $('.qx-rebd .ax').click(function(){
+        $('.mask-filter-div').hide();
+        $('.losepay').hide();
+    })
+
+    //确认取消订单
+    function cancel_order(id){
+        $.ajax({
+            type: 'GET',
+            dataType:'JSON',
+            url:"/index.php?m=Mobile&c=Order&a=cancel_order&id="+id,
+            success:function(data){
+                if(data.code == 1){
+                    layer.open({content:data.msg,time:2});
+                    location.href = "/index.php?m=Mobile&c=Order&a=order_detail&id="+id;
+                }else{
+                    layer.open({content:data.msg,time:2});
+                    location.href = "/index.php?m=Mobile&c=Order&a=order_detail&id="+id;
+                    return false;
+                }
+            },
+            error:function(){
+                layer.open({content:'网络异常，请稍后重试',time:3});
+            },
+        });
+        $('.mask-filter-div').hide();
+        $('.losepay').hide();
+    }
+
+
+    //        $('.loginsingup-input .lsu i').click(function(){
+    //            $(this).toggleClass('eye');
+    //            if ($(this).hasClass('eye')) {
+    //                $(this).siblings('input').attr('type','text')
+    //            } else{
+    //                $(this).siblings('input').attr('type','password')
+    //            }
+    //        });
+    // 复制订单号
+
+    // $('.cp-order').click(function () {
+    //     alert(123)
+    //     $('.cp-order-i').val($(this).parent().children('.fr').html());
+    //     $('.cp-order-i').select()
+    //     document.execCommand("Copy");
+    // })
+</script>
+</body>
+</html>

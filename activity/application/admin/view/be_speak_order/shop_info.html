@@ -1,0 +1,408 @@
+<include file="public/layout"/>
+<body style="background-color: #FFF; overflow: auto;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back(-1)" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+
+            <div class="subject">
+                <h3>预约订单</h3>
+                <h5>预约订单查询及管理</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="ncap-order-style">
+        <div class="titile">
+            <h3></h3>
+        </div>
+        <div class="ncap-order-flow">
+            <ol class="num5">
+                <li class="current">
+                    <h5>生成订单</h5>
+                    <i class="fa fa-arrow-circle-right"></i>
+                    <time>{$order.add_time|date='Y-m-d H:i:s',###}</time>
+                </li>
+                <li class="<if condition='$order[pay_status] eq 1'>current</if>" style=" width: 40%;">
+                    <h5>发放兑换码</h5>
+                    <i class="fa fa-arrow-circle-right"></i>
+                    <if condition='$order[pay_status] eq 1'>
+                        <div class="code-list tip" title="如列表过长超出显示区域时可滚动鼠标进行查看">
+                            <div id="codeList">
+                                <ul>
+                                    <foreach name="shop_order" item="vo">
+                                        <switch name="$vo[is_write_off]">
+                                        <case value="0">
+                                            <li class=""><strong>{$vo.shop_code}</strong> 未使用，有效期至{$vo.take_time}</li>
+                                        </case>
+                                        <case value="1">
+                                            <li class=""><strong>{$vo.shop_code}</strong> 已使用，使用时间{$vo.write_off_time|date='Y-m-d H:i:s',###}</li>
+                                        </case>
+                                        <case value="2">
+                                            <li class=""><strong>{$vo.shop_code}</strong> 已过期，有效期至{$vo.take_time}</li>
+                                        </case>
+                                        <default />default
+                                        </switch>
+
+                                    </foreach>
+                                </ul>
+                            </div>
+                        </div>
+                    </if>
+                </li>
+                <li class="long <if condition='$order[confirm_time] gt 0'>current</if>">
+                    <h5>订单完成</h5>
+                    <time>
+                        <if condition='$order[confirm_time] gt 0'>{$order.confirm_time|date='Y-m-d H:i:s',###}</if>
+                    </time>
+                </li>
+            </ol>
+        </div>
+        <div class="ncap-order-details" style="margin-bottom: 50px;">
+            <ul class="tabs-nav">
+                <li class="current"><a href="javascript:void(0);">订单详情</a></li>
+            </ul>
+            <div class="tabs-panels">
+                <form id="order-action">
+                    <input name="order_id" value="{$order['order_id']}" type="hidden"/>
+                    <div class="misc-info">
+                        <h3>基本信息</h3>
+                        <dl>
+                            <dt>订单 ID：</dt>
+                            <dd>{$order.order_id}</dd>
+                            <dt>订单号：</dt>
+                            <dd>{$order.order_sn}</dd>
+                            <dt>会员：</dt>
+                            <dd>{$order.users.nickname}  ID:{$order.user_id}</dd>
+                        </dl>
+                        <dl>
+                            <dt>E-Mail：</dt>
+                            <dd>{$order.email}</dd>
+                            <dt>电话：</dt>
+                            <dd>{$order.mobile}</dd>
+                            <dt>应付金额：</dt>
+                            <dd>{$order.order_amount}</dd>
+                        </dl>
+                        <dl>
+                            <dt>订单状态：</dt>
+                            <dd>{$order.order_status_detail}</dd>
+                            <dt>下单时间：</dt>
+                            <dd>{$order.add_time|date='Y-m-d H:i:s',###}</dd>
+                            <dt>支付时间：</dt>
+                            <dd>
+                                <if condition="$order.pay_time neq 0">{$order.pay_time|date='Y-m-d H:i:s',###}
+                                    <else/>
+                                    N
+                                </if>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>支付方式：</dt>
+                            <dd>{$order.pay_name|default='其他方式'}</dd>
+                            <dt>发票抬头：</dt>
+                            <dd>{$order.invoice_title|default='N'}</dd>
+                            <dt>纳税人识别号：</dt>
+                            <dd>{$order.taxpayer|default='N'}</dd>
+                        </dl>
+                    </div>
+                    <div class="addr-note">
+                        <h4>预约信息</h4>
+                        <volist name="$order_bespeak" id="unit">
+                            <dl>
+                                <dt>{$unit['title']}：</dt>
+                                <if condition="$unit.type eq 6 || $unit.type eq 7">
+                                    <volist name="$unit['img_arr']" id="img_v">
+                                        <dd><img src="{$img_v}" style="width: 140px;height: 140px;"></dd>
+                                    </volist>
+                                <else>
+                                    <dd>{$unit['value']}</dd>
+                                </if>
+                            </dl>
+                        </volist>
+                    </div>
+                    <div class="addr-note">
+                        <h4>商家信息</h4>
+                        <dl>
+                            <dt>店名：</dt>
+                            <dd>{$shop_order[0]['shop']['shop_name']}</dd>
+                            <dt>电话：</dt>
+                            <dd>{$shop_order[0]['shop']['shop_phone_code']}{$shop_order[0]['shop']['shop_phone']}</dd>
+                        </dl>
+                        <dl>
+                            <dt>地址：</dt>
+                            <dd>{$shop_order[0]['shop']['full_address']}</dd>
+                        </dl>
+                    </div>
+                    <div class="addr-note">
+                        <h4>购买/收货方信息</h4>
+                        <dl>
+                            <dt>买家：</dt>
+                            <dd>{$order.consignee}</dd>
+                            <dt>接收手机：</dt>
+                            <dd>{$order.mobile}</dd>
+                        </dl>
+                        <dl>
+                            <dt>买家留言：</dt>
+                            <dd>{$order.user_note}</dd>
+                        </dl>
+                    </div>
+                    <div class="addr-note">
+                        <h4>订单状态</h4>
+                        <if condition="$order.pay_status eq 1">
+                            <dl>
+                                <dt><i class="icon-ok-circle green"></i>订单状态：</dt>
+                                <dd>买家已付款，电子兑换码已发放</dd>
+                            </dl>
+                            <dl>
+                                <dt><i class="icon-ok-circle green"></i>说明：</dt>
+                                <dd>
+                                    <ul>
+                                        <li>1. 该笔订单的电子兑换码已由系统自动发送至买家接收。</li>
+                                        <li>2. 本次交易从即日起至<time>{$shop_order[0]['take_time']}</time>。</li>
+
+                                        <!--<li>3. 临时支付按钮，生成兑换码 <a href="{:U('Order/generateVirtualCode',array('order_id'=>$order[order_id]))}" class="ncbtn-mini ncap-btn-mini ncap-btn-green">给他付钱</a>。 </li>-->
+                                    </ul>
+                                </dd>
+                            </dl>
+                            <else/>
+                            <dl>
+                                <if condition="$order['order_status'] eq 3">
+                                    <dt><i class="icon-off orange"></i>订单状态：</dt>
+                                    <dd>交易关闭</dd>
+                                    <else/>
+                                    <dt><i class="icon-ok-circle green"></i>订单状态：</dt>
+                                    <dd>订单已经生成，等待买家付款</dd>
+                                </if>
+                            </dl>
+                            <dl>
+                                <dt><i class="icon-ok-circle green"></i>说明：</dt>
+                                <dd>
+                                    <ul>
+                                        <if condition="$order['order_status'] eq 3">
+                                            <li> 交易关闭，原因：{$order.user_note}</li>
+                                            <else/>
+                                            <li>1. 买家尚未对该订单进行支付。</li>
+                                            <!--<li>2. 如果该订单是一个无效订单，您可以点击 <a href="javascript:void(0)" data-url="{:U('Order/virtual_cancel',array('order_id'=>$order[order_id]))}" class="ncap-btn ncap-btn-red" onclick="virtual_cancel(this)" >取消订单</a></li>-->
+                                            <!--<li>3. 临时支付按钮，生成兑换码 <a href="{:U('Order/generateVirtualCode',array('order_id'=>$order[order_id]))}" class="ncbtn-mini ncap-btn-mini ncap-btn-green">给他付钱</a>。 </li>-->
+                                        </if>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </if>
+                    </div>
+                    <div class="goods-info">
+                        <h4>商品信息</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th >商品编号</th>
+                                <th colspan="2">商品</th>
+                                <th>规格属性</th>
+                                <th>数量</th>
+                                <th>商品价格</th>
+                                <th>会员折扣价</th>
+                                <th>商品小计</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="$order.orderGoods" id="good">
+                                <input type="hidden" name="goods_id" value="{$good['goods_id']}">
+                                <tr>
+                                    <td class="w60">{$good.goods_sn}</td>
+                                    <td class="w30"><div class="goods-thumb"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$good['goods_id']))}" target="_blank"><img alt="" src="{$good['goods_id']|goods_thum_images=200,200}" /> </a></div></td>
+                                    <td style="text-align: left;"><a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$good['goods_id']))}" target="_blank">{$good.goods_name}</a><br/></td>
+                                    <td class="w80">{$good.spec_key_name}</td>
+                                    <td class="w60">{$good.goods_num}</td>
+                                    <td class="w100">{$good.goods_price}</td>
+                                    <td class="w60">{$good.member_goods_price}</td>
+                                    <td class="w80">{$good.total_member_goods_price}</td>
+                                </tr>
+                            </volist>
+                        </table>
+                    </div>
+                    <div class="total-amount contact-info">
+                        <h3>订单总额：￥{$order.goods_price}</h3>
+                    </div>
+                    <div class="total-amount">
+                        <h3>应付：<strong class="red_common">￥{$order.order_amount}</strong></h3>
+                    </div>
+                    <div class="contact-info">
+                        <h3>费用信息 </h3>
+                        <if condition="$order.pay_status eq 0">
+                            <div class="form_class">
+                                <a class="btn green" href="{:U('Admin/Order/editprice',array('order_id'=>$order['order_id']))}"><i class="fa fa-pencil-square-o"></i>修改费用</a>
+                            </div>
+                        </if>
+                        <dl>
+                            <dt>小计：</dt>
+                            <dd>{$order.goods_price}</dd>
+                            <dt>运费：</dt>
+                            <dd>+{$order.shipping_price}</dd>
+                            <dt>积分 (-{$order.integral})：</dt>
+                            <dd>-{$order.integral_money}</dd>
+                        </dl>
+                        <dl>
+                            <dt>余额抵扣：</dt>
+                            <dd>-{$order.user_money}</dd>
+                            <dt>优惠券抵扣：</dt>
+                            <dd>-{$order.coupon_price}</dd>
+                            <dt>价格调整：</dt>
+                            <dd>减：{$order.discount}</dd>
+                        </dl>
+                        <dl>
+                            <dt>订单促销：</dt>
+                            <dd>减：{$order.order_prom_amount}</dd>
+                            <dt>应付：</dt>
+                            <dd><strong class="red_common">{$order.order_amount}</strong></dd>
+                        </dl>
+                    </div>
+                    <div class="contact-info">
+                        <h3>操作信息</h3>
+                        <dl class="row">
+                            <dt class="tit">
+                                <label for="note">操作备注</label>
+                            </dt>
+                            <dd class="opt" style="margin-left:10px">
+                                <textarea id="note" name="note" style="width:600px" rows="6"  maxlength="200" placeholder="请输入操作备注" class="tarea">{$keyword.text}</textarea>
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="tit">
+                                <label for="note">可执行操作</label>
+                            </dt>
+                            <dd class="opt" style="margin-left:10px">
+                                <foreach name="$order.adminOrderButton" item="vo" key="k">
+                                    <if condition="$k eq 'pay_cancel'">
+                                        <!--<a class="ncap-btn-big ncap-btn-green" href="javascript:void(0)" data-url="{:U('Order/pay_cancel',array('order_id'=>$order['order_id']))}" onclick="pay_cancel(this)">{$vo}</a>-->
+                                        <a class="ncap-btn-big ncap-btn-green" onclick="verifyForm('order-action','{:U('Admin/order/order_action',array('type'=>$k,'bespeak'=>1))}');" >{$vo}</a>
+                                        <elseif condition="$k eq 'delivery'"/>
+                                        <if condition="$order.shop_id eq 0">
+                                            <a class="ncap-btn-big ncap-btn-green" href="{:U('Order/delivery_info',array('order_id'=>$order['order_id']))}">{$vo}</a>
+                                            <else/>
+                                            <a class="ncap-btn-big ncap-btn-green" onclick="deliverGoods()">{$vo}</a>
+                                        </if>
+                                        <elseif condition="$k eq 'refund'"/>
+                                        <else/>
+                                        <a class="ncap-btn-big ncap-btn-green" onclick="verifyForm('order-action','{:U('Admin/order/order_action',array('type'=>$k,'bespeak'=>1))}');" >
+                                            {$vo}</a>
+                                    </if>
+                                </foreach>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="goods-info">
+                        <h4>操作记录</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>操作者</th>
+                                <th>操作时间</th>
+                                <th>订单状态</th>
+                                <th>付款状态</th>
+                                <th>发货状态</th>
+                                <th>描述</th>
+                                <th>备注</th>
+                            </tr>
+                            </thead>
+                            <tbody id="order_action">
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--核销-->
+<include file="/be_speak_order/write_off"/>
+
+<script type="text/javascript">
+    //兑换码列表过多时出现滚条
+
+    function virtual_cancel(obj){
+        layer.open({
+            type: 2,
+            title: '取消订单',
+            shadeClose: true,
+            shade: 0.2,
+            area: ['420px', '330px'],
+            skin: 'layui-layer-rim',
+            content: [$(obj).attr('data-url'),'no'],
+        });
+    }
+</script>
+</body>
+</html>
+
+<script>
+    before_request = 1; // 标识上一次ajax 请求有没回来, 没有回来不再进行下一次
+    function verifyForm(form_id,submit_url){
+        if(before_request == 0)
+            return false;
+        $("[id^='err_']").hide();  // 隐藏提示
+        $.ajax({
+            type : "POST",
+            url  : submit_url,
+            data : $('#'+form_id).serialize(),// 你的formid
+            dataType: 'json',
+            error: function(request) {
+                layer.msg("服务器繁忙, 请联系管理员!", {icon: 1, time: 2000});
+            },
+            success: function(data) {
+                before_request = 1; // 标识ajax 请求已经返回
+                // 验证成功提交表单
+                if(data.status == 1)
+                {
+                    layer.msg(data.msg, {icon: 1, time: 2000},function () {
+                        window.location.href = "{:U('/admin/BeSpeakOrder/shop_info',array('order_id'=>$order.order_id))})}";
+                    });
+                }else{
+                    layer.msg(data.msg, {icon: 2, time: 2000});
+                }
+            }
+        });
+        before_request = 0; // 标识ajax 请求已经发出
+    }
+
+    $(function () {
+        getOrderAction();
+    });
+
+
+    function getOrderAction(){
+        var order_id = "{$order.order_id}";
+        $.ajax({
+            type : "get",
+            url  : "{:U('Admin/order/getOrderAction')}",
+            data : {order_id:order_id},
+            dataType: 'json',
+            error: function(request) {
+                layer.msg("服务器繁忙, 请联系管理员!", {icon: 1, time: 2000});
+            },
+            success: function(data) {
+                // 验证成功提交表单
+                if(data.status == 1)
+                {
+                    var html = '';
+                    for (var i=0; i<data.data.length;i++){
+                        html +='<tr><td class="text-center">'+data.data[i].action_user_name+'</td>' +
+                                '<td class="text-center">'+data.data[i].log_time+'</td>' +
+                                '<td class="text-center">'+data.data[i].order_status+'</td>' +
+                                '<td class="text-center">'+data.data[i].pay_status+'</td>' +
+                                '<td class="text-center">'+data.data[i].shipping_status+'</td>' +
+                                '<td class="text-center">'+data.data[i].status_desc+'</td>' +
+                                '<td class="text-center">'+data.data[i].action_note+'</td></tr>'
+                    }
+                    $('#order_action').html(html);
+                }else{
+                    layer.msg(data.msg, {icon: 2, time: 2000});
+                }
+            }
+        });
+    }
+
+
+
+
+</script>

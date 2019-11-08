@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>加盟政策</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/distribut/css/main.css"/>
+    <script src="__STATIC__/js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/mobile-util.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/js/style.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iconfont.css"/>
+</head>
+<style>
+.pri-card{
+  width:100%;
+  padding: 0.64rem 4% 0;
+  background-color: #f0f0f0;
+  min-height: 27.818667rem;
+  overflow: hidden;
+}
+.card-item{
+  width: 100%;
+  height: 7.253334rem;
+  margin-bottom: 0.896rem;
+  background-color: #fff;
+  display: block;
+  border-radius: 0.384rem;
+  overflow: hidden;
+}
+.card-item a{
+  display: block;
+  width: 94%;
+  height: 90%;
+  border: 1px solid #c0c0c0;
+  border-radius: 0.384rem;
+  margin:2.5% auto;
+}
+.card-text{
+  display: block;
+  width: 12.16rem;
+  padding: 0.84rem 0 0 1.28rem;
+  overflow: hidden;
+}
+.card-text b{
+  display: inline-block;
+  width: 2.304rem;
+  height: 2.304rem;
+  border-radius: 50%;
+  background-color: #1d9f85;
+  text-align: center;
+    float: left;
+}
+.card-text b img{
+  width: 1.536rem;
+  margin-top: 0.512rem; 
+}
+.card-text i{
+  display: inline-block;
+  font-size: 0.768rem;
+  margin-left: 0.64rem;
+  margin-top: 0.786rem;
+  font-weight: bold;
+  vertical-align: middle;
+    float: left;
+}
+.sm-txt{
+  font-size: 0.64rem;
+  display: block;
+  margin: 0.64rem 0 0.986rem 0;
+  padding-left:3.456rem;
+}
+.cad-price{
+  display:block;
+  margin-right:1.28rem;
+  float: right;
+  font-size:0.64rem;
+    font-weight:bold;
+}
+.sm-txt,.cad-price,.card-text i{
+  color:#1d9f85;
+}
+</style>
+<body>
+<include file="public/header_nav" title="加盟政策"  href="{:U('Mobile/Distribut/index')}" />
+<div class="pri-card">
+    <foreach name="level_list" item="vo">
+     <div class="card-item">
+  	   <a href="{:U('Mobile/Distribut/join_info',array('level_id'=>$vo.level_id))}">
+      	<span class="card-text"><b><img src="__STATIC__/images/crown.png" alt=""></b><i>{$vo.level_name}</i></span>
+          <p class="sm-txt">{$vo.introduction}</p>
+          <em class="cad-price">￥{$vo.join_price}</em>
+        </a>
+    </div>
+    </foreach>
+</div>
+</body>
+</html>

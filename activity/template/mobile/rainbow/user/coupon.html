@@ -1,0 +1,306 @@
+<include file="public/header" title="我的优惠券" body="g4"/>
+<include file="public/header_nav" title="我的优惠券" href="javascript:history.back(-1)"/>
+<style>
+    .coupon_csswri ul li:nth-child(2n){
+        float: left;
+    }
+    .two-bothshop ul li {
+        width: 33%;
+        height: 1.98rem;
+        line-height: 1.98rem;
+        font-size: 0.64rem;
+        position: relative;
+    }
+    .two-bothshop ul .red span{
+        color: #f23030;
+    }
+    .two-bothshop ul .red{
+        border: none;
+    }
+    .two-bothshop ul .red:before{
+        content: '';
+        display: block;
+        width: 1.07rem;
+        height: 0.11rem;
+        background-color: #ff4139;
+        position: absolute;
+        bottom: 0;
+        left: 1.9rem;
+    }
+    .btTab{
+        width: 100%;
+        height: 2rem;
+        bottom: 0;
+        position: fixed;
+        background-color: #fff;
+    }
+    .h-public{
+        width: 50%;
+        border:0.03rem solid #BFBFBF;
+        height: 100%;
+        float: left;
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 2rem;
+        font-size: 0.65rem;
+        color: #DA0202;
+        background-color: #ffffff;
+    }
+    .h-coupon{
+        position: absolute;
+        width: 12rem;
+        height: 6rem;
+        background-color: #ffffff;
+        top: 9rem;
+        left: 50%;
+        margin-left: -6rem;
+        border-radius: 0.3rem;
+        overflow: hidden;
+    }
+    .h-coupon p{
+        height: 1.6rem;
+        text-align: center;
+        font-size: 0.65rem;
+        line-height: 1.6rem;
+        border-bottom: 1px solid #BFBFBF;
+    }
+    .h-coupon input{
+        display: block;
+        height: 1.6rem;
+        width: 8rem;
+        margin: 0 auto;
+        font-size: 0.65rem;
+        text-align: center;
+        border: none;
+        margin: 0.6rem auto;
+        outline: none;
+    }
+    .h-coupon span{
+        display: inline-block;
+        width: 50%;
+        height: 1.6rem;
+        float: left;
+        text-align: center;
+        font-size: 0.65rem;
+        line-height: 1.6rem;
+        border: 1px solid #BFBFBF;
+        border-right: none;
+        border-bottom: none;
+    }
+    .h-crt{
+        background-color: #FF0000;
+        color: #ffffff;
+    }
+    .c-mask{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+        top: 0;
+        display: none;
+    }
+    .content{
+        background-color: #ffffff;
+    }
+    .coupon_csswri ul li{
+        width: 14.72rem;
+        margin-top: 0.58rem;
+        margin-left: .4rem;
+    }
+    .coupon_csswri ul li .cp_alo{
+        width: 14.72rem;
+    }
+    .cp_alo .pon_top{
+        width: 5.33rem;
+        height: 3.67rem;
+        background-color: #ff3030;
+        background: url(__STATIC__/images/cpn.png) no-repeat 100% 100%;
+        padding: 0;
+        overflow: hidden;
+        float: left;
+        background-size:5.33rem;
+    }
+    .cp_alo .pon_top h1{
+        width: 100%;
+        text-align: center;
+        padding: 0;
+        font-size: 1.54rem;
+        font-family: 'DIN';
+        margin: 0.9rem 0 0.38rem;
+    }
+    .cp_alo .pon_top h1 .fosi{
+        font-size: 0.64rem;
+    }
+    .cp_alo .pon_top p{
+        padding: 0!important;
+        margin: 0;
+        font-size: 0.47rem;
+        text-align: center;
+    }
+    .coupon_csswri ul li .cp_alo p.cpn-name{
+        width: 8rem;
+        font-size: 0.55rem;
+        color: #1e1e1e;
+        float: left;
+        margin-left: 0.55rem;
+        margin-top: 0.53rem;
+    }
+    .cp_alo .pon_dow .usecoupon{
+        float: right;
+        height: 0.94rem;
+        border-radius: 0.47rem;
+        border: solid 0.02rem #ff3030;
+        font-size: 0.47rem;
+        color: #ff3030;
+        padding: 0.26rem 0.45rem;
+    }
+    .cp_alo .pon_dow p{
+        min-width: 8rem;
+        padding: 0.34rem 0 0.45rem 0.55rem;
+    }
+    .coupon_csswri ul li .xd_time{
+        padding: 0;
+        min-width: 6rem;
+        width: 6rem;
+        padding-left: 0.55rem;
+        font-size: 0.47rem;
+        color: #666666;
+        margin-top: 0.34rem;
+    }
+    .cp_alo .pon_dow{
+        height: 3.67rem;
+    }
+</style>
+<div class="two-bothshop">
+    <div class="maleri30">
+        <ul>
+            <li  <if condition="$Request.param.type eq ''">class="red"</if>">
+                <a href="{:U('User/coupon')}"><span>未使用</span></a>
+            </li>
+            <li  <if condition='$Request.param.type eq 1'>class="red"</if>">
+                <a href="{:U('User/coupon',array('type'=>1))}"><span>已使用</span></a>
+            </li>
+            <li  <if condition='$Request.param.type eq 2'>class="red"</if>">
+                <a href="{:U('User/coupon',array('type'=>2))}"><span>已过期</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="coupon_csswri">
+    <div class="maleri30">
+        <ul id="user_goods_ka_1">
+            <volist name="coupon_list" id="coupon">
+                <li>
+                <div class="cp_alo">
+
+                    <div class="pon_top">
+                        <h1><em class="fosi">￥</em><em>{$coupon.money|intval}</em></h1>
+                        <p>{$coupon.use_scope}</p>
+
+                    </div>
+                    <p class="cpn-name">{$coupon.name}</p>
+                    <div class="pon_dow">
+                        <!--<p>{$tpshop_config['shop_info_store_name']}</p>-->
+                        <p>满 {$coupon.condition} 元使用</p>
+                        <if condition="$Request.param.type eq null">
+                                <if condition="$coupon.use_type eq 2">
+                                    <a class="usecoupon" href="{:U('Goods/goodsList',['id'=>$coupon.category_id])}">
+                                        <elseif condition="$coupon.use_type eq 1">
+                                            <a class="usecoupon" href="{:U('Goods/goodsInfo',['id'=>$coupon.goods_id])}">
+                                                <else/>
+                                                <a class="usecoupon" href="/">
+                                </if>
+                                立即使用</a>
+                        </if>
+                        <if condition="$Request.param.type eq 1">
+                            <a class="usecoupon" >已使用</a>
+                        </if>
+                        <if condition="$Request.param.type eq 2">
+                            <a class="usecoupon" >已过期</a>
+                        </if>
+                        <p class="xd_time">{$coupon.use_start_time|date='Y.m.d',###} - {$coupon.use_end_time|date='Y.m.d',###}</p>
+                    </div>
+                </div>
+            </li>
+            </volist>
+
+        </ul>
+        <ul>
+            <li><div style="margin-bottom: 8rem"></div></li>
+            <li><div style="margin-bottom: 8rem"></div></li>
+        </ul>
+    </div>
+</div>
+<div class="btTab">
+    <div class="h-public h-conversion">兑换优惠券码</div>
+    <div class="h-public h-get">领取优惠券</div>
+</div>
+<div class="c-mask">
+    <div class="h-coupon">
+        <p>兑换优惠券</p>
+        <form action="">
+            <input type="text" placeholder="请输入优惠券码" id="coupon_code" value="">
+            <span class="h-crt">确定</span>
+            <span class="c-close">取消</span>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="__STATIC__/js/sourch_submit.js"></script>
+<script>
+    var  page = 1;
+    /*** ajax 提交表单 查询订单列表结果*/
+    function ajax_sourch_submit()
+    {
+        page += 1;
+        $.ajax({
+            type : "GET",
+            url:"/index.php?m=Mobile&c=User&a=coupon&type={$Request.param.type}&is_ajax=1&p="+page,//+tab,
+//			url:"{:U('Mobile/User/coupon',array('type'=>$_GET['type']),'')}/is_ajax/1/p/"+page,//+tab,
+//			data : $('#filter_form').serialize(),// 你的formid 搜索表单 序列化提交
+            success: function(data)
+            {
+                if($.trim(data) == '')
+                    $('#getmore').hide();
+                else
+                    $("#user_goods_ka_1").append(data);
+            }
+        });
+    }
+
+    $('.c-mask').css('height',$(window).height())
+    // 兑换优惠券 确定
+    $('.h-crt').on('click',function () {
+        var coupon_code = $("#coupon_code").val();
+        $.ajax({
+            type : 'post',
+            url : "{:U('Home/Cart/cartCouponExchange')}",
+            data : {coupon_code:coupon_code},
+            dataType : 'json',
+            success : function(data){
+                if(data.status == 1){
+                    layer.open({content:data.msg,time:2});
+                    setTimeout(function() {
+                        $(".c-mask").hide();
+                        location.reload();
+                    }, 2000);
+                }else{
+                    layer.open({content:data.msg,time:2});
+                }
+            }
+        })
+    })
+    // 兑换优惠券 取消
+    $('.c-close').on('click',function () {
+        $(this).parent().parent().parent().hide()
+    })
+    // 兑换优惠券码 弹出输入框
+    $('.h-conversion').on('click',function () {
+        $('.c-mask').show();
+    })
+    $('.h-get').on('click',function () {
+        location.href = "{:U('Mobile/Activity/coupon_list')}";
+    })
+</script>
+<script src="js/style.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

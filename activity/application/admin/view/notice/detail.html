@@ -1,0 +1,47 @@
+<include file="public/layout" />
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<style>
+body{
+	text-align: center;
+	
+}
+.center{
+	text-align: center;
+	
+}
+.title{
+	font-size:1.85rem;
+}
+.author{
+	font-size:1.1rem;
+}
+.centent{
+	font-size:1rem;
+	width:600px;
+}
+.margin{
+	 margin: 0 auto;
+}
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+
+<div class="page">
+	<div class="fixed-bar">
+		<div class="item-title">
+			<div class="subject">
+				<h3>版本迭代详情</h3>
+			</div>
+		</div>
+	</div>
+	
+	<div class="flexigrid center margin  title" >
+		{$notice.title}
+	</div>
+	<div class="flexigrid center margin  author" >
+		作者：{$notice.author} &nbsp;&nbsp;&nbsp; 发布时间：{$notice.add_time|date="Y-m-d H:i:s",###}
+	</div>
+	<div class="flexigrid margin  centent" >
+		{$notice.content}
+	</div>
+</body>
+</html>

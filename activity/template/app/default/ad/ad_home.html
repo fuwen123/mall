@@ -1,0 +1,85 @@
+<include file="public/header" title="首页"/>
+<body style="background-color: #FFF; overflow: auto;">
+<style>
+    .pos-banner1 img{
+        height: 193px;
+    }
+    .banner-page-list{
+        top: 168px;
+    }
+    .pos-smallad1{
+        height: 75px;
+        top:551px;
+    }
+    .pos-smallad2{
+        height: 75px;
+        top:626px;
+    }
+    .pos-smallad3{
+        width: 187px;
+        height: 75px;
+        top: 551px;
+    }
+    .pos-smallad4{
+        width: 187px;
+        height: 75px;
+        top: 626px;
+    }
+    .pos-bigad1{
+        top:701px;
+        height: 94px;
+    }
+</style>
+<div class="pos-wrap" style="">
+    <img src="__STATIC__/images/ad/ad_home.jpg" style="width:375px; height: auto;">
+    <!-- 顶部banner广告轮播图 -->
+     <adv limit="5" item="v" pid="500">
+            <a class="pos-banner1"  href="{$v.ad_link}&is_app_ad=1&suggestion=750*380"><img  src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}"/></a>
+    </adv>
+	<div class="banner-page-list">
+        <adv limit="5" item="v" pid="500">
+            <a class="banner-page" href="javascript:;"></a>
+        </adv>
+    </div>
+    <script type="text/javascript">
+        $('.banner-page').eq(0).addClass('banner-page-ac');
+        $('.pos-banner1').eq(0).addClass('pos-banner1-ac');
+        $('.banner-page').click(function() {
+            $(this).addClass('banner-page-ac').siblings().removeClass('banner-page-ac');
+            $('.pos-banner1').eq($(this).index()).addClass('pos-banner1-ac').siblings().removeClass('pos-banner1-ac');
+        });
+    </script>
+     <!--中间广告图  b-->
+
+ 	<adv limit="1" item="v" pid="507"><!-- 中间广告图-左图1 -->
+            <a class="pos-smallad1"  href="{$v.ad_link}&is_app_ad=1&suggestion=750*188">
+            <img class="pos-smallad1" src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}"/>
+            </a>
+    </adv>
+ 	<adv limit="1" item="v" pid="508"><!-- 中间广告图-左图2 -->
+            <a class="pos-smallad2"  href="{$v.ad_link}&is_app_ad=1&suggestion=750*188">
+            <img class="pos-smallad2" src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}"/>
+            </a>
+    </adv>
+    <adv limit="1" item="v" pid="509"><!-- 中间广告图-右图1 -->
+            <a class="pos-smallad3"  href="{$v.ad_link}&is_app_ad=1&suggestion=750*188">
+            <img class="pos-smallad3" src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}"/>
+            </a>
+    </adv>
+    <adv limit="1" item="v" pid="510"><!-- 中间广告图-右图2 -->
+        <a class="pos-smallad4"  href="{$v.ad_link}&is_app_ad=1&suggestion=750*188">
+            <img class="pos-smallad4" src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}"/>
+        </a>
+    </adv>
+    <adv limit="1" item="v" pid="506">
+        <a class="pos-bigad1"  href="{$v.ad_link}&is_app_ad=1&suggestion=750*188">
+            <img class="pos-bigad1" src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}"/>
+        </a>
+    </adv>
+     <!-- 中间广告图  e-->
+
+</div>
+</body>
+</html>
+
+ 

@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Apple devices fullscreen -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="shortcut icon" type="image/x-icon"
+          href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}"
+          media="screen"/>
+    <title>供应商管理中心</title>
+    <script type="text/javascript">
+        var SITEURL = window.location.host + '/index.php/Supplier';
+    </script>
+
+    <link href="__PUBLIC__/static/css/main.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/static/js/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/static/font/css/font-awesome.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="__PUBLIC__/static/js/jquery.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/js/dialog/dialog.js" id="dialog_js"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/js/supplier.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/js/jquery.validation.min.js"></script>
+    <script src="__PUBLIC__/js/layer/layer.js"></script><!--弹窗js 参考文档 http://layer.layui.com/-->
+    <script src="__PUBLIC__/js/upgrade.js"></script>
+	<style>
+	.unfold .nav-tabs dl span.ico-goods-0 {
+		background-position: -625px 4px;
+	}
+	.unfold .nav-tabs dl span.ico-order-0 {
+		background-position: -114px 4px;
+	}
+	.unfold .nav-tabs dl span.ico-finance-0 {
+		background-position: -28px 4px;
+	}
+	</style>
+</head>
+<body>
+<div class="admincp-header">
+    <div class="bgSelector"></div>
+    <div class="admincp-name" onClick="javascript:openItem('welcome|Index');"><img src="__PUBLIC__/static/images/logo/admin_home_logo_default.png" alt=""></div>
+    <div class="nc-module-menu">
+        <ul>
+            <li data-param="goods"><a href="javascript:void(0);"><img src="__PUBLIC__/static/images/iconhead4.png" alt="">商品</a></li>
+            <li data-param="order"><a href="javascript:void(0);"><img src="__PUBLIC__/static/images/iconhead12.png" alt="">订单</a></li>
+			<li data-param="finance"><a href="javascript:void(0);"><img src="__PUBLIC__/static/images/iconhead11.png" alt="">结算</a></li>
+            <li data-param="system"><a href="javascript:void(0);"><img src="__PUBLIC__/static/images/iconhead2.png" alt="">系统</a></li>
+        </ul>
+    </div>
+    <div class="admincp-header-r">
+        <div class="manager">
+			
+            <a href="http://help.tp-shop.cn/Index/Help/channel/cat_id/5.html"  class="manual" target="_blank">帮助手册</a>
+    	</div>
+        <div class="operate bgd-opa">
+        	<span class="bgdopa-t">我的工作台<i class="opa-arow"></i></span>
+            <ul class="bgdopa-list">
+                <li style="display: none !important;" tptype="pending_matters"><a class="toast show-option" href="javascript:void(0);" onClick="$.cookie('commonPendingMatters', 0, {expires : -1});ajax_form('pending_matters', '待处理事项', 'http://www.tpshop.cn/admin/index.php?act=common&op=pending_matters', '480');" title="查看待处理事项">&nbsp;<em>0</em></a></li>
+                <li><a class="login-out show-option" href="{:U('Admin/logout')}"><i></i>退出系统</a></li>
+                <!--<li><a class="sitemap show-option" id="trace_show" href="{:U('admin/system/cleanCache',array('quick'=>1))}" target="workspace"><i></i>更新缓存</a></li>-->
+                <!--<li><a class="switch-smpro" href="http://wx.tp-shop.cn/client"><img src="__PUBLIC__/static/images/icon-switch.png" style="margin-top:0;">切换小程序</a></li>-->
+                <li><a class="homepage show-option" target="_blank" href="/"><i></i>打开商城</a></li>
+                
+            </ul>
+        </div>
+  	</div>
+  	<div class="clear"></div>
+</div>
+<div class="admincp-container unfold">
+    <include file="public/left"/>
+  <div class="admincp-container-right">
+    <!--<div class="top-border"></div>-->
+    <iframe src="" id="workspace" name="workspace" style="overflow: visible;" frameborder="0" width="100%" height="94%" scrolling="yes" onload="window.parent"></iframe>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+
+    $("#admin-manager-btn").click(function () {
+        if ($(".manager-menu").css("display") == "none") {
+            $(".manager-menu").css('display', 'block');
+            $("#admin-manager-btn").attr("title", "关闭快捷管理");
+            $("#admin-manager-btn").removeClass().addClass("arrow-close");
+        }
+        else {
+            $(".manager-menu").css('display', 'none');
+            $("#admin-manager-btn").attr("title", "显示快捷管理");
+            $("#admin-manager-btn").removeClass().addClass("arrow");
+        }
+    });
+</script>
+</html>

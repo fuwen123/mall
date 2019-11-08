@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+	.scrollbar .prohibit{background: #eee;color: #fff;}
+	.scrollbar li:hover{
+		cursor:default;color: #fff;
+	}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>common</title>
+    <link href="__PUBLIC__/static/css/tp-base.css" rel="stylesheet" />
+    <link href="__PUBLIC__/static/css/tp-form-decorate.css" rel="stylesheet" />
+    <script src="__PUBLIC__/static/js/jquery-1.9.1-min.js" type="text/javascript"></script>
+	<!--<script src="../../../../public/static/js/tp-form-preview.js"></script>-->
+</head>
+<body class="not-select">
+<div class="tp-decorate-wrap">
+    <div class="tpd-main">
+        <h3 class="tpd-scetion-title">
+	        <ul class="tpd-head">
+		        <li>
+		        	<label style="font-size: 21px;margin:0 10px 0 2px">自定义组件</label>
+		            <label>模板名称：</label>
+		            <input class="tpd-module-name" name="name" type="text" value="{$list['name']}" placeholder="未命名" />
+		            <input type="hidden" id="template_id" value="{$list['template_id']}" />
+		            <input type="hidden" id="delete_template_id" value="" />
+		        </li>
+		    </ul>
+        </h3>
+        <div class="tpd-scetion-cont clearfix">
+        	<div class="tpd-tools clearfix">
+                    <div class="tpd-tool-wrap">
+                        <h5><em>复用</em>（可多次使用的组件）</h5>
+                        <ul class="tpd-tool-list clearfix">
+                            <li data-eidtid="0">
+                                <i class="tpd-ico ico-menus1"></i>
+                                <label>单行文本</label>
+                            </li>
+                            <li data-eidtid="1">
+                                <i class="tpd-ico ico-menus2"></i>
+                                <label>多行文本</label>
+                            </li>
+                            <li data-eidtid="2">
+                                <i class="tpd-ico ico-menus3"></i>
+                                <label>单选按钮组</label>
+                            </li>
+                            <li data-eidtid="3">
+                                <i class="tpd-ico ico-menus4"></i>
+                                <label>复选框组</label>
+                            </li>
+                            <li data-eidtid="4">
+                                <i class="tpd-ico ico-menus5"></i>
+                                <label>下拉框</label>
+                            </li>
+                            <li data-eidtid="5">
+                                <i class="tpd-ico ico-menus6"></i>
+                                <label>图片</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--视图窗口-->
+            <div class="tpd-mobile-show">
+                <div class="tpd-mobile-scroll scrollbar">
+                	<form id="form-template">
+	                    <div class="tpd-mobile-views" id="tpd-mobile-views" data-diy="1">
+	                    	<!--可预约人信息s-->
+	                    	<div class="tpd-appointment-wrap">
+	                    		<div class="tpd-commonBd-name">
+	                    			<span>*</span><p>预约人信息:</p>
+	                    		</div>
+	                    		<div class="commonBd-list-wrap">
+	                    			<div class="commonBd-list">
+	                    				<p class="commonBd-name">预约姓名</p>
+	                    				<div class="commonBd-input">
+	                    					<input type="text" name="user_name" data-required="required" placeholder="请输入预约人姓名" disabled />
+	                    					<label></label>
+	                    				</div>
+	                    			</div>
+	                    			<div class="commonBd-list">
+	                    				<p class="commonBd-name">手机号码</p>
+	                    				<div class="commonBd-input">
+	                    					<input type="text" name="user_mobile" data-required="required" placeholder="请输入预约人手机号码"data-format="mobile" disabled/>
+	                    					<label></label>
+	                    				</div>
+	                    			</div>
+									<div class="commonBd-list">
+										<p class="commonBd-name">预约时间</p>
+										<div class="commonBd-input">
+											<input type="text" name="take_time" data-required="required" disabled/>
+											<label></label>
+										</div>
+									</div>
+	                    		</div>
+	                    	</div>
+	                    	<!--可预约人信息d-->
+	                    	<!--可预约时间s-->
+	                    	<div class="tpd-timeAppointment-wrap">
+	                    		<div class="tpd-commonBd-name">
+	                    			<span>*</span><p>可预约时间:</p>
+	                    		</div>
+	                    		<div class="tap-magin-left10 work">
+		                    		<div class="timeAppointment-list-wrap" id="timeAppointmentList1">
+		                    			<div class="timeAppointment-list-ul">
+		                    				<div class="timeAppointment-list <if condition="!isset($list)">timechenk</if> {$list['monday']==1?'timechenk':''} " data-work="monday">
+		                    					周一
+		                    				</div>
+		                    				<div class="timeAppointment-list <if condition="!isset($list)">timechenk</if> {$list['tuesday']==1?'timechenk':''} "  data-work="tuesday">
+		                    					周二
+		                    				</div>
+		                    				<div class="timeAppointment-list <if condition="!isset($list)">timechenk</if> {$list['wednesday']==1?'timechenk':''} "  data-work="wednesday">
+		                    					周三
+		                    				</div>
+		                    				<div class="timeAppointment-list  {$list['thursday']==1?'timechenk':''} " data-work="thursday">
+		                    					周四
+		                    				</div>
+		                    				<div class="timeAppointment-list {$list['friday']==1?'timechenk':''} " data-work="friday">
+		                    					周五
+		                    				</div>
+		                    			</div>
+		                    			<div class="timeAppointment-list-checkbox">
+		                    				<input type="checkbox" name="allTime"/>
+		                    				<label>全选</label>
+		                    			</div>
+		                    		</div>
+									
+									<div class="timeAppointment-select-wrap">
+										<div class="timeAppointment-sj">上午:</div>
+										<div class="timeAppointment-select ">
+											<input type="text" name="work_am_start_time" value="{$list['work_am_start_time']|default='08:00'}" readonly="readonly" />
+		                    			</div>
+		                    			<div class="timeAppointment-select-icon">
+		                    				~
+		                    			</div>
+		                    			<div class="timeAppointment-select ">
+		                    				<input type="text"  name="work_am_end_time" value="{$list['work_am_end_time']|default='12:00'}" readonly="readonly" />
+		                    			</div>
+		                    		</div>
+									<div class="timeAppointment-select-wrap">
+										<div class="timeAppointment-sj">下午:</div>
+										<div class="timeAppointment-select ">
+											<input type="text"  name="work_pm_start_time" value="{$list['work_pm_start_time']|default='14:00'}" readonly="readonly" />
+										</div>
+										<div class="timeAppointment-select-icon">
+											~
+										</div>
+										<div class="timeAppointment-select " style="margin-bottom: 10px;">
+											<input type="text" name="work_pm_end_time"  value="{$list['work_pm_end_time']|default='18:00'}" readonly="readonly" />
+										</div>
+									</div>
+	                    		</div>
+	                    		<div class="tap-magin-left10 week">
+		                    		<div class="timeAppointment-list-wrap">
+		                    			<div class="timeAppointment-list-ul">
+		                    				<div class="timeAppointment-list <if condition="!isset($list)">timechenk</if> {$list['saturday']==1?'timechenk':''}" data-work="saturday">
+		                    					周六
+		                    				</div>
+		                    				<div class="timeAppointment-list {$list['sunday']==1?'timechenk':''}"  data-work="sunday">
+		                    					周日
+		                    				</div>
+		                    			</div>
+		                    			<div class="timeAppointment-list-checkbox">
+		                    				<input type="checkbox" name="allTime" />
+		                    				<label>全选</label>
+		                    			</div>
+		                    		</div>
+		                    		<div class="timeAppointment-select-wrap">
+		                    			<div class="timeAppointment-sj">上午:</div>
+		                    			<div class="timeAppointment-select">
+		                    				<input type="text"  name="weekend_am_start_time"  value="{$list['weekend_am_start_time']|default='08:00'}" readonly="readonly"  />
+		                    			</div>
+		                    			<div class="timeAppointment-select-icon">
+		                    				~
+		                    			</div>
+		                    			<div class="timeAppointment-select">
+		                    				<input type="text"  name="weekend_am_end_time"  value="{$list['weekend_am_end_time']|default='12:00'}" readonly="readonly" />
+		                    			</div>
+		                    		</div>
+									<div class="timeAppointment-select-wrap">
+										<div class="timeAppointment-sj">下午:</div>
+										<div class="timeAppointment-select">
+											<input type="text"  name="weekend_pm_start_time"  value="{$list['weekend_pm_start_time']|default='14:00'}" readonly="readonly"  />
+										</div>
+										<div class="timeAppointment-select-icon">
+											~
+										</div>
+										<div class="timeAppointment-select">
+											<input type="text"  name="weekend_pm_end_time"  value="{$list['weekend_pm_end_time']|default='20:00'}" readonly="readonly" />
+										</div>
+									</div>
+	                    		</div>
+	                    	</div>
+	                    	<div class="tpd-selectTime-wrap">
+	                    		<h3>选择预约时间 <i class="tpd-selectTime-close">×</i></h3>
+	                    		<div class="tpd-selectTime-ul">
+		                    		<ul class="scrollbar">
+		                    			<li class="prohibit">00:00</li>
+		                    			<li>01:00</li>
+		                    			<li>02:00</li>
+		                    			<li>03:00</li>
+		                    			<li>04:00</li>
+		                    			<li>05:00</li>
+		                    			<li>06:00</li>
+		                    			<li>07:00</li>
+		                    			<li>08:00</li>
+		                    			<li>09:00</li>
+		                    			<li>10:00</li>
+		                    			<li>11:00</li>
+		                    			<li>12:00</li>
+		                    			<li>13:00</li>
+		                    			<li>14:00</li>
+		                    			<li>15:00</li>
+		                    			<li>16:00</li>
+		                    			<li>17:00</li>
+		                    			<li>18:00</li>
+		                    			<li>19:00</li>
+		                    			<li>20:00</li>
+		                    			<li>21:00</li>
+		                    			<li>22:00</li>
+		                    			<li>23:00</li>
+		                    			<li>24:00</li>
+		                    		</ul>
+	                    		</div>
+	                    	</div>
+	                    	<!--可预约时间d-->
+	                    	<!--可预约天数s-->
+	                    	<div class="tpd-AppointmentDays-wrap">
+	                    		<div class="tpd-commonBd-name">
+	                    			<span>*</span><p>可预约天数:</p>
+	                    		</div>
+	                    		<div class="AppointmentDays-list-wrap tap-magin-left10">
+	                    			<div class="AppointmentDays-list">
+	                    				<a class="AppointmentDays-mins" onclick="daysAdd(-1)">-</a><input type="text"  max="60" id="daysNumber" name="reserved_days" value="{$list['reserved_days']|default='1'}" onblur="daysAdd(0)"/><a class="AppointmentDays-add" onclick="daysAdd(1)">+</a>
+	                    			</div>
+	                    		</div>
+	                    		<div class="AppointmentTips-wrap tap-magin-left10">
+	                    			<p>可预约天数设置范围1~60天</p>
+	                    		</div>
+	                    	</div>	 
+	                    	<!--可预约天数d-->
+	                    	<!--可预约人数s-->
+	                    	<div class="tpd-AppointmentNumber-wrap">
+	                    		<div class="tpd-commonBd-name">
+	                    			<span>*</span><p>可预约人数:</p>
+	                    		</div>
+	                    		<div class="AppointmentNumber-list-wrap tap-magin-left10">
+	                    			<div class="AppointmentNumber-list">
+	                    				<span>每小时最多可预约</span><input type="text" name="numbers" id="numbers" onblur="numbersAdd()" value="{$list['numbers']|default='5'}"/><span>位客户<i>(营业时间内)</i></span>
+	                    			</div>
+	                    		</div>
+	                    		<div class="AppointmentTips-wrap tap-magin-left10">
+	                    			<p>根据自身门店客流量估算填写</p>
+	                    		</div>
+	                    	</div>	 
+	                    	<!--可预约人数d-->
+	                    	<!--配套设施s-->
+	                    	<div class="tpd-facilities-wrap">
+	                    		<div class="tpd-commonBd-name">
+	                    			<p style="margin-left: 10px;">配套设施:</p>
+	                    		</div>
+	                    		<div class="facilities-list-wrap tap-magin-left10">
+								<if condition="!isset($list)">
+	                    			<div class="facilities-list">
+	                    				<!--<input class="facilities-checkbox" type="checkbox" checked="checked"  />-->
+										<input type="text" name="equipment[]" class="facilities-text" value="免费wi-fi" placeholder="建议2~6个字" /><span class="facilities-close" >x</span>
+	                    			</div>
+	                    			<div class="facilities-list">
+	                    				<!--<input class="facilities-checkbox" type="checkbox"  />-->
+										<input type="text" name="equipment[]" class="facilities-text" value="空调开放" placeholder="建议2~6个字" /><span class="facilities-close" >x</span>
+	                    			</div>
+	                    			<div class="facilities-list">
+	                    				<!--<input class="facilities-checkbox" type="checkbox"  />-->
+										<input type="text" name="equipment[]" class="facilities-text" value="免费花茶" placeholder="建议2~6个字" /><span class="facilities-close" >x</span>
+	                    			</div>
+	                    			<div class="facilities-list">
+	                    				<!--<input class="facilities-checkbox" type="checkbox"  />-->
+										<input type="text" name="equipment[]" class="facilities-text" value="行李寄存" placeholder="建议2~6个字" /><span class="facilities-close" >x</span>
+	                    			</div>
+								<else>
+									<volist name="$list['equipment_arr']" id="equipment_v" >
+										<div class="facilities-list">
+										<!--<input class="facilities-checkbox" type="checkbox"  />-->
+										<input type="text" name="equipment[]" class="facilities-text" placeholder="建议2~6个字" value="{$equipment_v}"/><span class="facilities-close" >x</span>
+									</div>
+									</volist>
+								</if>
+									<div class="facilities-list">
+										<!--<input class="facilities-checkbox" type="checkbox"  />-->
+										<input type="text" name="equipment[]" class="facilities-text" placeholder="建议2~6个字" /><span class="facilities-close" >x</span>
+									</div>
+								</div>
+	                    		<div class="tpd-cadd-project"><i></i>添加</div>
+	                    	</div>
+							<if condition="isset($list)">
+								<include file="bespeak_template/edit_bespeak" title="编辑自定义表单"/>
+							</if>
+						</div>
+
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="tpd-eidt-tools">
+                <div class="tpd-tools-title"><b>组件库</b>（拖拽想要添加的组件）</div>
+                <div class="tpd-tools-title"><b>组件样式</b></div>
+                <div class="tpd-diy-box scrollbar">
+                	<!--单文本-->
+                    <div class="tpd-diy-js tpd-singleText">
+                        <div class="tpd-diy-title">单文本</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>标题</p>
+                        	<div class="tpd-singleTex-input  allInputs">
+                        		<input type="text" name="" placeholder="此处填写标题" data-maxlength="15" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <!--<div class="tpd-singleTex-title">-->
+                        	<!--<p>描述信息</p>-->
+                        	<!--<div class="tpd-singleTex-textarea">-->
+                        		<!--<textarea  data-maxlength="200"  placeholder="此处填写描述信息"></textarea>-->
+                        		<!--<span>-->
+                        			<!--<i class="singleOne">0</i>/200-->
+                        		<!--</span>-->
+                        	<!--</div>-->
+                        <!--</div>-->
+                        <div class="tpd-txtnav-style">
+                            <div class="tpd-cstyle-select tpd-cdiy-font28">
+                                <p>格式 </p>
+                                <div class="tpd-select-wrap">
+                                    <span>手机号码</span>
+                                    <ul class="tpd-select-list">
+										<li singleTex-li="">无</li>
+										<li singleTex-li="mobile">手机号码</li>
+										<li singleTex-li="phone">电话号码</li>
+										<li singleTex-li="zip_code">邮政编码</li>
+										<li singleTex-li="identity">身份证号码</li>
+										<li singleTex-li="email">邮箱</li>
+										<li singleTex-li="url">链接</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tpd-singleTex-title">
+                        	<p>提示文字</p>
+                        	<div class="tpd-singleTex-input singleTex-Tips">
+                        		<input type="text" name="" placeholder="此处填写提示文字"  data-maxlength="15" value="" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <div class="tpd-singleTex-title">
+                        	<p>校验</p>
+                        	<div class="tpd-singleTex-checkbox">
+                        		<input type="checkbox" name="" value=""  class="check"/>
+                        		<span>必填</span>
+                        	</div>
+                        </div>
+                    </div>
+                     <!--多文本-->
+ 					<div class="tpd-diy-js tpd-multiText">
+                        <div class="tpd-diy-title">多文本</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>标题</p>
+                        	<div class="tpd-singleTex-input allInputs">
+                        		<input type="text" name="" data-maxlength="15" value="" placeholder="此处填写标题" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <div class="tpd-singleTex-title">
+                        	<p>提示文字</p>
+                        	<div class="tpd-singleTex-input singleTex-Tips">
+                        		<input type="text" name="" data-maxlength="15" value="" placeholder="此处填写提示文字" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <div class="tpd-singleTex-title">
+                        	<p>校验</p>
+                        	<div class="tpd-singleTex-checkbox">
+                        		<input type="checkbox" name="" value="" class="check"/>
+                        		<span>必填</span>
+                        	</div>
+                        </div>
+                    </div> 
+                    <!--单选按钮-->
+                    <div class="tpd-diy-js tpd-radioButton">
+                        <div class="tpd-diy-title">单选按钮</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>标题</p>
+                        	<div class="tpd-singleTex-input allInputs">
+                        		<input type="text" name="" data-maxlength="15" value="" placeholder="此处填写标题" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <p class="tpd-radioButton-title">选项</p>
+                        <div class="tpd-radio-wrap select-list">
+	                        <div class="tpd-radioButton-li">
+	                        	<div class="tpd-radioButton-radio">
+	                        		<input type="radio" name="radio" value="" checked="checked" />
+	                        		<label></label>
+	                        	</div>
+	                        	<div class="tpd-radioButton-input">
+                        			<input type="text" name="" placeholder="选项1" value="" />
+                        			<label></label>
+                        		</div>
+                        		<div class="tpd-btn-del">
+                        		</div>
+	                        </div>
+	                        <div class="tpd-radioButton-li">
+	                        	<div class="tpd-radioButton-radio">
+	                        		<input type="radio" name="radio" value="" />
+	                        		<label></label>
+	                        	</div>
+	                        	<div class="tpd-radioButton-input">
+                        			<input type="text" name=""  placeholder="选项2" value="" />
+                        			<label></label>
+                        		</div>
+                        		<div class="tpd-btn-del">
+                        		</div>
+	                        </div>
+	                        <div class="tpd-radioButton-li">
+	                        	<div class="tpd-radioButton-radio">
+	                        		<input type="radio" name="radio" value="" />
+	                        		<label></label>
+	                        	</div>
+	                        	<div class="tpd-radioButton-input">
+                        			<input type="text" name=""  placeholder="选项3" value="" />
+                        			<label></label>
+                        		</div>
+                        		<div class="tpd-btn-del">
+                        		</div>
+	                        </div>
+                        </div>
+                        <div class="tpd-cadd-project"><i></i>新建目标</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>校验</p>
+                        	<div class="tpd-singleTex-checkbox">
+                        		<input type="checkbox" name="" value="" class="check"/>
+                        		<span>必填</span>
+                        	</div>
+                        </div>
+                    </div>
+                     <!--复选框组-->
+                    <div class="tpd-diy-js tpd-checkBox">
+                        <div class="tpd-diy-title">复选框组</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>标题</p>
+                        	<div class="tpd-singleTex-input allInputs">
+                        		<input type="text" name="" data-maxlength="15" value="" placeholder="此处填写标题" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <p class="tpd-radioButton-title">选项</p>
+                        <div class="tpd-checkBox-wrap select-list">
+	                        <div class="tpd-checkButton-li">
+	                        	<div class="tpd-checkBox-btn">
+	                        		<input type="checkbox" value="" checked="checked" />
+	                        		<label></label>
+	                        	</div>
+	                        	<div class="tpd-radioButton-input">
+                        			<input type="text" name="" placeholder="选项1" value="" />
+                        			<label></label>
+                        		</div>
+                        		<div class="tpd-btn-del">
+                        		</div>
+	                        </div>
+	                         <div class="tpd-checkButton-li">
+	                        	<div class="tpd-checkBox-btn">
+	                        		<input type="checkbox" value="" />
+	                        		<label></label>
+	                        	</div>
+	                        	<div class="tpd-radioButton-input">
+                        			<input type="text" name="" placeholder="选项2" value="" />
+                        			<label></label>
+                        		</div>
+                        		<div class="tpd-btn-del">
+                        		</div>
+	                        </div>
+	                         <div class="tpd-checkButton-li">
+	                        	<div class="tpd-checkBox-btn">
+	                        		<input type="checkbox" value=""  />
+	                        		<label></label>
+	                        	</div>
+	                        	<div class="tpd-radioButton-input">
+                        			<input type="text" name="" placeholder="选项3" value="" />
+                        			<label></label>
+                        		</div>
+                        		<div class="tpd-btn-del">
+                        		</div>
+	                        </div>
+                        </div>
+                        <div class="tpd-cadd-project"><i></i>新建目标</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>校验</p>
+                        	<div class="tpd-singleTex-checkbox">
+                        		<input type="checkbox" name="" value="" class="check"/>
+                        		<span>必填</span>
+                        	</div>
+                        </div>
+                   </div>
+                    <!--下拉框-->
+                    <div class="tpd-diy-js tpd-dropDown">
+                        <div class="tpd-diy-title">下拉框</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>标题</p>
+                        	<div class="tpd-singleTex-input allInputs">
+                        		<input type="text" name="" data-maxlength="15" value="" placeholder="此处填写标题" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <div class="tpd-dropDown-wraps">
+                        	<p class="tpd-radioButton-title">选项格式：</p>
+	            			<div class="tpd-dropDown-list select-list">
+	            				<div class="tpd-singleTex-input" >
+	                        		<input type="text" name="" value="" style="margin-top: 0;" placeholder="选项1" />
+	                        		<div class="tpd-btn-del" style="margin-top: 0px;">
+                        			</div>
+	                        	</div>
+	                        	<div class="tpd-singleTex-input">
+	                        		<input type="text" name="" value="" placeholder="选项2" />
+	                        		<div class="tpd-btn-del">
+                        			</div>
+	                        	</div>
+	                        	<div class="tpd-singleTex-input">
+	                        		<input type="text" name="" value="" placeholder="选项3" />
+	                        		<div class="tpd-btn-del">
+                        			</div>
+	                        	</div>
+	            			</div>
+            			</div>
+                        <div class="tpd-cadd-project" style="margin-left: 0;"><i></i>新建目标</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>校验</p>
+                        	<div class="tpd-singleTex-checkbox">
+                        		<input type="checkbox" name="" value="" class="check"/>
+                        		<span>必填</span>
+                        	</div>
+                        </div>
+                    </div>
+                    <!--图片-->
+                    <div class="tpd-diy-js tpd-picture">
+                        <div class="tpd-diy-title">图片</div>
+                        <div class="tpd-singleTex-title">
+                        	<p>标题</p>
+                        	<div class="tpd-singleTex-input allInputs">
+                        		<input type="text" name="" data-maxlength="15" value="" placeholder="此处填写标题" />
+                        		<span>
+                        			<i class="singleOne">0</i>/15
+                        		</span>
+                        	</div>
+                        </div>
+                        <div class="tpd-singleTex-title">
+                        	<p>校验</p>
+                        	<div class="tpd-singleTex-checkbox">
+                        		<input type="checkbox" name="" value="" class="check"/>
+                        		<span>必填</span>
+                        	</div>
+                        	<div class="tpd-singleTex-checkbox">
+                        		<input type="checkbox" name="" value="" class="upNum"/>
+                        		<span>仅允许上传一张图片</span>
+                        	</div>
+                        	<!--<div class="tpd-singleTex-checkbox">-->
+                        		<!--<input type="checkbox" name="" value="" class="photo"/>-->
+                        		<!--<span>仅允许拍照上传 </span>-->
+                        		<!--<i>!</i>-->
+                        	<!--</div>-->
+                        </div>
+                    </div>                    
+                </div>
+                </div>
+                <div class="tpd-foot-wrap">
+                    <div class="tpd-foot">
+                    	<p class="tap-foot-p">{$Think.config.shop_info.copyright}商城</p>
+                    	<div class="tpd-foot-cont">
+	                        <a href="javascript:;" class="submit">保 存</a>
+	                        <a href="javascript:;" class="preview">预 览</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/static/js/layer/layer.js"  type="text/javascript" ></script>
+<script src="__PUBLIC__/static/js/tp-form-drag.js" type="text/javascript"></script>
+<script src="__PUBLIC__/static/js/tp-form-preview.js" type="text/javascript"></script>
+
+</body>
+</html>

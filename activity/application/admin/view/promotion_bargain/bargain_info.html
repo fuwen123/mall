@@ -1,0 +1,360 @@
+<include file="public/layout" />
+<style>
+    .err{color:#F00; display:none;}
+</style>
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>砍价管理 - 编辑活动</h3>
+                <h5>网站系统砍价活动详情页</h5>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="handleposition" method="post">
+        <input type="hidden" id="goods_id" name="goods_id" value="{$info.goods_id}">
+        <input type="hidden" name="id" value="{$info.id}">
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>活动标题</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="title" id="title" value="{$info.title}" class="input-txt">
+                    <span class="err" id="err_title"></span>
+                    <p class="notic">请填写抢购标题</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>砍价金额范围</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="cut_statr_range" name="cut_statr_range" value="{$info['cut_statr_range']|default='0'}"  onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="input-txt" style="width: 50px !important;"> 元  ~
+                    <input type="text" id="cut_end_range" name="cut_end_range" value="{$info['cut_end_range']|default='1'}"  onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="input-txt" style="width: 50px !important;"> 元
+                    <span class="err" id="err_cut_end_range"></span>
+                    <p class="notic">每次随机砍掉的金额范围</p>
+                </dd>
+            </dl>
+
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>限购数量</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" <if condition="$info[id] gt 0">readonly="readonly"</if> id="buy_limit" name="buy_limit" value="{$info.buy_limit}" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"  class="input-txt">
+                    <span class="err" id="err_buy_limit"></span>
+                    <p class="notic">限时抢购每个人能购买的数量</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>虚拟参与活动人数</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="virtual_num" name="virtual_num" value="{$info.virtual_num}" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"  class="input-txt">
+                    <span class="err" id="err_virtual_num"></span>
+                    <p class="notic">虚拟参与本商品砍价的人数</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>参与砍价限制</label>
+                </dt>
+                <dd class="opt">
+                    每个砍价活动，每人可参与
+                    <input type="text" name="cut_limit" id="cut_limit" value="{$info['cut_limit']?$info['cut_limit']:''}" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="input-txt" style="width: 50px !important;" {:isset($info['cut_limit']) && $info['cut_limit']==0?'disabled':''}> 次
+                    <input type="checkbox" name="cut_limit" id="cut_limit_cut" value="0" onclick="cutLimitCut(this)" {:isset($info['cut_limit']) && $info['cut_limit']==0?'checked':''}> <label for="cut_limit_cut">不限制</label>
+                    <span class="err" id="err_cut_limit">一个用户，针对（同一商品，同一发起砍价者），<span>仅可协助砍价一次</span></span>
+                    <p class="notic">
+                        1,配置每个砍价活动每人可参与砍价的次数。
+                        2,一个用户，针对（同一商品，同一个发起砍价者），仅可协助砍价1次。
+                    </p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>订单保留时间</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="order_overtime" id="order_overtime" value="{$info['order_overtime']|default='10'}" onpaste="this.value=this.value.replace(/[^\d.]/g,'')" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" class="input-txt"  style="width: 50px !important;"> 分钟
+                    <span class="err" id="err_order_overtime"></span>
+                    <p class="notic">未及时付款的订单，超时将自动取消订单</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label><em>*</em>活动时间</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" id="start_time" name="start_time" value="{:date('Y-m-d H:i:s', $info['start_time'])}"  class="input-txt"> ~
+                    <input type="text" id="end_time" name="end_time" value="{:date('Y-m-d H:i:s', $info['end_time'])}"  class="input-txt">
+                    <span class="err" id="err_start_time"></span>
+                    <p class="notic">消费者须在有效期内购买砍价商品，逾期商品将恢复原价</p>
+                    <p class="hint" style="color:red"><strong></strong></p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label>活动介绍</label>
+                </dt>
+                <dd class="opt">
+                    <textarea placeholder="请输入活动介绍" name="description" rows="6" class="tarea">{$info.description}</textarea>
+                    <p class="notic">活动描述介绍</p>
+                </dd>
+            </dl>
+            <div class="flexigrid">
+                <div class="hDiv">
+                    <div class="hDivBox">
+                        <table cellspacing="0" cellpadding="0">
+                            <thead>
+                            <tr>
+                                <th align="center">
+                                    <div style="text-align: center; width: 250px;" class="">规格</div>
+                                </th>
+                                <th align="center">
+                                    <div style="text-align: center; width: 50px;" class="">库存</div>
+                                </th>
+                                <th align="center">
+                                    <div style="text-align: center; width: 100px;" class="">商城价格（元）</div>
+                                </th>
+                                <th align="center">
+                                    <div style="text-align: center; width: 150px;" class="">最低价格（元）</div>
+                                </th>
+                                <th align="center">
+                                    <div style="text-align: center; width: 150px;" class="">需要参与的库存</div>
+                                </th>
+                                <th class="handle" align="left">
+                                    <div style="text-align: center; width: 150px;">操作</div>
+                                </th>
+                                <th style="width:100%" axis="col7">
+                                    <div></div>
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="tDiv">
+                    <div class="tDiv2">
+                        <a onclick="selectGoods()">
+                            <div class="fbutton">
+                                <div title="添加商品" class="add">
+                                    <span><i class="fa fa-plus"></i>添加商品</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="fbutton_right" style="margin-left: 5px;vertical-align: top;">
+                            <div class="fbutton_span">
+                                <input type="text" id="goods_name" name="goods_name" readonly="readonly" value="{$info.goods_name}" class="input-txt" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="fbutton_right" style="margin-left: 5px;vertical-align: top;">
+                            <div class="fbutton_span">
+                                <span class="err" id="err_team_goods_item"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tDiv2" style="margin-top: 2px;">
+                        <span class="err" id="err_combination_goods" style="font-size: 12px;height: 20px;margin-left: 400px;vertical-align:top">选择商品</span>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div class="bDiv" style="height: auto;">
+                    <div id="flexigrid">
+                        <table>
+                            <tbody id="selected_group_goods">
+                            <volist name="info['promotion_bargain_goods_item']" id="goods_item" key="item_key">
+                                <tr class="bd-line">
+                                    <input name="team_goods_item[{$goods_item.item_id}][goods_id]" value="{$goods_item.goods_id}" type="hidden"/>
+                                    <input name="team_goods_item[{$goods_item.item_id}][item_id]" value="{$goods_item.item_id}" type="hidden"/>
+                                    <td> <div style="text-align: center; width: 250px;">{$goods_item.spec_goods_price.key_name}</div> </td>
+                                    <td>
+                                        <div style="text-align: center; width: 50px;">
+                                            <if condition="$goods_item['item_id'] eq 0">
+                                                {$info.goods.store_count}
+                                                <else/>
+                                                {$goods_item.spec_goods_price.store_count}
+                                            </if>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center; width: 100px;">
+                                            <if condition="$goods_item['item_id'] eq 0">
+                                                {$info.goods.shop_price}
+                                                <else/>
+                                                {$goods_item.spec_goods_price.price}
+                                            </if>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center; width: 150px;">
+                                            <input name="team_goods_item[{$goods_item.item_id}][start_price]" value="{$goods_item.start_price}" type="hidden"/>
+                                            <input name="team_goods_item[{$goods_item.item_id}][end_price]" value="{$goods_item.end_price}" type="text"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center; width: 150px;">
+                                            <input name="team_goods_item[{$goods_item.item_id}][goods_num]" value="{$goods_item.goods_num}" type="text"/>
+                                        </div>
+                                    </td>
+                                    <td class="handle">
+                                        <div style="text-align: center; width: 100px;">
+                                            <a class="btn red delete_tr" href="javascript:void(0)">删除</a>
+                                        </div>
+                                    </td>
+                                    <td style="width: 100%;">
+                                        <div>&nbsp;</div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--分页位置-->
+                <div class="dataTables_paginate paging_simple_numbers"><ul class="pagination">    </ul>
+                </div>
+            </div>
+
+            <if condition="$info['is_prohibit'] eq 1">
+                <div class="bot"><a class="ncap-btn-big">确认提交</a></div>
+            <else/>
+            <dl class="row" txt="发布活动时，进行通知">
+                <dt class="tit">站内信通知</dt>
+                <dd class="opt">
+                    <div class="onoff">
+                        <label for="mmt_message_switch1" class="cb-enable selected">是</label>
+                        <label for="mmt_message_switch0" class="cb-disable ">否</label>
+                        <input id="mmt_message_switch1" name="mmt_message_switch" checked="checked" value="1" type="radio">
+                        <input id="mmt_message_switch0" name="mmt_message_switch" value="0" type="radio" >
+                    </div>
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+                <div class="bot"><a onclick="verifyForm()" class="ncap-btn-big ncap-btn-green">确认提交</a></div>
+            </if>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#start_time').layDateHMS();
+        $('#end_time').layDateHMS();
+    })
+    var ajax_return_status = 1; // 标识ajax 请求是否已经回来 可以进行下一次请求
+    function verifyForm(){
+        $('span.err').hide();
+        if (ajax_return_status == 0) {
+            return false;
+        }
+        if ($('#start_time').val() == ''){
+            layer.msg('请输入活动时间', {icon: 2,time: 1000});
+            return false;
+        }
+        ajax_return_status = 0;
+        $.ajax({
+            type: "POST",
+            url: "{:U('Admin/PromotionBargain/bargain_info')}",
+            data: $('#handleposition').serialize(),
+            dataType: "json",
+            error: function () {
+                ajax_return_status = 1
+                layer.alert("服务器繁忙, 请联系管理员!");
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.msg, {icon: 1, time: 1000}, function(){
+                        location.href = "{:U('Admin/PromotionBargain/index')}";
+                    });
+                } else {
+                    $.each(data.result, function (index, item) {
+                        $('#err_' + index).text(item).show();
+                        layer.msg(item, {icon: 2,time: 1000});
+
+                    });
+                    ajax_return_status = 1;
+                }
+            }
+        });
+    }
+    function selectGoods(){
+        var url = "{:U('Promotion/search_goods',array('tpl'=>'select_goods_item','prom_type'=>8,'prom_id'=>$info.id))}";
+        layer.open({
+            type: 2,
+            title: '选择商品',
+            shadeClose: true,
+            shade: 0.2,
+            area: ['75%', '75%'],
+            content: url,
+        });
+    }
+    function call_back(goodsItem){
+        var html = '';
+        if(goodsItem.spec != null){
+            //有规格
+            $.each(goodsItem.spec, function (i, o) {
+                html += '<tr class="bd-line"> ' +
+                    '<input name="team_goods_item['+o.item_id+'][goods_id]" value="'+goodsItem.goods_id+'" type="hidden"/> ' +
+                    '<input name="team_goods_item['+o.item_id+'][item_id]" value="'+ o.item_id +'" type="hidden"/> ' +
+                    '<input name="team_goods_item['+o.item_id+'][start_price]" value="'+ o.price +'" type="hidden"/> ' +
+                    '<td> <div style="text-align: center; width: 250px;">'+o.key_name+'</div> </td> ' +
+                    '<td> <div style="text-align: center; width: 50px;"> '+ o.store_count+ ' </div> </td> ' +
+                    '<td> <div style="text-align: center; width: 100px;"> '+ o.price +' </div> </td> ' +
+                    '<td> <div style="text-align: center; width: 150px;"><input name="team_goods_item['+o.item_id+'][end_price]" value="1.00" type="text"/></div></td> ' +
+                    '<td> <div style="text-align: center; width: 150px;"><input name="team_goods_item['+o.item_id+'][goods_num]" value="1" type="text"/></div></td> ' +
+                    '<td class="handle"> <div style="text-align: center; width: 100px;"> <a class="btn red delete_tr" href="javascript:void(0)">删除</a> </div> </td> ' +
+                    '<td style="width: 100%;"> <div>&nbsp;</div> </td> ' +
+                    '</tr>';
+            });
+
+        }else{
+            html = '<tr class="bd-line"> ' +
+                '<input name="team_goods_item[0][goods_id]" value="'+goodsItem.goods_id+'" type="hidden"/> ' +
+                '<input name="team_goods_item[0][item_id]" value="0" type="hidden"/> ' +
+                '<input name="team_goods_item[0][start_price]" value="'+ goodsItem.goods_price +'" type="hidden"/> ' +
+                '<td> <div style="text-align: center; width: 250px;"> -- </div> </td> ' +
+                '<td> <div style="text-align: center; width: 50px;"> '+ goodsItem.store_count+ ' </div> </td> ' +
+                '<td> <div style="text-align: center; width: 100px;"> '+ goodsItem.goods_price +' </div> </td> ' +
+                '<td> <div style="text-align: center; width: 150px;"><input name="team_goods_item[0][end_price]" value="1.00" type="text"/></div></td> ' +
+                '<td> <div style="text-align: center; width: 150px;"><input name="team_goods_item[0][goods_num]" value="1" type="text"/></div></td> ' +
+                '<td class="handle"> <div style="text-align: center; width: 100px;"> <a class="btn red delete_tr" href="javascript:void(0)">删除</a> </div> </td> ' +
+                '<td style="width: 100%;"> <div>&nbsp;</div> </td> ' +
+                '</tr>';
+        }
+        var goods_id = $("input[name='goods_id']").val();
+        $('#goods_id').val(goodsItem.goods_id);
+        $('#goods_name').val(goodsItem.goods_name);
+        if(goods_id == goodsItem.goods_id){
+            $('#selected_group_goods').append(html);
+        }else{
+            $('#selected_group_goods').empty().html(html);
+        }
+        $('.selected-group-goods').show();
+        layer.closeAll('iframe');
+    }
+    function cutLimitCut(obj) {
+        if($(obj).context.checked){
+            $('#cut_limit').val('');
+            $('#cut_limit').attr('disabled',true);
+        }else{
+            $('#cut_limit').val(1);
+            $('#cut_limit').attr('disabled',false);
+        }
+    }
+
+    $(document).on("click", ".delete_tr", function (e) {
+        $(this).parent().parent().parent().remove();
+        if($('#selected_group_goods').find('tr').length == 0){
+            $('#goods_name').removeAttr('readonly').val('').attr('readonly', 'readonly');
+        }
+    })
+</script>
+</body>
+</html>

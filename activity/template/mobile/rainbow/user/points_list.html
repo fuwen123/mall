@@ -1,0 +1,162 @@
+<include file="public/header" title="我的积分" body=""/>
+<style>
+    .fll_acc li{
+        float: left;
+    }
+    .fll_acc .des-h{
+        /*padding-left: 6px;*/
+        padding: 0;
+        margin: 0.235rem 0;
+        float: right;
+        min-width: 50%;
+        text-align: right;
+        line-height: inherit;
+    }
+    .fll_acc .price-h{
+        color: #ff3b34;
+    }
+    .ft-color{
+        color:#000000!important;
+    }
+    .head_acc li{
+        position: relative;
+    }
+    .btr::before{
+        content: '';
+        width: 0.853rem;
+        height: 0.107rem;
+        background-color: #ff3b34;
+        margin-left: 2.283rem;
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        margin-right: -0.4265rem;
+    }
+    .fll_acc .pointer-list{
+        width: 50%;
+        text-align: left;
+        padding: 0;
+        font-size: 0.64rem;
+        margin: 0.235rem 0;
+    }
+    .fll_acc .pointer-list:nth-child(n+3){
+        font-size: 0.512rem;
+        color: #999999;
+    }
+    .fll_acc .pointer-list:nth-child(3){
+        width: 35%;
+    }
+    .fll_acc .pointer-list:nth-child(even){
+        text-align: right;
+    }
+    .content{
+        margin: 0;
+        padding: 0 0.21333rem;
+        background: linear-gradient(to top,#f6312f,#f7522f);
+        color: #ffffff;
+    }
+    .classreturn .content .search {
+        font-size: 0.683rem;
+    }
+    .head_acc ul li {
+        float: left;
+        width: 33.33333%;
+        text-align: center;
+        line-height: 1.87733rem;
+        font-size: 0.64rem;
+        cursor: pointer;
+        height: 1.984rem;
+        background-color: #fff;
+    }
+    .head_acc ul li>a {
+        color: #666666;
+        width: 100%;
+        display: inline-block;
+        height: 0.64rem;
+        line-height: 0.64rem;
+        border-right: 0.021rem solid #666666;
+    }
+    .fll_acc {
+        border-bottom: 1px solid #ddd;
+        overflow: hidden;
+        padding: 0.64rem 0;
+    }
+    .head_acc ul li:last-child>a {
+        border-right: none;
+    }
+    .fll_acc-h li{
+        overflow: visible;
+        /*white-space: nowrap;*/
+        /*text-overflow: ellipsis;*/
+    }
+</style>
+<include file="public/header_nav" title="我的积分" href="javascript:history.back(-1)"/>
+<div class="allaccounted">
+    <div class="head_acc ma-to-20" style="margin-top: 0">
+        <ul>
+            <li>
+            <a <if condition="$type eq 'all'">class="ft-color btr"</if> href="{:U('User/points_list',array('type'=>'all'))}"  data-list="1">全部</a>
+            </li>
+            <li>
+            <a <if condition="$type eq 'plus'">class="ft-color btr"</if> href="{:U('User/points_list',array('type'=>'plus'))}"   data-list="2">赚取</a>
+            </li>
+            <li>
+            <a  <if condition="$type eq 'minus'">class="ft-color btr"</if> href="{:U('User/points_list',array('type'=>'minus'))}"  data-list="3">消费</a>
+            </li>
+        </ul>
+    </div>
+    <div class="maleri30">
+        <div class="allpion">
+	         <!--<div class="fll_acc fll_acc-h">-->
+	         	<!--<ul><li class="orderid-h">订单</li><li class="price-h">积分</li><li class="time-h">时间</li></ul>-->
+	         <!--</div>-->
+             <foreach name="account_log" item="v">
+                 <div class="fll_acc fll_acc-h">
+                     <ul>
+                         <li class="pointer-list orderid-h">单号：{$v[order_sn]|default='无'}</li>
+                         <li class="pointer-list price-h">{$v[pay_points]}</li>
+                         <li class="pointer-list time-h">{:date('Y-m-d H:i:s',$v[change_time])}</li>
+                         <li class="des-h">描述:{$v[desc]}</li>
+                     </ul>
+                 </div>
+             </foreach>
+         </div>
+        <div id="getmore"  style="font-size:.32rem;text-align: center;color:#888;padding:.25rem .24rem .4rem; clear:both;display: none">
+            <a >已显示完所有记录</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/sourch_submit.js"></script>
+<script type="text/javascript">
+    //加载更多记录
+    var page = 1;
+    var before_request = 1
+    function ajax_sourch_submit()
+    {
+        if(before_request == 0) return false;
+        before_request = 0
+        page ++;
+        $.ajax({
+            type : "GET",
+            url:"/index.php?m=mobile&c=User&a=points_list&is_ajax=1&type={$type}&p="+page,//+tab,
+            success: function(data)
+            {
+                before_request = 1
+                if($.trim(data) == '') {
+                    $('#getmore').show();
+                    return false;
+                }else{
+                    $(".allpion").append(data);
+                    console.log(data)
+                }
+            }
+        });
+    }
+    //切换tab
+    $('.head_acc').on('click','a',function () {
+        $(this).addClass('btr')
+    })
+</script>
+</body>
+</html>

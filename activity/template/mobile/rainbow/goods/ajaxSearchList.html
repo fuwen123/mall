@@ -1,0 +1,27 @@
+<!--商品-s-->
+<foreach name="goods_list" item="vo" key="k">
+    <div class="orderlistshpop p"  >
+        <div class="maleri30">
+            <div class="sc_list se_sclist">
+                <div class="shopimg fl">
+                    <if condition="!empty($vo.label_name)">
+                        <div class="h-label" style="background: url(__STATIC__/images/h-label.png) no-repeat;background-size: 2rem 0.5rem;"><p>{$vo.label_name}</p></div></if>
+                    <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}" class="item"><img src="{$vo.goods_id|goods_thum_images=400,400}"></a>
+                </div>
+                <div class="deleshow fr">
+                    <div class="deletes">
+                        <a href="{:U('Mobile/Goods/goodsInfo',array('id'=>$vo[goods_id]))}" class="item"><span class="similar-product-text fl">{$vo.goods_name} {$vo['specGoodsPrice'][0]['key_name']}</span></a>
+                    </div>
+                    <div class="prices">
+                        <p class="sc_pri fl"><span>￥</span><b>{$vo[shop_price]}元</b></p>
+                    </div>
+                    <p class="weight">
+                        <span>已售出{$vo['sales_sum']+$vo['virtual_sales_sum']}件</span>
+                        <span goods_id="{$vo.goods_id}" class="add_cart"><img src="__STATIC__/images/red-icon-cart.png" alt=""></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</foreach>
+<!--商品-e-->

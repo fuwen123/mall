@@ -1,0 +1,122 @@
+<include file="public/layout"/>
+<script type="text/javascript" src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>自提订单核销</h3>
+                <h5>商城自提订单核销码</h5>
+            </div>
+            <ul class="tab-base nc-row">
+                <li><a class="current" href="{:U('ShopOrder/off')}"><span>核销提货码</span></a></li>
+                <li><a href="{:U('ShopOrder/index')}"><span>全部自提订单</span></a></li>
+                <li><a href="{:U('ShopOrder/index',['is_write_off'=>0])}"><span>待自提订单</span></a></li>
+                <li><a href="{:U('ShopOrder/statistic')}"><span>数据统计</span></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <!--<ul>
+                <li>点击查看操作将显示订单（包括电子兑换码）的详细信息</li>
+                <li>未付款的订单可以点击取消操作来取消订单</li>
+                <li>如果平台已确认收到买家的付款，但系统支付状态并未变更，可以点击收到货款操作，并填写相关信息后更改订单支付状态</li>
+             </ul>-->
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <div class="flexigrid">
+        <div class="mDiv" style="height: auto;">
+            <div class="ncsc-vr-order-exchange">
+                <dl class="p" style="margin-top: 80px;">
+                    <dt class="ncsc-keyb0oard-title fl"><h6>提货核销码</h6></dt>
+                    <dd class="ncsc-vr-order-one fl p">
+                        <div class="fl" style="margin: 0 15px;">
+                            <input class="vr-code" name="bar_code" type="text" placeholder="请输入买家提供的提货核销码" maxlength="18"  />
+                        </div>
+                        <div class="ncsc-keyboard fl">
+                            <label class="enter-border">
+                                <input type="button"  class="submit enter" value="提交验证">
+                            </label>
+                        </div>
+                    </dd>
+                </dl>
+                <div class="keyboard-icon-wrap">
+                    <div class="ncsc-keyboard-icon">
+                        <i></i>
+                    </div>
+                    <div class="keyboard-icon-cont">{$shop_order_wait_off_num}个订单待自提</div>
+                    <div class="keyboard-icon-btn"><a href="{:U('ShopOrder/index',['is_write_off'=>0])}">查看</a></div>
+                </div>
+                <div class="show " style="display: none;margin-top: 30px;">
+                    <div><span>订单编号：</span><span class="order-no"></span></div>
+                    <div><span>门店编号：</span><span class="store-no"></span></div>
+                    <div><span>订单总金额：</span><span class="order-total-money"></span></div>
+                    <div><span>支付状态：</span><span class="pay-status"></span></div>
+                    <div><span>支付方式：</span><span class="pay-mode"></span></div>
+                    <div><span>核销状态：</span><span class="off-status"></span></div>
+                    <div><span>核销码：</span><span class="write-off-code"></span></div>
+                    <span class="submit check-write-off" style="background-color: #5bb75b;color: #fff;padding: 10px;border-radius: 4px;" data-status="write_off">核销</span>
+
+                </div>
+                <div class="bottom">
+
+                </div>
+            </div>
+        </div>
+
+        <!--分页位置-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //更换自提点
+        $(document).on("click", '.submit', function (e) {
+            if($('.vr-code').val() != ''){
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('ShopOrder/writeOff')}",
+                    dataType: 'json',
+                    data: {bar_code: $("input[name='bar_code']").val(),status:!!!$(this).data('status')?'':$(this).data('status')},
+                    success: function (data) {
+                        $('.keyboard-icon-wrap').hide();
+                        $('.show').show();
+                        if (data.status == 1) {
+                            layer.open({icon: 1, content: data.msg, time: 1000,end:function(){
+                                location.reload();
+                            }});
+                        }
+                        else if (data.status == 2) {
+                            $('.order-no').text(data.result.order_sn);
+                            $('.store-no').text(data.result.shop_id);
+                            $('.order-total-money').text(data.result.order.total_amount);
+                            $('.pay-status').text(data.result.order.pay_status == 1 ? '已支付':'未支付');
+                            $('.pay-mode').text(data.result.order.pay_name);
+                            $('.off-status').text(data.result.is_write_off==1?'已核销':'未核销');
+                            $('.write-off-code').text(data.result.bar_code);
+                            if(data.result.is_write_off == 1){
+                                $('.check-write-off').hide();
+                            }else{
+                                $('.check-write-off').show();
+                            }
+                        }
+                        else {
+                            layer.open({icon: 2, content: data.msg, time: 1000});
+                        }
+                    }
+                });
+            }
+        })
+    })
+</script>
+</body>
+</html>

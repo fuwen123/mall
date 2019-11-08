@@ -1,0 +1,107 @@
+<table>
+       <tbody>
+            <volist name="goodsList" id="list">
+              <tr data-id="{$list[goods_id]}">              
+                <td align="center" axis="col0">
+                  <div style="width: 50px;">{$list.goods_id}</div>
+                </td>                
+                <td align="center" axis="col0">
+                  <div style="text-align: left; width: 300px;">{$list.goods_name|getSubstr=0,33}</div>
+                </td>
+                <td align="center" axis="col0">
+                  <div style="text-align: center; width: 100px;">{$list.goods_sn}</div>
+                </td>
+                <td align="center" axis="col0">
+                  <div style="text-align: center; width: 100px;">{$catList[$list[cat_id]][name]}</div>
+                </td>
+                <td align="center" axis="col0">
+                  <div style="text-align: center; width: 50px;">{$list.cost_price}</div>
+                </td>
+				<td align="center" axis="col0">
+                  <div style="text-align: center; width: 100px;">{$list.suppliers_name}</div>
+                </td>
+                <td align="center" axis="col0">
+                  <div style="text-align: center; width: 50px;">
+					<if condition="$list.audit == 1">
+						待审核
+					<elseif condition="$list.audit == 2"/>
+						未通过
+					</if>
+                  </div>
+                </td>    
+                <td align="center" axis="col0">                  
+                <div style="text-align: center; width: 50px; <if condition="$list.store_count elt tpCache('basic.warning_storage')">color:#D91222;</if> ">
+                  {$list.store_count}
+                </div>
+                </td> 
+				<td align="center" axis="col0">
+					<div style="text-align: center; width: 200px;">
+						<span><a target="_blank" href="{:U('Home/Goods/goodsInfo',array('id'=>$list['goods_id'], 'preview'=>1))}">预览</a></span>
+						<span><a href="{:U('Admin/Goods/addEditGoods',array('id'=>$list['goods_id'],'type'=>'edit','behavior'=>'audit'))}">审核</a></span>
+					</div>
+				</td>  
+                <td align="" class="" style="width: 100%;">
+                  <div>&nbsp;</div>
+                </td>
+              </tr>
+            </volist>             
+          </tbody>
+        </table>
+        <!--分页位置--> {$page}
+<script>
+// 点击分页触发的事件
+$(".pagination  a").click(function(){
+    cur_page = $(this).data('p');
+    ajax_get_table('search-form2',cur_page);
+});
+
+/*
+ * 清除静态页面缓存
+ */
+function ClearGoodsHtml(goods_id)
+{
+    $.ajax({
+        type:'GET',
+        url:"{:U('Admin/System/ClearGoodsHtml')}",
+        data:{goods_id:goods_id},
+        dataType:'json',
+        success:function(data){
+            layer.alert(data.msg, {icon: 2});
+        }
+    });
+}
+/*
+ * 清除商品缩列图缓存
+ */
+function ClearGoodsThumb(goods_id)
+{
+    $.ajax({
+        type:'GET',
+        url:"{:U('Admin/System/ClearGoodsThumb')}",
+        data:{goods_id:goods_id},
+        dataType:'json',
+        success:function(data){
+            layer.alert(data.msg, {icon: 2});
+        }
+    });
+}
+
+function add_comment(obj) {
+    var id = $(obj).data('id');
+    var url = '/index.php?m=Admin&c=Goods&a=add_comment&id=' + id;
+    //iframe窗
+    layer.open({
+        type: 2,
+        title: '添加评论',
+        shadeClose: true,
+        shade: 0.4,
+        area: ['30%', '82%'],
+        content: [url], //iframe的url，no代表不显示滚动条
+        end: function () { //此处用于演示
+
+        }
+    });
+}
+
+
+</script>

@@ -1,0 +1,396 @@
+<include file="public/layout"/>
+<!--物流配置 css -start-->
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<style>
+    ul.group-list {
+        width: 96%;
+        min-width: 1000px;
+        margin: auto 5px;
+        list-style: disc outside none;
+    }
+
+    .err {
+        color: #F00;
+        display: none;
+    }
+
+    ul.group-list li {
+        white-space: nowrap;
+        float: left;
+        width: 150px;
+        height: 25px;
+        padding: 3px 5px;
+        list-style-type: none;
+        list-style-position: outside;
+        border: 0px;
+        margin: 0px;
+    }
+
+    .row .table-bordered td .btn, .row .table-bordered td img {
+        vertical-align: middle;
+    }
+
+    .row .table-bordered td {
+        padding: 8px;
+        line-height: 1.42857143;
+    }
+
+    .table-bordered {
+        width: 100%
+    }
+
+    .table-bordered tr td {
+        border: 1px solid #f4f4f4;
+    }
+
+    .btn-success {
+        color: #fff;
+        background-color: #449d44;
+        border-color: #398439 solid 1px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    .col-xs-8 {
+        width: 66.66666667%;
+    }
+
+    .col-xs-4 {
+        width: 33.33333333%;
+    }
+
+    .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+        float: left;
+    }
+
+    .row .tab-pane h4 {
+        padding: 10px 0;
+    }
+
+    .row .tab-pane h4 input {
+        vertical-align: middle;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .ncap-form-default .title {
+        border-bottom: 0
+    }
+
+    .ncap-form-default dl.row, .ncap-form-all dd.opt {
+        /*border-color: #F0F0F0;*/
+        border: none;
+    }
+
+    .ncap-form-default dl.row:hover, .ncap-form-all dd.opt:hover {
+        border: none;
+        box-shadow: inherit;
+    }
+
+    .p_plus strong {
+        cursor: pointer;
+        margin-left: 4px;
+    }
+
+    .excel_buttom {
+        font-size: 12px;
+        line-height: 30px;
+        font-weight: bold;
+        color: #FFF;
+        background-color: #48CFAE;
+        display: block;
+        height: 30px;
+        padding: 0 20px;
+        border-radius: 3px;
+        border: none 0;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .ncsc-form-goods {
+        border: solid #E6E6E6;
+        border-width: 1px 1px 0 1px;
+    }
+
+    .ncsc-form-goods dl {
+        font-size: 0;
+        *word-spacing: -1px;
+        line-height: 20px;
+        clear: both;
+        padding: 0;
+        margin: 0;
+        border-bottom: solid 1px #E6E6E6;
+        overflow: hidden;
+    }
+
+    .ncsc-form-goods dl dt {
+        font-size: 12px;
+        line-height: 30px;
+        color: #333;
+        vertical-align: top;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-align: right;
+        display: inline-block;
+        width: 13%;
+        padding: 8px 1% 8px 0;
+        margin: 0;
+    }
+
+    .ncsc-form-goods dl dd {
+        font-size: 12px;
+        line-height: 30px;
+        vertical-align: top;
+        letter-spacing: normal;
+        word-spacing: normal;
+        display: inline-block;
+        width: 84%;
+        padding: 8px 0 8px 1%;
+        border-left: solid 1px #E6E6E6;
+    }
+
+    .ncsc-form-goods dl dt i.required {
+        font: 12px/16px Tahoma;
+        color: #F30;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+
+    select, .select {
+        color: #777;
+        background-color: #FFF;
+        height: 30px;
+        vertical-align: middle;
+        *display: inline;
+        padding: 0 4px;
+        border: solid 1px #E6E9EE;
+        *zoom: 1;
+    }
+
+    .ncsc-default-table thead th {
+        line-height: 20px;
+        color: #999;
+        background-color: #FFF;
+        text-align: center;
+        height: 20px;
+        padding: 8px 0;
+        border-bottom: solid 1px #DDD;
+    }
+
+    a.ncbtn {
+        height: 20px;
+        padding: 5px 10px;
+        border-radius: 3px;
+    }
+    a.ncap-btn-big {
+        font: bold 14px/20px "microsoft yahei",arial;
+        background-color: #ECF0F1;
+        text-align: center;
+        vertical-align: middle;
+        display: inline-block;
+        height: 20px;
+        padding: 7px 19px;
+        border: solid 1px #BEC3C7;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    a.ncap-btn-green {
+        background-color: #148eff;
+        border-color: #148eff;
+        display: inline-block;
+        margin-top: -5px;
+    }
+    .bd-line td {
+        border: solid 1px #f5eded;
+        padding: 10px  0;
+    }
+    .w1 {
+        text-align: center;
+    }
+
+</style>
+<!--物流配置 css -end-->
+<!--以下是在线编辑器 代码 -->
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.config.js"/>
+<load href="__ROOT__/public/plugins/Ueditor/ueditor.all.min.js"/>
+<script type="text/javascript" charset="utf-8" src="__ROOT__/public/plugins/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<!--以上是在线编辑器 代码  end-->
+<body style="background-color: #FFF; overflow: auto;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>批量发货</h3>
+                <h5>导入需要发货订单</h5>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+                <li>1.请将商品excel文件上传,商品excel文件请按照下方提供的excel模板来录入数据.<span style="color:red">(可点击下方按钮下载excel模板)</span></li>
+                <li>2.修改excel文件时请勿修改其表格结构、行列名称，修改完成后务必不要修改文件编码格式及文件后缀名.</li>
+                <li>3.excel数据录入时如果某条订单不存在，将导入失败</li>
+                <li>
+                    <a href="/public/excel/tpshop-delivery-excel.xls" style="text-decoration:none">
+                        <input type="button" class="submit excel_buttom"value="excel模板下载">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <!--表单数据-->
+    <form method="post" enctype="multipart/form-data" id="goods_form">
+        <div class="ncsc-form-goods">
+            <dl>
+                <dt><i class="required">*</i>Excel文件：</dt>
+                <dd>
+                    <div class="handle">
+                        <div class="ncsc-upload-btn">
+                            <a href="javascript:void(0);">
+                                <span>
+                                    <input type="file" hidefocus="true" size="15"name="excel">
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>&nbsp;</dt>
+                <dd>
+                    <input type="submit" class="submit excel_buttom" value="导入">
+                </dd>
+            </dl>
+        </div>
+    </form>
+    <div style="width:800px;height:auto;overflow: hidden">
+        <form id="send_form" action="{:url('Order/delivery_batch_handle')}" method="post">
+            <div class="tit">
+                <div style="line-height:50px;text-indent:20px;float:left">
+                    配送方式:
+                    <select name="shipping_code" id="shipping_code" onchange="ShippingName()">
+                        <option value="">请选择</option>
+                        <volist name="shipping_list" id="shipping">
+                            <option value="{$shipping.shipping_code}">{$shipping.shipping_name}</option>
+                        </volist>
+                    </select>
+                    <input type="hidden" id="shipping_name" name="shipping_name" value="">
+                </div>
+                <div style="line-height:55px;text-indent:20px;float:right">
+                    <input type="text"  id="express_num" placeholder="设置配送起始单号" style="height:30px;padding: 0 4px;border: solid 1px #E6E9EE;">
+                    <a href="javascript:void(0)" onclick="express();" class="ncap-btn-big ncap-btn-green" style="padding:6px;">分配单号</a>
+                </div>
+            </div>
+            <table class="ncsc-default-table" style="width:795px">
+                <thead>
+                <tr>
+                    <th class="w1" style="background-color:#dddddd">订单编号</th>
+                    <th class="w2" style="background-color:#dddddd">商品(数量)</th>
+                    <th class="w1" style="background-color:#dddddd">配送单号</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <volist name="order" id="vo" key="k">
+                        <tr class="bd-line">
+                            <td class="w1 bor">{$vo.order_sn}</td>
+                            <td class="w2 bor" style="padding-left: 10px;">
+                                <volist name="$vo['orderGoods']" id="vo2">
+                                    <div class="product">{$vo2.goods_name}&nbsp;&nbsp;
+                                        <span style="">({$vo2.goods_num})</span>
+                                        <input type="hidden" name="order[{$k-1}][goods][{$i-1}]" value="{$vo2.rec_id}">
+                                    </div>
+                                </volist>
+                            </td>
+                            <td class="w1">
+                                <input id="num_{$k}" maxlength="18" name="order[{$k-1}][invoice_no]"
+                                       style="width:90%;height:100%" type="text" value="{$vo.invoice_no}">
+                            </td>
+                        </tr>
+
+                        <input type="hidden" name="order[{$k-1}][shipping]" value="{$vo.shipping_status}">
+                        <input type="hidden" name="order[{$k-1}][order_id]" value="{$vo.order_id}">
+                    </volist>
+                </tbody>
+            </table>
+        </form>
+        <div class="tit" style="text-align:right;margin:20px 0 100px;">
+            <a href="javascript:void(0)" class="ncbtn ncbtn-grapefruit mt5 ncap-btn-big ncap-btn-green" onclick="dosubmit()">确认发货</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var count='{$num}';
+    function express(){
+        var num_start=$('#express_num').val();
+        if(!num_start){
+            layer.msg('起始单号不能为空', {icon: 2, time: 1000});
+            return false;
+        }
+        if(!IsNum(num_start)){
+            layer.msg('请填入正确的起始单号', {icon: 2, time: 1000});
+            return false;
+        }
+
+        var tmp=0;
+        for (var i = 1; i <= count; i++) {
+            tmp=(parseInt(num_start) + i) - 1;
+            $('#num_'+i).val(tmp);
+        };
+    }
+    function IsNum(num){
+        var reNum=/^\d*$/;
+        return(reNum.test(num));
+    }
+    function ShippingName(){
+        var checkText=$("#shipping_code").find("option:selected").text();
+        $('#shipping_name').val(checkText);
+    }
+    function dosubmit(){
+        var shipping_code=$('#shipping_code').val();
+        if(!shipping_code){
+            layer.msg('请选择配送方式', {icon: 2, time: 1000});
+            return false;
+        }
+
+        for (var i = 1; i <= count; i++) {
+            if(!$('#num_'+i).val()){
+                layer.msg('快递单号不能为空', {icon: 2, time: 1000});
+                return false;
+            }
+        };
+
+        $('#send_form').submit();
+    }
+</script>
+</body>

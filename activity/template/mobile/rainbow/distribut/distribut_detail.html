@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-sacle=1,user-scalable=no">
+    <title>团队佣金</title>
+    <link rel="stylesheet" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" href="__STATIC__/css/teamCommission.css">
+    <include file="public/distrbut_header" />
+</head>
+<body>
+<!--顶部-->
+<header>
+    <div class="wrap">
+        <a href="{:U('Distribut/index')}" class="back"></a>
+        <a href="{:U('distribut/withdrawals_log')}" class="details">提现明细</a>
+        <h1>佣金提现</h1>
+    </div>
+</header>
+<!--顶部结束-->
+<!--累计佣金模块开始-->
+<section class="accumulative">
+    <em>{$user.distribut_money|default="0.00"}</em>
+    <span>累计佣金（元）</span>
+</section>
+<!--累计佣金模块结束-->
+<!--列表模块开始-->
+<section class="commission_list">
+    <ul class="withdrawable wrap">
+        <li>
+            <span class="commission_list_title">可提现佣金</span>
+            <span class="commission_list_data red">{$user.withdraw}元</span>
+        </li>
+    </ul>
+    <ul class="using_commission wrap">
+        <li>
+            <span class="commission_list_title">已申请佣金</span>
+            <span class="commission_list_data">{$user.apply}元</span>
+        </li>
+        <li>
+            <span class="commission_list_title">待打款佣金</span>
+            <span class="commission_list_data">{$user.wait}元</span>
+        </li>
+        <li>
+            <span class="commission_list_title">无效佣金</span>
+            <span class="commission_list_data">{$user.invalid}元</span>
+        </li>
+        <li>
+            <span class="commission_list_title">成功提现佣金</span>
+            <span class="commission_list_data">{$user.distribut_withdrawals_money|default="0.00"}元</span>
+        </li>
+    </ul>
+    <ul class="other_commission wrap">
+        <li>
+            <span class="commission_list_title">待收货佣金</span>
+            <span class="commission_list_data">{$user.pending_receipt}元</span>
+        </li>
+        <li>
+            <span class="commission_list_title">未结算佣金</span>
+            <span class="commission_list_data">{$user.unsettlement}元</span>
+        </li>
+    </ul>
+</section>
+<!--列表模块结束-->
+<!--申请提现功能模块开始-->
+<section class="apply_cash">
+    <div class="wrap">
+        <p>1.买家确认收货（<span>{$distribut.date}天</span>）后，佣金才可提现。结算期内，买家如退
+            货，佣金将自动扣除；</p>
+        <p>2.可用佣金满 <span>{$distribut.distribut_withdrawals_money}</span>元 才可申请提现。</p>
+        <a href="{:U('distribut/withdrawals')}">申请提现</a>
+    </div>
+</section>
+<!--申请提现功能模块结束-->
+
+</body>
+</html>
