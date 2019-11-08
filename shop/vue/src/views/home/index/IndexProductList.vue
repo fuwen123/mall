@@ -10,7 +10,7 @@
 				:item="item"
 				:index="index"
 				v-for="(item, index) in items"
-				v-bind:key="index"
+				:key="'list_body_'+index"
 			></index-product-body>
 		</div>
 	</div>

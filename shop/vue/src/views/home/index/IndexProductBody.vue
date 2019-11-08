@@ -20,7 +20,7 @@ export default {
     return {
       itemWidth: 0,
       itemHeight: 0,
-      showRightBorder: this.index % 2 == 0
+      showRightBorder: this.index % 2 === 0
     }
   },
   props: ['item', 'index'],
