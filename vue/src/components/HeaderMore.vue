@@ -70,7 +70,7 @@ export default {
       shareVisible: false,
       weixinShareImage: false,
       copyVisible: false,
-      copyLink: process.env.VUE_APP_H5_HOST + this.$route.fullPath
+      copyLink: window.location.host + this.$route.fullPath
     }
   },
   components: {
