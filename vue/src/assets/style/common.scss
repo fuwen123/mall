@@ -1,15 +1,15 @@
 /*多分辨率设定rem设定*/
-html{font-size: 20px}
-@media only screen and (max-width: 310px) and (min-width: 300px) {html { font-size: 20px !important; }}
-@media only screen and (max-width: 320px) and (min-width: 310px) {html { font-size: 20px !important; }}
-/*Note3*/
-@media only screen and (min-width: 360px) {html { font-size: 20px !important; }}
-/*iPhone6*/
-@media only screen and (min-width: 376px) {html { font-size: 21px !important; }}
-/*iPhone6 plus*/
-@media only screen and (min-width: 414px) {html { font-size: 22px !important; }}
-/*big Resolution*/
-@media only screen and (min-width: 641px) {html { font-size: 23px !important; }}
+html{font-size: 25px}
+// @media only screen and (max-width: 310px) and (min-width: 300px) {html { font-size: 20px !important; }}
+// @media only screen and (max-width: 320px) and (min-width: 310px) {html { font-size: 20px !important; }}
+// /*Note3*/
+// @media only screen and (min-width: 360px) {html { font-size: 20px !important; }}
+// /*iPhone6*/
+// @media only screen and (min-width: 376px) {html { font-size: 21px !important; }}
+// /*iPhone6 plus*/
+// @media only screen and (min-width: 414px) {html { font-size: 22px !important; }}
+// /*big Resolution*/
+// @media only screen and (min-width: 641px) {html { font-size: 23px !important; }}
 
 html,
 body,

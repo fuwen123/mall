@@ -241,7 +241,7 @@ export default {
     }
     .price {
         font-size: 0.8rem;
-        color: $primaryColor;
+        color: $mainColor;
     }
     .item-wrapper{
         height: 3.1rem;

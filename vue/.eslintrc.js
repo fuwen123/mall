@@ -23,6 +23,7 @@ module.exports = {
     'generator-star-spacing': 'off',
     // allow debugger during development
     'no-debugger': process.env.VUE_APP_NODE_ENV === 'production' ? 'error' : 'off',
-    'no-tabs': 'off'
+    'no-tabs': 'off',
+    'space-before-function-paren': 'off'
   }
 }

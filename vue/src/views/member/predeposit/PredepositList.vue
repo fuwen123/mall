@@ -118,7 +118,7 @@ export default {
 	margin-top:0.7rem;
 	}
 	.income {
-	color: $primaryColor;
+	color: $mainColor;
 	}
 	.expend {
 	color: #333;

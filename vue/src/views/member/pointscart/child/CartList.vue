@@ -351,8 +351,8 @@ export default {
 			opacity: 0;
 			background-color: #fff;
 			&:checked + label {
-				border-color:$primaryColor;
-				background-color:$primaryColor;
+				border-color:$mainColor;
+				background-color:$mainColor;
 				.iconfont{display: block;color:#fff}
 			}
 			&:focus {
@@ -407,7 +407,7 @@ export default {
 						line-height:1rem;
 						text-align: center;
 						font-size:0.7rem;
-						color: $primaryColor;
+						color: $mainColor;
 						width: 100%;
 						bottom: 0;
 						left: 0;
@@ -466,7 +466,7 @@ export default {
 						align-items: flex-end;
 						p {
 							font-size:0.8rem;
-							color: $primaryColor;
+							color: $mainColor;
 							padding: 0;
 							margin: 0;
 							display: inline-block;
@@ -529,11 +529,11 @@ export default {
 				background: #f8f8f8;
 				width: 100%;
 				span {
-					border: 1px solid $primaryColor;
+					border: 1px solid $mainColor;
 					padding: 1px 0.2rem;
 					border-radius:0.1rem;
 					font-size:0.5rem;
-					color: $primaryColor;
+					color: $mainColor;
 					margin: 0 0.5rem;
 					text-align: center;
 				}

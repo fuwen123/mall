@@ -133,8 +133,8 @@ export default {
                 line-height: 2.2rem;
                 border-bottom: 0.1rem solid transparent;
                 &.active {
-                    color: $primaryColor;
-                    border-bottom-color: $primaryColor;
+                    color: $mainColor;
+                    border-bottom-color: $mainColor;
                 }
             }
         }
@@ -145,7 +145,7 @@ export default {
     .evaluate-info .p-img img{width:4rem;height:4rem;}
     .evaluate-info .p-info{flex:1;margin-left:1rem;}
     .evaluate-info .p-info .name{font-size:0.7rem;}
-    .evaluate-info .p-info .explain{font-size:0.7rem;color:$primaryColor;margin-top:.5rem}
+    .evaluate-info .p-info .explain{font-size:0.7rem;color:$mainColor;margin-top:.5rem}
     .evaluate-btn{padding:.5rem;border-top:1px solid #e4e4e4;display: flex}
     .evaluate-btn .btn-wrapper{width:3rem;}
     .evaluate-btn .btn{float: right}

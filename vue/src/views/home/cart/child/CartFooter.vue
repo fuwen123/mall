@@ -137,8 +137,8 @@ export default {
 			background-color: #fff;
 			opacity: 0;
 			&:checked + label {
-				border-color:$primaryColor;
-				background-color:$primaryColor;
+				border-color:$mainColor;
+				background-color:$mainColor;
 				.iconfont{display: block;color:#fff}
 			}
 			&:focus {
@@ -151,7 +151,7 @@ export default {
 			font-size: 0.7rem;
 			color: rgba(41, 43, 45, 1);
 			&.total-price span {
-				color: $primaryColor;
+				color: $mainColor;
 			}
 		}
 	}
@@ -167,7 +167,7 @@ export default {
 		font-weight: normal;
 	}
 	.checkout {
-		background: $primaryColor;
+		background: $mainColor;
 	}
 	.disable {
 		background: #c3c3c3;

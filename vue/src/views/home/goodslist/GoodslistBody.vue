@@ -367,7 +367,7 @@ export default {
             li.sortactive {
                 border-bottom-color:#e93b3d;
                 a {
-                    color:$primaryColor;
+                    color:$mainColor;
                 }
                 .iconfont{color:#e93b3d;}
                 .iconfont.active{transform: rotate(180deg);}
@@ -407,7 +407,7 @@ export default {
                     height: .7rem;
                 }
                 &.active {
-                    color: $primaryColor;
+                    color: $mainColor;
                 }
             }
         }
@@ -467,7 +467,7 @@ export default {
                     line-height: .9rem;
                     text-align: center;
                     font-size:.63rem;
-                    color:$primaryColor;
+                    color:$mainColor;
                     width: 5rem;
                     bottom: 0;
                     left: 0;

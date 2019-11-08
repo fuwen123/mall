@@ -1,46 +1,66 @@
 <template>
-    <div class="container">
-        <div class="common-header-wrap">
-            <mt-header class="common-header" title="登录">
-                <mt-button icon="back" slot="left" @click="$router.go(-1)"></mt-button>
-                <mt-button slot="right" @click="onSignup">注册</mt-button>
-            </mt-header>
-        </div>
-
-        <div class="top-wrapper">
-            <mt-field class="input-wrapper" v-model="username" placeholder="用户名/邮箱/手机号" type="text">
-            </mt-field>
-            <mt-field class="input-wrapper" type="password" v-model="password" placeholder="请输入密码">
-            </mt-field>
-        </div>
-        <mt-button type="primary" class="ds-button-large mt-10 mb-10" v-on:click="signin">登录</mt-button>
-        <div class="retrieve-wrapper">
-            <div class="retrieve-item" @click="onRetrieve">
-                <label id="retrieve-title">忘记密码？</label>
-            </div>
-        </div>
-        <div class="bottom-wrapper" v-if="isShowWechat || isShowSina || isShowQQ">
-            <div class="auth-title-wrapper">
-                <div class="auth-line"></div>
-                <label class="auth-title">第三方登录</label>
-                <div class="auth-line"></div>
-            </div>
-            <div class="auth-bottom-wrapper">
-                <div class="auth-item" v-if="isShowWechat" @click="onWechat">
-                    <i class="auth-item-icon iconfont wechat">&#xe647;</i>
-                    <label class="auth-title auth-item-title">微信</label>
-                </div>
-                <div class="auth-item" v-if="isShowSina" @click="onSina">
-                    <i class="auth-item-icon iconfont sina">&#xe646;</i>
-                    <label class="auth-title auth-item-title">微博</label>
-                </div>
-                <div class="auth-item" v-if="isShowQQ" @click="onTencent">
-                    <i class="auth-item-icon iconfont tencent">&#xe882;</i>
-                    <label class="auth-title auth-item-title">QQ</label>
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="common-header-wrap">
+      <mt-header class="common-header"
+                 title="登录">
+        <mt-button icon="back"
+                   slot="left"
+                   @click="$router.go(-1)"></mt-button>
+        <mt-button slot="right"
+                   @click="onSignup">注册</mt-button>
+      </mt-header>
     </div>
+
+    <div class="top-wrapper">
+      <mt-field class="input-wrapper"
+                v-model="username"
+                placeholder="用户名/邮箱/手机号"
+                type="text">
+      </mt-field>
+      <mt-field class="input-wrapper"
+                type="password"
+                v-model="password"
+                placeholder="请输入密码">
+      </mt-field>
+    </div>
+    <mt-button type="primary"
+               class="ds-button-large mt-10 mb-10"
+               v-on:click="signin">登录</mt-button>
+    <div class="retrieve-wrapper">
+      <div class="retrieve-item"
+           @click="onRetrieve">
+        <label id="retrieve-title">忘记密码？</label>
+      </div>
+    </div>
+    <div class="bottom-wrapper"
+         v-if="isShowWechat || isShowSina || isShowQQ">
+      <div class="auth-title-wrapper">
+        <div class="auth-line"></div>
+        <label class="auth-title">第三方登录</label>
+        <div class="auth-line"></div>
+      </div>
+      <div class="auth-bottom-wrapper">
+        <div class="auth-item"
+             v-if="isShowWechat"
+             @click="onWechat">
+          <i class="auth-item-icon iconfont wechat">&#xe647;</i>
+          <label class="auth-title auth-item-title">微信</label>
+        </div>
+        <div class="auth-item"
+             v-if="isShowSina"
+             @click="onSina">
+          <i class="auth-item-icon iconfont sina">&#xe646;</i>
+          <label class="auth-title auth-item-title">微博</label>
+        </div>
+        <div class="auth-item"
+             v-if="isShowQQ"
+             @click="onTencent">
+          <i class="auth-item-icon iconfont tencent">&#xe882;</i>
+          <label class="auth-title auth-item-title">QQ</label>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -68,19 +88,19 @@ export default {
       config: state => state.config.config,
     }),
     isShowWechat: function () {
-      if (isWechat() && this.config && this.config.weixin_isuse==1) {
+      if (isWechat() && this.config && this.config.weixin_isuse == 1) {
         return true
       }
       return false
     },
     isShowSina: function () {
-      if (!isWechat() && this.config && this.config.sina_isuse==1) {
+      if (!isWechat() && this.config && this.config.sina_isuse == 1) {
         return true
       }
       return false
     },
     isShowQQ: function () {
-      if (!isWechat() && this.config && this.config.qq_isuse==1) {
+      if (!isWechat() && this.config && this.config.qq_isuse == 1) {
         return true
       }
       return false
@@ -123,12 +143,12 @@ export default {
     ...mapActions({
       fetchConfig: 'fetchConfig'
     }),
-      onTencent(){
-          window.location.href=env.API_HOST+'/api/oa_qq'
-      },
-      onSina(){
-          window.location.href=env.API_HOST+'/api/oa_sina'
-      },
+    onTencent () {
+      window.location.href = process.env.VUE_APP_API_HOST + '/api/oa_qq'
+    },
+    onSina () {
+      window.location.href = process.env.VUE_APP_API_HOST + '/api/oa_sina'
+    },
     signin () {
       let username = this.username
       let password = this.password
@@ -205,123 +225,122 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-    .container {
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  background-color: #f0f2f5;
+  .top-wrapper {
+    .input-wrapper {
+      display: flex;
+      align-content: center;
+      align-items: center;
+      padding-left: 0.5rem;
+      background-color: #fff;
+      height: 2.2rem;
+      img {
+        width: 1.2rem;
+        height: 1.2rem;
+        margin: 0;
+        padding: 0;
+      }
+      input {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: stretch;
-        background-color: #F0F2F5;
-        .top-wrapper {
-            .input-wrapper {
-                display: flex;
-                align-content: center;
-                align-items: center;
-                padding-left: 0.5rem;
-                background-color: #fff;
-                height: 2.2rem;
-                img {
-                    width: 1.2rem;
-                    height: 1.2rem;
-                    margin: 0;
-                    padding: 0;
-                }
-                input {
-                    flex: 1;
-                    font-size:.8rem;
-                }
-                .bottom-input {
-                    border-bottom-width: 0;
-                }
-            }
-        }
+        font-size: 0.8rem;
+      }
+      .bottom-input {
+        border-bottom-width: 0;
+      }
     }
-    .retrieve-wrapper {
-        height: 2rem;
-        margin-top: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-    }
-    .retrieve-item {
-        width: 4rem;
-        height: 2rem;
-        margin-right: 0.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    #retrieve-title {
-        color: $primaryColor;
-        font-size: 0.75rem;
-        text-align: center;
-    }
-    .bottom-wrapper {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: stretch;
-    }
-    .auth-wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        height: 13rem;
-    }
-    .auth-title-wrapper {
-        height: 1rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-    .auth-title {
-        color: #8f8e94;
-        font-size: 0.7rem;
-    }
-    .auth-line {
-        display: flex;
-        flex: 1;
-        height: 1px;
-        background-color: #d8d8d8;
-        margin-left: 0.8rem;
-        margin-right: 0.8rem;
-    }
-    .auth-item {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-    }
-    .auth-item-icon {
-        width: 3rem;
-        height: 3rem;
-        text-align:center;
-        font-size:3rem;
-
-    }
-    .wechat{
-        color: #2db304;
-    }
-    .sina{
-        color: #f01414;
-    }
-    .tencent{
-        color: #26a2ff;
-    }
-    .auth-item-title {
-        margin-top: 0.6rem;
-    }
-    .auth-bottom-wrapper {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        margin-left: 0.75rem;
-        margin-right: 0.75rem;
-        margin-bottom: 1rem;
-    }
+  }
+}
+.retrieve-wrapper {
+  height: 2rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.retrieve-item {
+  width: 4rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#retrieve-title {
+  color: $mainColor;
+  font-size: 0.75rem;
+  text-align: center;
+}
+.bottom-wrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+}
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 13rem;
+}
+.auth-title-wrapper {
+  height: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.auth-title {
+  color: #8f8e94;
+  font-size: 0.7rem;
+}
+.auth-line {
+  display: flex;
+  flex: 1;
+  height: 1px;
+  background-color: #d8d8d8;
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+}
+.auth-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.auth-item-icon {
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  font-size: 3rem;
+}
+.wechat {
+  color: #2db304;
+}
+.sina {
+  color: #f01414;
+}
+.tencent {
+  color: #26a2ff;
+}
+.auth-item-title {
+  margin-top: 0.6rem;
+}
+.auth-bottom-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  margin-bottom: 1rem;
+}
 </style>

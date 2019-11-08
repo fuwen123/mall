@@ -87,8 +87,8 @@ export default {
 			color: #55595f;
 			background-color: #fff;
 			&.navbar_active {
-				color: $primaryColor;
-				border-bottom: 0.1rem solid $primaryColor;
+				color: $mainColor;
+				border-bottom: 0.1rem solid $mainColor;
 			}
 			&:last-child {
 				margin-right: 0;

@@ -88,6 +88,6 @@ export default {
 .product-div .p-info{margin-left:6rem;height:5.2rem;padding: 0;}
 .product-div .p-info h5{font-size:.8rem;line-height:1rem;height:1rem;overflow:hidden;text-overflow:ellipsis;margin-bottom: .2rem;white-space: nowrap;}
 .product-div .p-info p{ color: #777;font-size:.6rem;line-height:1rem;}
-.product-div .p-info p .strong{color:$primaryColor;font-size:.8rem;margin-right:.2rem}
+.product-div .p-info p .strong{color:$mainColor;font-size:.8rem;margin-right:.2rem}
 .product-div .p-info .btn{border-radius: .2rem;color: #fff;font-size:.7rem;padding:.2rem .5rem;line-heigh:1rem;background: #e93b3d;border: 1px solid #e93b3d;}
 </style>

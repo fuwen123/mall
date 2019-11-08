@@ -136,7 +136,7 @@ export default {
                 flex: 1;
                 margin-left: 1rem;
                 margin-right: 0.6rem;
-                color: $primaryColor;
+                color: $mainColor;
                 font-size: 0.7rem;
                 text-align: right;
             }
@@ -251,7 +251,7 @@ export default {
         padding-top: 1.7rem;
     }
     .price {
-        color: $primaryColor;
+        color: $mainColor;
         font-size: 0.85rem;
         margin-left:0;
     }
@@ -374,7 +374,7 @@ export default {
             line-height: 2.25rem;
             span {
                 font-size: 0.8rem;
-                color: $primaryColor;
+                color: $mainColor;
             }
         }
     }
@@ -398,7 +398,7 @@ export default {
             border: 1px solid #ccc;
         }
         .buttonbottom {
-            color: $primaryColor;
+            color: $mainColor;
             border: 1px solid #e93b3d;
         }
         .mint-popup {

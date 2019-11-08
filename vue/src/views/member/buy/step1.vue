@@ -285,7 +285,7 @@ export default {
     .amount {
         flex: 1;
         font-size: 0.8rem;
-        color: $primaryColor;
+        color: $mainColor;
         text-align: right;
         padding-right: 0.75rem;
     }

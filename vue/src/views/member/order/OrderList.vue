@@ -230,8 +230,8 @@ export default {
 				line-height: 2.2rem;
 				border-bottom: 0.1rem solid transparent;
 				&.active {
-					color: $primaryColor;
-					border-bottom-color: $primaryColor;
+					color: $mainColor;
+					border-bottom-color: $mainColor;
 				}
 			}
 		}
@@ -316,7 +316,7 @@ export default {
 				.buttonright {
 					background: rgba(255, 255, 255, 1);
 					border-radius: 0.1rem;
-					color: $primaryColor;
+					color: $mainColor;
 					border: 1px solid #e93b3d;
 				}
 			}

@@ -96,7 +96,7 @@ export default {
     .consult-info{padding:.5rem;display: flex}
     .consult-info .p-info{flex:1;margin-left:1rem;}
     .consult-info .p-info .name{font-size:0.6rem;}
-    .consult-info .p-info .explain{font-size:0.7rem;color:$primaryColor;margin-bottom:.5rem}
+    .consult-info .p-info .explain{font-size:0.7rem;color:$mainColor;margin-bottom:.5rem}
     .consult-info .p-info .explain .right{float:right;color:#666;font-size:0.6rem;}
     .consult-info .p-info .replay{border-top:1px dashed #e1e1e1;font-size:.6rem;margin-top:.5rem;padding-top:.5rem;color:green}
 </style>

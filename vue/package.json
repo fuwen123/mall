@@ -20,6 +20,7 @@
     "mint-ui": "^2.2.13",
     "moment": "^2.24.0",
     "vant": "^2.2.12",
+    "vconsole": "^3.3.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vue-scratchcard": "^1.2.0-a",

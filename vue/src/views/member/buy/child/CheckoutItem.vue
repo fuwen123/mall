@@ -53,7 +53,7 @@ export default {
     .tips {
         width: auto;
         font-size: 0.5rem;
-        color: $primaryColor;
+        color: $mainColor;
         margin-left: 0.5rem;
         border: 1px solid #e93b3d;
         border-radius: 0.1rem;

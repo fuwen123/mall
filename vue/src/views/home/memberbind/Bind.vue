@@ -119,7 +119,7 @@ export default {
 		color: #404245;
 	}
 	.active {
-		color: $primaryColor;
+		color: $mainColor;
 	}
 	.normal {
 		color: #404245;

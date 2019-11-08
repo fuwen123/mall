@@ -93,14 +93,14 @@ export default {
 		line-height: 2.5rem;
 		span.title {
 			font-size: 0.7rem;
-			color: $primaryColor;
+			color: $mainColor;
 		}
 		div {
 			float: right;
 			font-size: 0.6rem;
 			color: #abaeb3;
 			span {
-				color: $primaryColor;
+				color: $mainColor;
 				padding: 0.1rem 0.15rem;
 				border-radius: 0.1rem;
 				border: 1px solid #adafb3;

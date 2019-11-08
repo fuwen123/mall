@@ -188,8 +188,8 @@ export default {
         line-height: 2.2rem;
         border-bottom: 0.1rem solid transparent;
     &.active {
-         color: $primaryColor;
-         border-bottom-color: $primaryColor;
+         color: $mainColor;
+         border-bottom-color: $mainColor;
      }
     }
     }

@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'es6-promise/auto'
-// import Mint from 'mint-ui'
 
-import { Popup, Header, Button, Picker, Spinner, Tabbar, TabItem, Swipe, SwipeItem, Radio, Field, Cell } from 'mint-ui'
 import moment from 'moment'
 
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
+// import VConsole from 'vconsole'
+
 import router from './router'
 import store from './store'
 import utils from './util/util'
 
-import 'mint-ui/lib/style.css'
 import './assets/style/iconfont/iconfont.css'
 import './assets/style/common.scss'
+
+import { Popup, Header, Button, Picker, Spinner, Tabbar, TabItem, Swipe, SwipeItem, Radio, Field, Cell } from 'mint-ui'
+import 'mint-ui/lib/style.css'
 
 // // mini-ui 组件
 Vue.component(Popup.name, Popup)
@@ -30,16 +32,18 @@ Vue.component(SwipeItem.name, SwipeItem)
 Vue.component(Radio.name, Radio)
 Vue.component(Field.name, Field)
 Vue.component(Cell.name, Cell)
-// Vue.use(Mint)
 Vue.use(Vant)
 
 Vue.prototype.utils = utils
-
-moment.locale('zh-cn')
 Vue.prototype.$moment = moment
 Vue.config.productionTip = false
+// import vconsole
+// new VConsole()
 
-console.log(process.env)
+router.afterEach((to, from) => {
+  document.title = to.meta.title || '蜂鸟智慧商圈' // title 更改
+  // document.body.className = to.meta.body || '' // 动态改变 body class
+})
 
 new Vue({
   store,

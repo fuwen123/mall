@@ -93,7 +93,7 @@ export default {
 			background: #efeff4;
 			opacity: 1;
 			&.is-active {
-				background: $primaryColor;
+				background: $mainColor;
 			}
 		}
 	}

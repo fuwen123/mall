@@ -140,7 +140,7 @@ export default {
 			margin-left: 0.5rem;
 			margin-right: 0.5rem;
 			border: 1px solid #e93b3d;
-			color: $primaryColor;
+			color: $mainColor;
 			font-size: 0.5rem;
 			text-align: center;
 			border-radius: 0.1rem;

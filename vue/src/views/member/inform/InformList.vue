@@ -97,7 +97,7 @@ export default {
     .inform-info .p-img img{width:4rem;height:4rem;}
     .inform-info .p-info{flex:1;margin-left:1rem;}
     .inform-info .p-info .name{font-size:0.8rem;}
-    .inform-info .p-info .explain{font-size:0.8rem;color:$primaryColor;margin-bottom:.5rem}
+    .inform-info .p-info .explain{font-size:0.8rem;color:$mainColor;margin-bottom:.5rem}
     .inform-btn{padding:.5rem;border-top:1px solid #e4e4e4;display: flex}
     .inform-btn .btn-wrapper{margin-left:.5rem}
     .inform-btn .btn{float: right}

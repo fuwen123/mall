@@ -182,7 +182,7 @@ export default {
 		font-size:0.8rem;
 		color: rgba(255, 255, 255, 1);
 		height:2.2rem;
-		background: $primaryColor;
+		background: $mainColor;
 		border-radius:0.15rem;
 		line-height:2.2rem;
 		display: inline-block;

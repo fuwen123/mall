@@ -124,7 +124,7 @@ export default {
             border-left: 0.1rem solid #e93b3d;
             a {
               font-weight:600;
-              color: $primaryColor;
+              color: $mainColor;
             }
           }
         }

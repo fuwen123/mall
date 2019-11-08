@@ -163,7 +163,7 @@ export default {
 .select-goods li .p-img img{width:3rem;height: 3rem;}
 .select-goods li .p-info{margin-left:1rem;}
 .select-goods li .p-info p{line-height:1rem;}
-.select-goods li .p-info .price{font-size:0.6rem;color:$primaryColor;height:2rem;overflow: hidden}
+.select-goods li .p-info .price{font-size:0.6rem;color:$mainColor;height:2rem;overflow: hidden}
 .select-goods li .p-info .name{font-size:0.7rem;}
 
 </style>

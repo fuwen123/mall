@@ -96,11 +96,11 @@ export default {
 				background: rgba(255, 255, 255, 1);
 				border-radius:0.1rem;
 				font-size:0.5rem;
-				color: $primaryColor;
+				color: $mainColor;
 				line-height:0.5rem;
 				padding:0.15rem 0.3rem;
 				display: inline-block;
-				border: 1px solid $primaryColor;
+				border: 1px solid $mainColor;
 				margin-right:0.35rem;
 			}
 			span.title {
@@ -115,7 +115,7 @@ export default {
 					padding: 0;
 					margin: 0;
 					font-size:0.6rem;
-					color: $primaryColor;
+					color: $mainColor;
 					line-height:0.8rem;
 					display: -webkit-box;
 					-webkit-box-orient: vertical;

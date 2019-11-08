@@ -193,7 +193,7 @@
 					.buttonright {
 						background: rgba(255, 255, 255, 1);
 						border-radius:0.1rem;
-						color: $primaryColor;
+						color: $mainColor;
 						border: 1px solid #e93b3d;
 					}
 				}

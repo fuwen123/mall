@@ -244,7 +244,7 @@ export default {
 						font-size: 0.9rem;
 						line-height: 1rem;
 						padding-bottom: 0.6rem;
-						color: $primaryColor;
+						color: $mainColor;
 					}
 					&:nth-child(2) {
 						img {
@@ -327,9 +327,9 @@ export default {
 						cursor: pointer;
 						margin-top: 0.75rem;
 						&.active-properties {
-							background: $primaryColor;
+							background: $mainColor;
 							color: rgba(255, 255, 255, 1);
-							border: 1px solid $primaryColor;
+							border: 1px solid $mainColor;
 						}
 						&.disabled-properties {
 							color: #b1b5bb;
@@ -412,7 +412,7 @@ export default {
 				height: 2.2rem;
 			}
 			.active-cart {
-				background: $primaryColor;
+				background: $mainColor;
 			}
 			.active-buy {
 				background: #000;

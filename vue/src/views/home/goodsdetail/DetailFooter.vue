@@ -312,7 +312,7 @@ export default {
 			background: #c3c3c3;
 		}
 		.active-cart {
-			background: $primaryColor;
+			background: $mainColor;
 		}
 		.disabled-buy {
 			background: #999999;

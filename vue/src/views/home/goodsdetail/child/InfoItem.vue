@@ -258,7 +258,7 @@ export default {
 			font-weight: normal;
 			&.current-price {
 				font-size: 0.7rem;
-				color: $primaryColor;
+				color: $mainColor;
 				line-height: 1rem;
 			}
 			&.old-price {
@@ -277,7 +277,7 @@ export default {
 		p {
 			padding: 0;
 			margin: 0;
-			color: $primaryColor;
+			color: $mainColor;
 			font-size: 0.5rem;
 		}
 	}
@@ -299,7 +299,7 @@ export default {
 			width: 30.4rem;
 		}
 	}
-	.info-promotions i{font-size:.7rem;border:1px solid $primaryColor;color:$primaryColor;padding:0.1rem 0.3rem;border-radius:0.1rem;}
+	.info-promotions i{font-size:.7rem;border:1px solid $mainColor;color:$mainColor;padding:0.1rem 0.3rem;border-radius:0.1rem;}
 	.info-promotions .left{flex:1}
 	.info-promotions .right{width:4rem;text-align: right}
 }

@@ -112,7 +112,7 @@ export default {
     .goods-info .p-img img{width:4rem;height:4rem;}
     .goods-info .p-info{flex:1;margin-left:1rem;}
     .goods-info .p-info .name{font-size:0.8rem;}
-    .goods-info .p-info .explain{font-size:0.8rem;color:$primaryColor;margin-bottom:.5rem}
+    .goods-info .p-info .explain{font-size:0.8rem;color:$mainColor;margin-bottom:.5rem}
     .goods-btn{padding:.5rem;border-top:1px solid #e4e4e4;display: flex}
     .goods-btn .btn-wrapper{margin-left:.5rem}
     .goods-btn .btn{float: right}

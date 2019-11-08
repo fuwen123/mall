@@ -69,7 +69,7 @@ export default {
 		margin-top:.4rem;
 		line-height:1rem;
 		.product-price {
-			color: $primaryColor;
+			color: $mainColor;
 			font-size:.7rem;
 		}
 		.product-buy {

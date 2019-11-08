@@ -213,7 +213,7 @@ export default {
 				color: #c3c3c3;
 			}
 			.right-text {
-				color: $primaryColor;
+				color: $mainColor;
 			}
 		}
 	}

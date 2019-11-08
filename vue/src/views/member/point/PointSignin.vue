@@ -113,17 +113,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .point-signin-header{margin-bottom:1rem;background:$primaryColor;padding:.5rem;text-align: center;
-    .btn-wrapper{height: 4rem;width:4rem;margin:1rem auto;border-radius:50%;background: $primaryColor;border:.3rem solid rgba(255,255,255,.5);overflow: hidden;
+  .point-signin-header{margin-bottom:1rem;background:$mainColor;padding:.5rem;text-align: center;
+    .btn-wrapper{height: 4rem;width:4rem;margin:1rem auto;border-radius:50%;background: $mainColor;border:.3rem solid rgba(255,255,255,.5);overflow: hidden;
       &.active{
         .btn{
-          >div{background:$primaryColor;color:rgba(255,255,255,.8);line-height:3.4rem;}
+          >div{background:$mainColor;color:rgba(255,255,255,.8);line-height:3.4rem;}
         }
       }
       .btn{background:#fff;width:100%;height:100%;padding:.3rem;box-sizing:border-box;
-        >div{border-radius:50%;width:100%;height:100%;margin:0 auto;border:1px solid $primaryColor;box-sizing:border-box;
-          .title{font-size:.8rem;color:$primaryColor;margin-top: .7rem;}
-          .content{font-size:.6rem;color:$primaryColor}
+        >div{border-radius:50%;width:100%;height:100%;margin:0 auto;border:1px solid $mainColor;box-sizing:border-box;
+          .title{font-size:.8rem;color:$mainColor;margin-top: .7rem;}
+          .content{font-size:.6rem;color:$mainColor}
         }
       }
     }
@@ -137,10 +137,10 @@ export default {
   .item{float:left;width:14.28%;height:1.5rem;text-align: center;font-size:.6rem;
     >span{height:1rem;width:1rem;line-height: 1rem;border-radius: 50%;display: block;margin:0 auto;}
     &.pre-active{
-      >span{border:1px solid $primaryColor}
+      >span{border:1px solid $mainColor}
     }
     &.active{
-      >span{background:$primaryColor;color:#fff}
+      >span{background:$mainColor;color:#fff}
     }
   }
   .calendar-content,.calendar-title{overflow: hidden;padding:0 .5rem;}

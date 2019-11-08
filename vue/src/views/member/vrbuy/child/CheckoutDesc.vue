@@ -34,7 +34,7 @@ export default {
         flex: 1;
         margin-left: 1rem;
         margin-right: 0.75rem;
-        color: $primaryColor;
+        color: $mainColor;
         font-size: 0.75rem;
         text-align: right;
     }

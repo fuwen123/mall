@@ -110,7 +110,7 @@ export default {
 				text-align: center;
 				&.active {
 					color: #ffffff;
-					background: $primaryColor;
+					background: $mainColor;
 					border: 0.5px solid transparent;
 				}
 			}

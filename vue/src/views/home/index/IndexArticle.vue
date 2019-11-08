@@ -56,7 +56,7 @@ export default {
         display:flex;
         background:#fff;
     }
-    .title{width:25%;text-align:center;font-size:0.7rem;font-weight:700;color:$primaryColor}
+    .title{width:25%;text-align:center;font-size:0.7rem;font-weight:700;color:$mainColor}
     .more{width:15%;font-size:0.6rem;text-align:center;}
     .scroll-content{
         width:60%;

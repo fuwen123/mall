@@ -308,7 +308,7 @@ export default {
             li.sortactive {
                 border-bottom-color:#e93b3d;
                 a {
-                    color:$primaryColor;
+                    color:$mainColor;
                 }
                 .iconfont{color:#e93b3d;}
                 .iconfont.active{transform: rotate(180deg);}

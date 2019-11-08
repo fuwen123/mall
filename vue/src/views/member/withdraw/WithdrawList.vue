@@ -246,7 +246,7 @@ export default {
   }
   .price {
     font-size:0.9rem;
-    color:$primaryColor;
+    color:$mainColor;
     margin-right:0.75rem;
     margin-top:0.5rem;
     text-align: right;

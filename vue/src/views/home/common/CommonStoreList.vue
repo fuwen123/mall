@@ -341,7 +341,7 @@ export default {
   li.sortactive {
     border-bottom-color:#e93b3d;
   a {
-    color:$primaryColor;
+    color:$mainColor;
   }
     .iconfont{color:#e93b3d;}
     .iconfont.active{transform: rotate(180deg);}
@@ -393,7 +393,7 @@ export default {
         .goods-image {margin-bottom:.2rem;
           img{width:3.5rem;height: 3.5rem;}
         }
-        .goods-price{color:$primaryColor;font-size:.7rem;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;width:100%}
+        .goods-price{color:$mainColor;font-size:.7rem;white-space: nowrap;overflow: hidden;text-overflow:ellipsis;width:100%}
       }
     }
     .list-wrapper{margin-bottom:.5rem;}
@@ -476,7 +476,7 @@ export default {
 .store-info-wrapper{display: flex;
   .store-info{flex:1}
   .btn{width:3rem;font-size:.7rem;color:#e1e1e1;text-align: center;border:1px solid #e1e1e1;border-radius:1rem;height: 1rem;line-height: 1rem;}
-  .btn.active{border-color:$primaryColor;background:$primaryColor;color:#fff}
+  .btn.active{border-color:$mainColor;background:$mainColor;color:#fff}
 }
   .product-header {
     display: flex;

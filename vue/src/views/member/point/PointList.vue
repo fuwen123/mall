@@ -139,7 +139,7 @@ export default {
     }
     .number {
       font-size: 1rem;
-      color:$primaryColor;
+      color:$mainColor;
     }
     .diture {
       font-size: 1rem;

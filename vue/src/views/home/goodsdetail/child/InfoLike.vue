@@ -55,7 +55,7 @@ export default {
 	background-color: #ffffff;
 	margin-top:0.4rem;
 	.explain{padding:.5rem;
-		h2{color:$primaryColor;font-size:.8rem;padding-bottom: .5rem;}
+		h2{color:$mainColor;font-size:.8rem;padding-bottom: .5rem;}
 		.desc{font-size:.7rem;color:gray;padding-right:.5rem;margin-right:.5rem;border-right:1px solid #e1e1e1}
 		.desc:last-child{padding-right:0;margin-right:0;border-right:0}
 	}

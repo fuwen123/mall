@@ -84,7 +84,7 @@ export default {
 			height: 0.9rem;
 			line-height: 0.9rem;
 			text-align: center;
-			background: $primaryColor;
+			background: $mainColor;
 			border-radius: 0.1rem;
 			font-size: 0.6rem;
 			color: rgba(255, 255, 255, 1);
@@ -101,7 +101,7 @@ export default {
 			font-weight: normal;
 			&.current-price {
 				font-size: 0.8rem;
-				color: $primaryColor;
+				color: $mainColor;
 				line-height: 1rem;
 			}
 			&.old-price {
@@ -120,7 +120,7 @@ export default {
 		p {
 			padding: 0;
 			margin: 0;
-			color: $primaryColor;
+			color: $mainColor;
 			font-size: 0.6rem;
 			&.ui-clip {
 				display: -webkit-box;

@@ -286,5 +286,5 @@ export default {
     height: 1.5rem;
 }
 .common-voucher{margin:0.5rem auto}
-    .promotion-icon{display: inline-block;line-height: .7rem;border: 1px solid $primaryColor;border-radius: .1rem;padding:.2rem;font-size: .6rem;color: $primaryColor}
+    .promotion-icon{display: inline-block;line-height: .7rem;border: 1px solid $mainColor;border-radius: .1rem;padding:.2rem;font-size: .6rem;color: $mainColor}
 </style>
