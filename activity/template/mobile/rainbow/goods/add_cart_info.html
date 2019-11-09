@@ -1,0 +1,115 @@
+<!--源于goodsinfo.html-->
+<style>
+    .plusshopcar-buy .buy_bt_disable{
+        background: #ebebeb;
+        color: #999;
+        cursor: not-allowed;
+        pointer-events:none;
+    }
+    .layermbox0 .layermchild{min-width: .375rem !important;}
+</style>
+<!--选择属性的弹窗-s-->
+<form name="buy_goods_form" method="post" id="buy_goods_form">
+    <input type="hidden" name="goods_id" value="{$goods.goods_id}"><!-- 商品id -->
+    <input type="hidden" name="spec_goods_price" value='{$goods.spec_goods_price|json_encode=true}'>
+    <input type="hidden" name="activity_is_on" value=""><!-- 活动是否进行中 -->
+    <input type="hidden" name="goods_prom_type" value="{$goods.prom_type}"/><!-- 活动类型 -->
+    <input type="hidden" name="shop_price" value="{$goods.shop_price}"/><!-- 活动价格 -->
+    <input type="hidden" name="store_count" value="{$goods.store_count}"/><!-- 活动库存 -->
+    <input type="hidden" name="market_price" value="￥{$goods.market_price}"/><!-- 商品原价 -->
+    <input type="hidden" name="start_time" value=""/><!-- 活动开始时间 -->
+    <input type="hidden" name="end_time" value=""/><!-- 活动结束时间 -->
+    <input type="hidden" name="activity_title" value=""/><!-- 活动标题 -->
+    <input type="hidden" name="item_id" value="{$Request.param.item_id}"/><!-- 商品规格id -->
+    <input type="hidden" name="prom_id" value="{$goods.prom_id}"/><!-- 活动ID -->
+    <input type="hidden" name="exchange_integral" value="{$goods.exchange_integral}"/><!-- 积分 -->
+    <input type="hidden" name="point_rate" value="{$tpshop_config['integral_point_rate']}"/><!-- 积分兑换比 -->
+    <input type="hidden" name="is_virtual" value="{$goods.is_virtual}"/><!-- 是否是虚拟商品 -->
+    <input type="hidden" name="virtual_limit" id="virtual_limit" value="{$goods.virtual_limit|default=0}"/>
+    <input type="hidden" name="deposit_price" value=""/><!-- 订金 -->
+    <input type="hidden" name="balance_price" value=""/><!-- 尾款 -->
+    <input type="hidden" name="ing_amount" value=""/><!-- 已预订了多少 -->
+    <div class="choose_shop_aready p">
+        <!--商品信息-s-->
+        <div class="shop-top-under p">
+            <div class="maleri30">
+                <div class="shopprice">
+                    <div class="img_or fl"><img id="zoomimg" src="{$goods.original_img}"></div>
+                    <div class="fon_or fl">
+                        <h2 class="similar-product-text">{$goods.goods_name}</h2>
+                        <input type="hidden" id="goods_name" name="goods_id" value="{$goods.goods_id}">
+                        <div class="price_or" id="goods_price"><span>￥</span><span>{$goods.shop_price}</span></div>
+                        <div class="dqkc_or"><span>剩余库存：</span><span id="spec_store_count">{$goods.store_count}</span></div>
+                        <if condition="$goods[is_virtual] !=2">
+                            <div class="dqkc_or buy_limit" style="display: none"><span>限购：</span><span id="buy_limit">{$goods.virtual_limit}</span></div>
+                        </if>
+                        <div class="price_or team-pies p" style="display: none"><span class="confinetime">该商品拼团中</span><a class="pb_buy team_button">点击前往</a></div>
+                    </div>
+                    <div class="price_or fr">
+                        <i class="xxgro"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--商品信息-e-->
+        <div class="shop-top-under p">
+            <div class="maleri30">
+                <div class="shulges p">
+                    <p>数量</p>
+                    <!--选择数量-->
+                    <div class="plus">
+                        <span class="mp_minous" onclick="altergoodsnum(-1);">-</span>
+                                <span class="mp_mp">
+                        <input type="tel" class="num buyNum" id="number" residuenum="{$goods.store_count}" name="goods_num" value="1" min="1" max="{$goods.store_count}" onblur="altergoodsnum(0)">
+                                </span>
+                        <span class="mp_plus" onclick="altergoodsnum(1);">+</span>
+                    </div>
+                </div>
+                <volist name="goods['spec']" id="spec">
+                    <div class="shulges p choicsel" >
+                        <p>{$spec['name']}</p>
+                        <!-------商品属性值-s------->
+                        <volist name="spec['spec_item']" id="spec_item">
+                            <div class="plus choic-sel">
+                                <a id="goods_spec_a_{$spec_item['id']}" title="{$spec_item['item']}" class="spec_item"
+                                <volist name="goods['spec_image']" id="spec_image">
+                                    <if condition="$spec_image['spec_image_id'] eq $spec_item['id']">
+                                        data-img-src="{$spec_image['src']}"
+                                    </if>
+                                </volist>
+                                >
+                                <input id="goods_spec_{$spec_item['id']}" style="display: none" type="radio" name="goods_spec[{$spec['name']}]" value="{$spec_item['id']}"/>{$spec_item['item']}
+                                </a>
+                            </div>
+                        </volist>
+                        <!-------商品属性值-e-------->
+                    </div>
+                </volist>
+            </div>
+        </div>
+        <div class="btns-fixed-wrap">
+            <div class="plusshopcar-buy p btns-fixed-w100">
+                <a id="join_cart" class="pb_buy buy_button" href="javascript:void(0);" >加入购物车</a>
+            </div>
+        </div>
+    </div>
+</form>
+<!--选择属性的弹窗-e-->
+
+<div class="mask-filter-div" style="display: none;"></div>
+<script type="text/javascript" src="__STATIC__/js/mobile-location.js"></script>
+<script>
+    var commentType = 1;// 默认评论类型
+    var spec_goods_price = $.parseJSON($('#buy_goods_form').find("input[name='spec_goods_price']").val());//规格库存价格
+    var ajax_return_stauts = 1;//规格库存价格
+    //页面加载后执行
+    $(document).ready(function () {
+        ajax_header_cart();
+        couponList();//领取优惠券
+        ajaxComment(commentType, 1);// ajax 加载评价列表
+        initSpec();
+        sel(); //在已选栏中显示默认选择属性，数量
+        //initGoodsPrice();
+        init_ok();
+    });
+</script>

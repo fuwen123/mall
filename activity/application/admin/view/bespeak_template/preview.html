@@ -1,0 +1,306 @@
+<html data-dpr="3" style="font-size: 22px;">
+<script type="text/javascript" src="/template/mobile/rainbow/static/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/template/mobile/rainbow/static/js/date.js"></script>
+<link rel="stylesheet" href="/template/mobile/rainbow/static/css/style.css">
+<!--<script src="/public/static/js/layer/layer.js"></script>-->
+
+<!--填写预约信息弹窗 s-->
+<div class="pop-prkage-wraps p pop-prkage-ziti" id="bespeak" style="position: fixed;width: 100%;height: 100%; z-index: 6;top: 0;left: 0;" >
+    <div class="z-Package-hrader">
+        <!--<i class="z-Package-icon Package-icon-close" id="bespeak_close"></i>-->
+        <!--</a>-->
+        <h5>填写预约信息</h5>
+        <input type="hidden" id='preview_data'>
+    </div>
+
+    <form  id="bespeak_form" enctype="multipart/form-data">
+        <div class="bookinfo_con" style="margin-top: 5rem;">
+            <div class="Package-footer-btn" style="margin-top: 1.344rem;">
+                <input type="button" onclick="bespeak_sub()" value="确定"/>
+                <label></label>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<!--填写预约信息弹窗 e-->
+</html>
+
+<script>
+    //设置自提时间
+    function initShopTime() {
+        var date_time_picker_mask = $('#date_time_picker_mask').val();
+        date_time_picker_mask += ':00';
+        date = date_time_picker_mask.replace(/-/g, '/');
+        var d = new Date(date);
+        var timestamp = d.getTime().toString().substring(0, 10);
+        cart2_form.find("input[name='take_time']").val(timestamp);
+        $('#bespeak_form_time').val(timestampToTime(timestamp));
+        var weekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        var day = weekDay[d.getDay()];
+        $('#date_time_day').html('【' + day + '】');
+    }
+</script>
+
+
+<script>
+    // 提交订单
+    function bespeak_sub() {
+        if($('#user_name').val()){
+            $("input[name='consignee']").val($('#user_name').val());
+        }
+        if($('#user_mobile').val()){
+            $("input[name='mobile']").val($('#user_mobile').val());
+        }
+        if(!$('#bespeak_form_time').val()){
+            layer.open({content: '请输入预约时间',time:2});
+            return false;
+        }
+        var status = 1;
+        console.log($('#bespeak_form').serializeArray());
+        $.each($('#bespeak_form').serializeArray(),function (i,o) {
+            var name = $("*[name='"+o.name+"']");
+            console.log(name.attr('type'));
+            // console.log(name.attr('type'));
+            // console.log(name.attr('data-title'));
+            var verify = name.attr('data-verify');
+            var title = name.attr('data-title');
+            var verify = verify.split('|');//分隔验证规则
+            var value = o.value;
+
+            //验证必填规则
+            if('required' == verify[0] &&　value == ''){
+                layer.msg({content: '请输入'+title,time:2});
+                status = 0;
+                return false;
+
+            }
+            if(name.attr('type')=='textarea' || name.attr('type')=='text'){
+                if(name.val().length >=255){
+                    layer.open({content: title+'不能超过255字符',time:2});
+                    status = 0;
+                    return false;
+                }
+            }
+            if(value){
+                //验证格式规则
+                switch (verify[1]){
+                    case 'mobile':
+                        if(!/^1[34578]\d{9}$/.test(value)){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'phone':
+                        if(!(/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'identity':
+                        if(!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'zip_code':
+                        if(!(/^[0-9][0-9]{5}$/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'email':
+                        if(!(/[a-z0-9A-Z_-]+@[a-z0-9A-Z_-]+(\.[a-z]{2,5}){1,2}/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'url':
+                        if(!(/[a-zA-z]+:\/\/[^\s]*/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                }
+                status = 1;
+            }
+
+        });
+        if(status){
+            $('#bespeak_close').click();
+        }
+    }
+
+
+
+</script>
+<script>
+
+    $(function () {
+        var data = JSON.parse($('#preview_data').val());
+        // console.log(data);
+        var html = '';
+        $.each(data['form'],function (i) {
+            console.log(data['form'][i].type);
+            switch (Number(data['form'][i].type)){
+                case 1:
+                    html +=  inputText(data['form'][i]);
+                    break;
+                case 2:
+                    html += inputTextarea(data['form'][i]);
+                    break;
+                case 3:
+                    html += inputRadio(data['form'][i]);
+                    break;
+                case 4:
+                    html += inputCheckbox(data['form'][i]);
+                    break;
+                case 5:
+                    html += inputSelect(data['form'][i]);
+                    break;
+                case 6:
+                    html += inputImg(data['form'][i]);
+                    break;
+                case 7:
+                    html += inputImgs(data['form'][i]);
+                    break;
+                case 8:
+                    html += inputTime(data['form'][i]);
+                    break;
+
+            }
+
+        });
+    // console.log(html);
+        $('#bespeak_form').find('.bookinfo_con').before(html);
+        sTime();
+    });
+    function inputText(value) {
+        var required = value['required']?"required":"";
+        var required_t = value['required']?"*":"";
+        var format_t = value['format']?"|":"";
+        var format = value['format']?value['format']:"";
+        var html = '<div class="bookinfo_list bookinfo_list_a"><label>'+value["title"]+'<i>'+required_t+'</i></label>' +
+            '<input type="text" name="bespeak_form['+value["template_unit_id"]+']" id="'+value["name"]+'"  placeholder="'+value["placeholder"]+'" data-title="'+value["title"]+'" data-verify="'+required+format_t+format+'" ></div>';
+        return html;
+    }
+    function inputTextarea(value) {
+        var required = value['required']?"required":"";
+        var required_t = value['required']?"*":"";
+        var format_t = value['format']?"|":"";
+        var format = value['format']?value['format']:"";
+        var html = '<div class="bookinfo_list boookinfo_mesg" style="height: 5rem;"><label>'+value["title"]+'<i style="color: #ff3333">'+required_t+'</i></label>' +
+            '<textarea type="textarea" name="bespeak_form['+value["template_unit_id"]+']" id="'+value["name"]+'"  placeholder="'+value["placeholder"]+'" data-title="'+value["title"]+'" data-verify="'+required+format_t+format+'" ></textarea></div>';
+        return html;
+    }
+    function inputRadio(value) {
+        var required = value['required']?"required":"";
+        var required_t = value['required']?"*":"";
+        var format_t = value['format']?"|":"";
+        var format = value['format']?value['format']:"";
+        var html = '<div class="bookinfo_list bookinfo_radios"><label>'+value["title"]+'<i>'+required_t+'</i></label>';
+            $.each(value['value'].split(','),function (i,o) {
+                html +='<div class="bookinfo_radios_cont">';
+                html += '<input type="radio" name="bespeak_form['+value["template_unit_id"]+']" id="'+value["template_unit_id"]+i+'"  placeholder="'+value["placeholder"]+'" data-title="'+value["title"]+'" data-verify="'+required+format_t+format+'" >';
+                html +=' <label for="'+value['template_unit_id']+i+'">'+o+'</label></div>';
+            });
+            html +='</div>';
+        return html;
+    }
+    function inputCheckbox(value) {
+        var required = value['required']?"required":"";
+        var required_t = value['required']?"*":"";
+        var format_t = value['format']?"|":"";
+        var format = value['format']?value['format']:"";
+        var html = '<div class="bookinfo_list bookinfo_radios"><label>'+value["title"]+'<i>'+required_t+'</i></label>';
+        $.each(value['value'].split(','),function (i,o) {
+            html +='<div class="bookinfo_radios_cont">';
+            html += '<input type="checkbox" name="bespeak_form['+value["template_unit_id"]+']" id="'+value["template_unit_id"]+i+'"  placeholder="'+value["placeholder"]+'" data-title="'+value["title"]+'" data-verify="'+required+format_t+format+'" >';
+            html +=' <label for="'+value['template_unit_id']+i+'">'+o+'</label></div>';
+        });
+        html +='</div>';
+        return html;
+    }
+    function inputSelect(value) {
+        var required = value['required']?"required":"";
+        var required_t = value['required']?"*":"";
+        var format_t = value['format']?"|":"";
+        var format = value['format']?value['format']:"";
+        var html = '<div class="bookinfo_list bookinfo_list_select"><label>'+value["title"]+'<i>'+required_t+'</i></label>' +
+            '<select type="select" class="select" id="'+value["template_unit_id"]+'"  id="'+value["template_unit_id"]+'" placeholder="'+value["placeholder"]+'" data-title="'+value["title"]+'" data-verify="'+required+format_t+format+'">' +
+            '<option value="">请选择</option>';
+        $.each(value['value'].split(','),function (i,o) {
+            html +='<option id="'+value['template_unit_id']+i+'" value="'+o+'" title="'+o+'">'+o+'</option>';
+        });
+        html +='</select> <i class="bookinfo_list_left"></i></div>';
+        return html;
+    }
+    function inputImg(value) {
+        var required = value['required']?"required":"";
+        var required_t = value['required']?"*":"";
+        var html = '<div class="bookinfo_list">' +
+            '<label class="bookinfo_tp_name" >'+value["title"]+'<i>'+required_t+'</i></label>' +
+            '<a class="bookinfo_tp">上传图片 </a>' +
+            '</div>';
+        return html;
+    }
+    function inputImgs(value) {
+        var required = value['required']?"required":"";
+        var required_t = value['required']?"*":"";
+        var html = '<div class="bookinfo_list">' +
+            '<label class="bookinfo_tp_name" >'+value["title"]+'<i>'+required_t+'</i></label>' +
+            '<a class="bookinfo_tp">上传图片 </a>' +
+            '</div>';
+        return html;
+    }
+    function inputTime(value) {
+        var required_t = value['required']?"*":"";
+        var html = '<div class="bookinfo_list">'+
+            '<div class="z-select-wrap">'+
+            '<div class="invoice list7">'+
+            '<div class="myorder p" style="border: 0;">'+
+            '<div class="content30">'+
+            '<a class="remain" style="float: none;background: none;">'+
+            '<div class="order">'+
+            '<div class="fl">'+
+            '<span>预约时间<i style="color: red">'+required_t+'</i></span>'+
+            '</div>'+
+            '<div class="fr">'+
+            '<span class="invoice_Package" style="margin-top: 0.6rem;">'+
+            '<input type="text" id="date_time_picker_mask" value="" data-options="">'+
+            '<input type="hidden" name="'+value["template_unit_id"]+'" id="bespeak_form_time"  value="" >'+
+            '<em id="date_time_day">请选择时间</em>'+
+            '</span>'+
+            '<i class="Mright"></i>'+
+            '</div>'+
+            '</div>'+
+            '</a>'+
+            '</div>'+
+            '</div>'+
+            '</div>' +
+            '</div>' +
+            '</div>';
+        return html;
+    }
+</script>
+
+<script>
+    function sTime() {
+        // <!--调用时间插件-->
+        var endY = {$data.time|default=time()|date='Y',###}-0+1;
+        var str = "{'type':'YYYY-MM-DD hh:mm','beginYear':{$data.time|default=time()|date='Y',###},'endYear':"+endY+",'limitTime':'today'}";
+        $('#date_time_picker_mask').attr('data-options',str);
+        $.date('#date_time_picker_mask');
+    }
+
+    $(document).on('click', '#date_time_day', function () {
+        $('#date_time_picker_mask').trigger('click');
+    });
+</script>

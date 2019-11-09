@@ -1,0 +1,130 @@
+body{
+    background: rgb(245, 245, 245);
+}
+.topbox{
+    width: 100%;
+    height: 2rem;
+    background: #ffffff;
+    z-index: 1000;
+}
+.fixed{
+    position: fixed;
+    top: 0rem;
+}
+.couponbox{
+    width: 15.445333rem;
+    height: 5.4186666rem;
+    background: url(../images/coupon.png);
+    background-size: cover;
+    margin: 0 auto;
+    margin-top: 0.42666rem;
+    display: flex;
+    justify-content: space-between;
+}
+.couponbox .left{
+    width: 5.1rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.couponbox .left img{
+    width: 3.4133333rem;
+    height: 3.4133333rem;
+    margin-top: -0.14rem;
+    margin-left: 0.32rem;
+}
+.couponbox .right{
+    width: 10rem;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 0.704rem;
+    padding-right: 0.954rem;
+    position: relative;
+}
+.couponbox .right .alreadyimg{
+    position: absolute;
+    right: .15rem;
+    top: .1rem;
+    z-index: 0;
+    width: 3.94rem;
+    height: 3.47rem;
+}
+.couponbox .right .righttop{
+    width: 100%;
+    height: 2.396rem;
+    line-height: 2.396rem;
+    font-size: 0.512rem;
+    color: #333333;
+    z-index: 10;
+    position: relative;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.couponbox .right .rightfoot{
+    width: 100%;
+    height: 2.7946rem;
+    font-size: 0.512rem;
+    color: #333333;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+    position: relative;
+}
+.couponbox .right .rightfoot .price{
+    height: 100%;
+    width: 4.62rem;
+    color: #FF3B3B;
+}
+.couponbox .right .rightfoot .price .money{ 
+    line-height: 1.17rem;
+    margin-top: 0.3rem;
+    font-size: 0.512rem;
+    font-weight: bold;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.couponbox .right .rightfoot .price .big{
+    font-size: 0.768rem;
+    position: relative;
+    top: -0.12rem;
+}
+.couponbox .right .rightfoot .price .full{
+    line-height: 1rem;
+    font-size: 0.512rem;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.couponbox .right .rightfoot .btnbox{
+    height: 100%;
+    width: 3.0rem;
+}
+.couponbox .right .rightfoot .getbox{
+    width:2.987rem;
+    height:1.024rem;
+    background:linear-gradient(90deg,rgba(255,59,59,1) 0%,rgba(255,115,61,1) 100%);
+    box-shadow:0rem .1304rem .22rem .025rem rgba(255,59,59,0.3);
+    border-radius:0.512rem;
+    text-align: center;
+    line-height: 1.024rem;
+    font-size: 0.512rem;
+    box-sizing: border-box;
+    margin-top: 0.8853rem;
+    color: #ffffff;
+}
+.couponbox .right .rightfoot .already{
+    width:2.987rem;
+    height:1.024rem;
+    background:rgba(153,153,153,1);
+    box-shadow:0rem .1304rem .22rem .025rem rgba(102,102,102,0.3);
+    border-radius:0.512rem;
+    text-align: center;
+    line-height: 1.024rem;
+    font-size: 0.512rem;
+    box-sizing: border-box;
+    margin-top: 0.8853rem;
+    color: #ffffff;
+}

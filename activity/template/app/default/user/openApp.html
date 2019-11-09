@@ -1,0 +1,114 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>推广海报</title>
+<script src="__PUBLIC__/js/jquery-1.8.2.min.js" type="text/javascript"></script>
+</head>
+<style>
+ .ios_show{
+     width: 100%;
+     height: 50px;
+ }
+ .ios_bg {
+     background: url(/public/images/ios_bg.png) no-repeat scroll top center;
+     width: 160px;
+     height: 160px;
+     background-size: 100% auto;
+     border: none;
+     background-color: #ffffff;
+     margin: auto;
+     margin-top: 100px;
+     text-align: center;
+ }
+    .ios_bg img{
+        margin-top: 60px;
+        width: 110px;
+    }
+    .center{
+        text-align: center;
+    }
+    .btn{
+        padding: 8px 60px;
+        background-color: #28caad;
+        border-radius: 30px;
+        display: flex;
+        word-break: keep-all;
+        border: #fff;
+        color: #fff;
+        margin: auto;
+        margin-top: 30px;
+    }
+
+</style>
+<body>
+<a id="vlink" onClick="try_to_open_app()" style="display:none"></a>
+<img src="__PUBLIC__/images/ios_msg.png" id="ios_msg" style="display: none;" >
+<img src="__PUBLIC__/images/ios_show.png" class="ios_show">
+
+<div class="ios_bg"><img src="http://192.168.0.250:1001/{$config.store_logo}"></div>
+<div class="center ">{$config.store_name}</div>
+<button type="button" class="center btn "  onclick="download()">点击安装</button>
+<script>
+
+var browser={
+		versions:function(){
+			var u = navigator.userAgent, app = navigator.appVersion;
+			return {
+			trident: u.indexOf('Trident') > -1,
+			presto: u.indexOf('Presto') > -1,
+			webKit: u.indexOf('AppleWebKit') > -1,
+			gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+			mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/),
+			ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+			android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+			iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+			iPad: u.indexOf('iPad') > -1,
+			webApp: u.indexOf('Safari') == -1
+		};
+	}()
+}
+	var iOS_URL = "tpshopbc://www.test.com?uid={$uid}";
+	var Android_URL = "myapp://www.test.com/openwith?uid={$uid}";
+	var ios_mtUrl = "http://itunes.apple.com/app/id1119059153";
+    var android_mtUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.tpshop.malls";
+
+    //打开下载页
+	function open_link() {
+        if(!browser.versions.iPhone){
+            window.location = android_mtUrl;
+        }
+
+	}
+    //try
+	function try_to_open_app() {
+		setTimeout('open_link()', 500);
+	}
+
+    //try打开app
+	//IOS
+	if(browser.versions.iPhone){
+		document.getElementById("vlink").setAttribute("href",iOS_URL);
+		document.getElementById("vlink").click();
+        $("#ios_msg").slideDown("slow");
+	}
+	//Android
+	else if(browser.versions.android){
+		document.getElementById("vlink").setAttribute("href",Android_URL);
+		document.getElementById("vlink").click();
+	}
+	else{
+		open_link();
+	}
+
+        function download(){
+            <if condition="$is_wechat eq 1">
+                alert('点击右上角选择Safari打开进行下载安装');
+                <else />
+                window.location = ios_mtUrl;
+            </if>
+        }
+</script>
+</body>
+</html>

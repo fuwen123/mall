@@ -1,0 +1,188 @@
+body {
+  background-color: #fff;
+}
+header {
+  height: 1.17333333rem;
+  width: 100%;
+  background-color: #ff3535;
+}
+header h1 {
+  padding-left: 1.22666667rem;
+  padding-right: 1.22666667rem;
+  font-size: 0.48rem;
+  color: white;
+  text-align: center;
+  height: 1.17333333rem;
+  line-height: 1.17333333rem;
+}
+.addset-h .red a{
+  color: red;
+  font-size: .72533rem;
+  display: inline-block;
+  height: 1.70667rem;
+  border-bottom:.13rem solid #ed5657;
+  box-sizing: border-box;
+}
+.addset-h a{
+  font-size: .62533rem;
+  color: #666666;
+}
+.addset-wrap-hh{
+  margin: 0 auto;
+  overflow-x: auto;
+}
+.team_info {
+  margin-bottom: 1.33333333rem;
+}
+.team_info .team_tab a {
+  float: left;
+  height: 1.17333333rem;
+  font-size: 0.4rem;
+  color: #666;
+  line-height: 1.17333333rem;
+  text-align: center;
+  width: 33.333%;
+  background-color: #eee;
+}
+.team_info .team_tab a.active {
+  color: #f6c70c;
+  background-color: #404040;
+  font-weight: bold;
+}
+.team_info .prompt {
+  height: 0.93333333rem;
+  padding-left: 1.28rem;
+  font-size: 0.32rem;
+  color: #666;
+  line-height: 0.93333333rem;
+  background-color: #f9f2d8;
+  position: relative;
+}
+.team_info .prompt::before {
+  content: '';
+  position: absolute;
+  left: 0.72rem;
+  top: 0;
+  height: 100%;
+  width: 0.34666667rem;
+  background: url("../images/distrbut/crown@2x.png") no-repeat center 0.29333333rem;
+  background-size: contain;
+}
+.team_info .team_details .team_details_list {
+  height: 1.86666667rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 0.4rem;
+  padding-bottom: 0.33333333rem;
+}
+.team_info .team_details .team_details_list .header_image {
+  float: left;
+  height: 1.06666667rem;
+  width: 1.06666667rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.team_info .team_details .team_details_list .header_image img {
+  height: 100%;
+  width: auto;
+}
+.team_info .team_details .team_details_list .user_info {
+  float: left;
+  margin-left: 0.4rem;
+}
+.team_info .team_details .team_details_list .user_info em {
+  display: block;
+  color: #1a1a1a;
+  font-size: 0.37333333rem;
+  height: 0.50666667rem;
+  position: relative;
+}
+.team_info .team_details .team_details_list .user_info em i {
+  position: absolute;
+  height: 0.50666667rem;
+  width: 0.34666667rem;
+  margin-left: 0.10666667rem;
+  background: url("../images/distrbut/crown@2x.png") no-repeat center center;
+  background-size: contain;
+}
+.team_info .team_details .team_details_list .user_info span {
+  margin-top: 0.06666667rem;
+  color: #666;
+  font-size: 0.29333333rem;
+}
+.team_info .team_details .team_details_list .user_data {
+  float: right;
+}
+.team_info .team_details .team_details_list .user_data .consume {
+  color: #1a1a1a;
+  font-size: 0.32rem;
+}
+.team_info .team_details .team_details_list .user_data .consume span {
+  font-weight: bold;
+  color: #ff3535;
+}
+.team_info .team_details .team_details_list .user_data > span {
+  display: block;
+  color: #666;
+  font-size: 0.29333333rem;
+  margin-top: 0.06666667rem;
+  text-align: right;
+}
+footer {
+  position: fixed;
+  width: 100%;
+  height: 1.33333333rem;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+footer a {
+  margin-top: 0.2rem;
+  float: left;
+  width: 20%;
+  padding: 0 3%;
+  text-align: center;
+}
+footer a img {
+  display: block;
+  width: auto;
+  height: 0.56rem;
+  margin: 0 auto;
+}
+footer a span {
+  font-size: 0.29333333rem;
+}
+footer a span.active {
+  color: #ff3535;
+}
+/*# sourceMappingURL=team.css.map */
+/*拼团页Team/index start*/
+.classreturn{
+  position: fixed;
+}
+.content{
+  background-color: #f8f8f8;
+}
+.fgtemple .g_price em{
+  font-size: .5rem;
+}
+.grandmogr{
+  padding: 0 !important;
+  margin-top:2.3rem;
+}
+.banner img{
+  height: 16rem !important;
+}
+.maleri30{
+  margin: 0 .64rem !important;
+}
+.ggroup-bx .cpt img{
+  height: 14.72rem !important;
+}
+.fgtemple .leok{
+  margin-top: .5rem;
+}
+.fgtemple .zeqzuo{
+  margin-top: .3rem;
+}
+/*拼团页Team/index end*/

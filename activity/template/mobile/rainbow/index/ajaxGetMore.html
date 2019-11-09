@@ -1,0 +1,17 @@
+<foreach name="favourite_goods" item="v">
+	<li>
+		<a href="{:U('mobile/goods/goodsInfo',array('id'=>$v.goods_id))}">
+			<img src="{$v.goods_id|goods_thum_images=300,300}" alt="热销商品" style="width: 100%">
+			<p class="rxsp-title">{$v.goods_name}</p>
+			<if condition="$v.label_name">
+				<span class="rx-sp">{$v.label_name}</span>
+				<else>
+					<span class="rx-sp"  style="height: 0.747rem;border:none"></span>
+			</if>
+			<div class="rxsp-price">
+				<span class="ro-sm">￥</span><span class="ro-price">{$v.shop_price|explode_price=0}</span><span class="ro-sm">.{$v.shop_price|explode_price=1}</span>
+				<span class="has-sold">已售出{$v.sales_sum}件</span>
+			</div>
+		</a>
+	</li>
+</foreach>

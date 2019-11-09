@@ -1,0 +1,67 @@
+
+<div class="de_font p">
+    <div class="thirty">
+        <div class="fl">
+            <span class="similar-product-text">{$goods.goods_name}</span>
+        </div>
+        <div class="keep fr">
+            <a href="javascript:collect_goods({$goods.goods_id});" id="favorite_add">
+                <i class=" <if condition='$collect gt 0'>red</if>"></i>
+                <span>收藏</span>
+            </a>
+        </div>
+        <div class="book_label">
+            <p class="book_price" ><b><span id="price">￥{$goods.shop_price}</span></b><span>到店价<i>￥{$goods.market_price}</i></span></p>
+            <p class="book_peop"><span>已有<i>{$goods.order_bespeak_count+$goods.virtual_comment_count}</i>人预约</span>{$goods['invalid_refund']==1?"<em>过期不退</em>":"<em>随时退</em>"}</p>
+            <!--<em>其他标签</em>-->
+        </div>
+        <div class="scunde p" style="display: none">
+            <!--<p class="red" id="price">￥{$goods.shop_price}</p>-->
+            <!--<p><span id="market_price_title">市场价：</span><span class="linethr" id="market_price">{$goods.market_price}</span></p>-->
+            <p>
+                <if condition="$goods.prom_type neq 2">销量：<span>{$goods['sales_sum']+$goods['virtual_sales_sum']}</span></if>
+                <span >
+                        当前库存：<span class="spec_store_count">{$goods.store_count}</span>
+                </span>
+            </p>
+            <div class="timeafter presale-time" style="display: none">
+                <p class="confinetime" id="activity_type"></p>
+                <p class="confinetime" id="overTime"></p>
+            </div>
+            <div class="timeafter team-pies" style="display: none">
+                <div class="confinetime">该商品参与拼团中</div>
+                <a class="team_button" href="">点击前往</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="floor list7 detailsfloo">
+    <div class="myorder p">
+    <div class="book_storinf">
+        <div class="book_storinf_item"><label>可预约时间</label><span>{$goods[bespeak_template][week_day]}</span></div>
+        <div class="book_storinf_item book_sec_item"><label>店内设施</label>
+            <span>
+                 <volist name="$goods[bespeak_template][equipment_arr]" id="template">
+                     <em>{$template}</em>
+                </volist>
+            </span>
+        </div>
+    </div>
+    </div>
+    <div class="myorder p tbv">
+        <div class="content30">
+            <a href="javascript:void(0)">
+                <div class="order">
+                    <div class="fl">
+                        <span class="firde">用户评价</span>
+                        <span>好评率<i>{$goods['comment_statistics']['high_rate']}%</i></span>
+                    </div>
+                    <div class="fr">
+                        <span><i>{$goods['comment_statistics']['high_sum']}</i>人好评</span>
+                        <i class="Mright"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

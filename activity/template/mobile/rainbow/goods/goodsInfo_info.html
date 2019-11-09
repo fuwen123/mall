@@ -1,0 +1,299 @@
+<style>
+	#prom_order .myorder .deta-coupon1{
+        color: #666 !important;
+        font-size: .47rem !important;
+	}
+    #prom_order .deta-coupon1{
+        max-width: 12.8rem;
+    }
+	.podee .cart-concert-btm .fl ul li a span{
+		z-index:999;
+	}
+    .titlebox{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.55rem;
+    }
+    .ladder{
+       
+    }
+
+    .ladder li:nth-child(3n){
+        text-align: right;
+    }
+
+    .ladder li:nth-child(3n-1){
+        text-align: center;
+    }
+
+    .ladder li:nth-child(3n-2){
+        text-align: left;
+    }
+    </style>
+
+<div class="de_font p">
+    <div class="thirty">
+        <div class="fl">
+            <span class="similar-product-text">{$goods.goods_name}</span>
+        </div>
+        <div class="keep fr">
+            <a href="javascript:;">
+                <i class=""></i>
+                <span>分享</span>
+            </a>
+        </div>
+        <div class="scunde p">
+            <span style="margin-top:0.55rem" class="red" id="price"></span><br/>
+            <div class="titlebox">
+            <span><span id="market_price_title">市场价：</span><span class="linethr" id="market_price">{$goods.market_price}</span></span>
+            <span style="margin-top:0px;">销量：{$goods['sales_sum']+$goods['virtual_sales_sum']}</span>
+            <if condition="$goods.prom_type eq 8">
+            	<span id="kanjia_store_count" >库存：<em>0</em></span>
+            <else />
+				<span style="margin-left: 1.135555rem;">库存：<span class="spec_store_count">{$goods.store_count}</span></span>
+            </if>
+            </div>
+            <if condition="$goods['give_integral'] gt 0">
+                <p style="font-size: .5rem" class="red" >
+                    赠送<span class="red" style="margin:0;font-size: .5rem">{$goods.give_integral}</span>积分
+                </span>
+            </if>
+        </div>
+        <if condition="$goods.price_ladder">
+            <div class="fl"  id="price_ladder">
+                <div class="ladder">
+                        <foreach name="goods.price_ladder" item="item">
+                            <li><span><i>¥</i>{$item.price}</span><p>满{$item.amount}件</p></li>
+                        </foreach>
+                </div>
+            </div>
+        </if>
+    </div>
+</div>
+<!--参与砍价 start------------------------------------------------------------------------------------>
+<div class="floor list7 detailsfloo" id="kanjia" style="display: none">
+    <div class="myorder p " >
+        <div class="content30">
+            <a href="javascript:void(0)">
+                <div class="order">
+                    <div class="fl" style="width: 100%">
+                        <span class="firde">快来邀请好友砍价吧！</span>
+                        <span id="kanjia_list">
+
+                        </span>
+                        <span style="font-size: .46rem;color: #999;float: right" id="kanjia_num"> 0人正在参加</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<!--参与砍价&促销活动end ------------------------------------------------------------------------------------------>
+<!--领取优惠券&促销活动 start------------------------------------------------------------------------------------>
+<div class="floor list7 detailsfloo" id="coupon">
+    <if condition="$goods.exchange_integral eq 0">
+        <div class="myorder p " id="zYHJ-POP">
+            <div class="content30">
+                <a href="javascript:void(0)">
+                    <div class="order">
+                        <div class="fl">
+                            <span class="firde">优惠券</span>
+                            <span class="deta-coupon"></span>
+                        </div>
+                        <div class="fr">
+                            <i class="Mright"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </if>
+</div>
+<!--领取优惠券&促销活动 end ------------------------------------------------------------------------------------------>
+<!--活动-->
+<if condition="$goods.exchange_integral eq 0">
+    <notempty name="prom_order">
+    <div class="floor list7 detailsfloo" id="prom_order">
+        <div class="myorder p ">
+            <div class="content30">
+                <a href="javascript:void(0)">
+                    <div class="order">
+                        <div class="fl">
+                            <span class="firde" style="height: 1.4rem;line-height: 1.4rem;">活动</span>
+                            <span class="deta-coupon1">
+                                <foreach name="prom_order" item="item">
+                                    <div id="prom_order_{$item.id}" style="height: 1.4rem;line-height: 1.4rem;"><em>{$item.name}</em><span2>{$item.prom_detail}</span2></div>
+                                </foreach>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    </notempty>
+</if>
+<!--订单促销end-->
+
+<div class="floor list7 detailsfloo">
+    <div class="myorder p  choise_num_s">
+        <div class="content30">
+            <a href="javascript:void(0)">
+                <div class="order">
+                    <div class="fl">
+                        <span class="firde">规格&emsp;</span>
+                        <span class="sel"></span>
+                    </div>
+                    <div class="fr">
+                        <i class="Mright"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div style="line-height: 1.4rem;" class="myorder p">
+        <div class="content30">
+            <a href="javascript:void(0)" onclick="locationaddress(this);">
+                <script type="text/javascript">
+                    function locationaddress(e){
+                        $('.container').animate({width: '14.4rem', opacity: 'show'}, 'normal',function(){
+                            $('.container').show();
+                        });
+                        if(!$('.container').is(":hidden")){
+                            $('body').css('overflow','hidden')
+                            cover();
+                            $('.mask-filter-div').css('z-index','9999');
+                        }
+                    }
+//                    地址弹出块返回按钮
+                    function closelocation(){
+                        $('body').css('overflow','scroll');
+                        var province_div = $('.province-list');
+                        var city_div = $('.city-list');
+                        var area_div = $('.area-list');
+                        if(area_div.is(":hidden") == false){
+                            area_div.hide();
+                            city_div.show();
+                            province_div.hide();
+                            return;
+                        }
+                        if(city_div.is(":hidden") == false){
+                            area_div.hide();
+                            city_div.hide();
+                            province_div.show();
+                            return;
+                        }
+                        if(province_div.is(":hidden") == false){
+                            area_div.hide();
+                            city_div.hide();
+                            $('.container').animate({width: '0', opacity: 'show'}, 'normal',function(){
+                                $('.container').hide();
+                            });
+                            undercover();
+                            return;
+                        }
+                    }
+                </script>
+                <div class="order">
+                    <div class="fl">
+                        <span class="firde">地址&emsp;</span>
+                        <span class="loc"></span>
+                        <span id="address"></span>
+                    </div>
+                    <div class="fr">
+                        <i class="Mright"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!--配送至-s-->
+    <div class="container" >
+        <div class="city">
+            <div class="screen_wi_loc">
+                <div class="classreturn loginsignup">
+                    <div class="content">
+                        <div class="ds-in-bl return seac_retu">
+                            <a href="javascript:void(0);" onclick="closelocation();"><img src="__STATIC__/images/return.png" alt="返回"></a>
+                        </div>
+                        <div class="ds-in-bl search center">
+                            <span class="sx_jsxz">配送至</span>
+                        </div>
+                        <div class="ds-in-bl suce_ok">
+                            <a href="javascript:void(0);">&nbsp;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="province-list"></div>
+            <div class="city-list" style="display:none"></div>
+            <div class="area-list" style="display:none"></div>
+            <div class="town-list" style="display:none"></div>
+        </div>
+    </div>
+    <!--配送至-e-->
+
+    <!--运费-s-->
+
+            <if condition="$goods.is_virtual neq 1">
+                <div style="line-height: 1.4rem;" class="myorder p" id="dispatching_desc">
+                    <div class="content30">
+                        <a class="remain" href="javascript:void(0);">
+                            <div class="order">
+                                <div class="fl">
+                                    <span class="firde">运费&emsp;</span>
+                                    <span id="shipping_freight"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </if>
+            <div id="balance" class="chidno"></div>
+
+    <!--运费-s-->
+
+    <div style="line-height: 1.4rem;" class="myorder p">
+        <div class="content30">
+            <a href="javascript:void(0)">
+                <div class="order">
+                    <div class="fl">
+                        <span class="firde">服务&emsp;</span>
+                        <span class="s-description">由商城自营发货并提供售后服务</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="myorder p tbv">
+        <div class="content30">
+            <a href="javascript:void(0)">
+                <div class="order">
+                    <div class="fl">
+                        <span class="firde">用户评价<b class="yasan-ajdas">({$goods['comment_statistics']['total_sum']})</b></span>
+                    </div>
+                    <div class="fr">
+                        <span class="deta_eva">好评&nbsp;<i>{$goods['comment_statistics']['high_rate']}%</i></span>
+                        <i class="Mright"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!--评论列表-s-->
+        <div class="xq_details pl-list01" >
+            <div class="spxq-ggcs comment_de p"  style="display:none;">
+                <ul>
+                    <!--1 全部 2好评 3 中评 4差评-->
+                    <li class="pj-list red">全部评价({$goods['comment_statistics']['total_sum']})</li>
+                    <li class="pj-list">好评({$goods['comment_statistics']['high_sum']})</li>
+                    <li class="pj-list">中评({$goods['comment_statistics']['center_sum']})</li>
+                    <li class="pj-list">差评({$goods['comment_statistics']['low_sum']})</li>
+                    <li class="pj-list">有图({$goods['comment_statistics']['img_sum']})</li>
+                </ul>
+            </div>
+            <!--评论列表-->
+            <div class="tab-con-wrapper my_comment_list" > </div>
+        </div>
+    </div>
+</div>

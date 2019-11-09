@@ -1,0 +1,22 @@
+<include file="public/header" title="预约成功" body="g4"/>
+<include file="public/header_nav" title="预约成功" href="javascript:void(0);" back="back"/>
+
+<style>
+    a,p,span{display: block;}
+
+    #back{display: none}
+</style>
+<div class="book_succe">
+	<div class="booksucce_tips"><img src="__STATIC__/images/icon-succe.png" alt=""><span>预约成功</span></div>
+    <div class="booksucce_info">
+    	<p>{$Request.param.goods_name}</p>
+        <span>请按时到店，凭券码确认订单消费</span>
+        <div class="booksucce_time">预约时间<i>{$Request.param.take_time}</i></div>
+    </div>
+    <div class="view_bookinfo"><a href="{:U('/Mobile/Order/bespeak_list')}">查看预约订单</a></div>
+</div>
+</body>
+</html>
+<script>
+    $('.booksucce_time').find('i').text($('.booksucce_time').find('i').text().replace(/\+/g, ' '));
+</script>

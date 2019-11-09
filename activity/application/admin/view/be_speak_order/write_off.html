@@ -1,0 +1,181 @@
+<style>
+    .z-ztfh-tab .tab-ul-cont li{height: auto ;line-height: 40px;}
+    #shop-order-info li{ vertical-align: middle; border-bottom: 1px solid #e3e3e3;}
+</style>
+<div class="z-ztfh-bg" hidden>
+</div>
+<div class="z-ztfh-pop" hidden>
+    <form>
+        <div class="z-ztfh-head">
+            <i class="z-ztfh-close"></i>
+            <h3>商品发货</h3>
+        </div>
+        <div class="z-ztfh-tab">
+            <ul class="tab-ul-title">
+                <li style="width: 21%;">订单编号</li>
+                <li style="width: 24%;">下单时间</li>
+                <li style="width: 15%;">会员ID</li>
+                <li style="width: 15%;">订单总额</li>
+                <li style="width: 12%;">券码</li>
+                <li style="width: 12%;">券码状态</li>
+            </ul>
+            <ul class="tab-ul-cont" id="shop-order-info">
+            </ul>
+        </div>
+        <div class="z-ztfh-information">
+            <h5 style="padding-left: 22px;">预约信息:</h5>
+            <div class="ztfh-information-cont" id="shop-info" style="width: 642px;"></div>
+        </div>
+        <div class="z-ztfh-select">
+            <span>提供方式:</span>
+            <div class="z-ztfh-hema ztfh-label">
+                <label ints="1" class="ztfh-lab-bg" data-val="1"></label>核码验证
+            </div>
+            <div class="z-ztfh-wuma ztfh-label">
+                <label data-val="0"></label>无码验证
+            </div>
+        </div>
+        <div class="z-ztfh-input">
+            <span>验      证 &nbsp;码:</span>
+            <label  ></label>
+            <input type="hidden" name="old_shop_order_id" id="old-shop-order-id" />
+            <input type="text" name="shop_order_id" id="shop-order-id" placeholder="请输入验证码" />
+        </div>
+        <div class="z-ztfh-btns">
+            <label></label>
+            <input type="button" id="fahuo" value="发货" />
+        </div>
+    </form>
+</div>
+
+<script>
+    var ajax_request = 1;
+    function deliverGoods(e,type){
+         if(!ajax_request){
+             return false;
+         }
+        ajax_request = 0;
+        if(type){
+            //从列表点进
+            var order_id = $(e).attr('data-order-id');
+        }else{
+            var order_id = $("input[name='order_id']").val();
+        }
+        //获取表单
+        getBespeakForm(order_id);
+        var ordreStr = '',shopStr = '';
+        $.ajax({
+            type:"POST",
+            url:"/index.php?m=Admin&c=BeSpeakOrder&a=getOrderGoodsInfo",
+            data:{order_id:order_id},
+            dataType:"json",
+            success: function (data) {
+                ajax_request = 1;
+                ordreStr += '<li style="width: 21%;">' + data.order_sn + '</li><li style="width: 24%;">' + time_format(data.add_time) + '</li><li style="width: 15%;">' + data.user_id + '</li><li style="width: 15%;">' + data.total_amount + '</li>';
+                var shop_code = '';
+                var status_decs = '';
+                $.each(data.shop_order,function (i,o) {
+                    switch (o.is_write_off){
+                        case 0:var status_dec = '未核销';break;
+                        case 1:var status_dec = '已核销';break;
+                        case 2:var status_dec = '已过期';break;
+                        default:var status_dec = '未知状态';
+                    }
+                    //保存未核销和已过期的
+                    if(o.is_write_off==0 || o.is_write_off == 2){
+                        if(i==0){$("#old-shop-order-id").val(o.shop_code);}else{$("#old-shop-order-id").val($("#old-shop-order-id").val()+','+o.shop_code);}
+                    }
+                    shop_code = shop_code + o.shop_code + '<br/>';
+                    status_decs +=  status_dec + '<br/>'
+                });
+                ordreStr += '<li style="width: 12%;">' + shop_code + '</li><li style="width: 12%;">' + status_decs + '</li>';
+                $("#shop-order-info").html(ordreStr);
+                $(".z-ztfh-bg,.z-ztfh-pop").show();
+                var h = $('#shop-order-info').children().eq(5).css('height')
+                $('#shop-order-info li').css('height',h)
+                $('#shop-order-info li').css('line-height',h)
+
+            }
+        })
+    }
+    function getBespeakForm(order_id){
+        // var goods_id = $("input[name='goods_id']").val();
+        var order_id = $("input[name='order_id']").val();
+        var shopStr = '';
+        $.ajax({
+            type:"POST",
+            url:"/index.php?m=Admin&c=BeSpeakOrder&a=getOrderBespeakFormInfo",
+            data:{order_id:order_id},
+            dataType:"json",
+            success: function (data) {
+                if(data){
+                    $.each(data,function (i,o) {
+                        shopStr += '<div class="information-list">'+o.title+'：';
+                        if(o.type == 6 || o.type == 7){
+                            $.each(o.value.split(','),function (ii,oo) {
+                                shopStr +='<em><img src="' + oo + '" style="width: 100px;height: 100px;"></em>';
+                            })
+                        }else{
+                            shopStr +='<em>' + o.value + '</em>';
+                        }
+                        shopStr += '</div>';
+                    });
+                    $("#shop-info").html(shopStr);
+                }
+
+            }
+        })
+    }
+
+    $("#fahuo").click(function(){
+        var order_id = $("input[name='order_id']").val();
+        var shopOrderId = $("#shop-order-id").val();
+        var oldShopOrderId = $("#old-shop-order-id").val().split(',');
+        var isCode = $(".ztfh-lab-bg").data().val;
+        var newShopOrderId = oldShopOrderId;
+        if (isCode == 1) {
+            if(oldShopOrderId.indexOf(shopOrderId) < 0){
+                layer.alert("核销码错误", {icon: 2});
+                return;
+            }
+            if(shopOrderId == ""){
+                layer.alert("请输入核销码", {icon: 2});
+                return;
+            }
+            newShopOrderId = shopOrderId;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/index.php?m=Admin&c=BeSpeakOrder&a=writeOff",
+            data: {shop_order_id: newShopOrderId,'order_id':order_id},
+            dataType: "json",
+            success: function (data) {
+                if(data.status == 1){
+                    layer.msg('核销成功，正在跳转');
+                    location.reload();
+                }else{
+                    layer.alert(data.msg, {icon: 2});
+                }
+            }
+        })
+    })
+
+
+
+
+
+    $(".ztfh-label label").click(function  () {
+        var index= $(this).attr("ints")
+        $(".ztfh-label label").removeClass("ztfh-lab-bg");
+        $(this).addClass("ztfh-lab-bg");
+        if (index==1) {
+            $(".z-ztfh-input").show();
+        } else{
+            $(".z-ztfh-input").hide();
+        }
+    });
+    $(".z-ztfh-close").click(function  () {
+        $(".z-ztfh-bg,.z-ztfh-pop").hide();
+    })
+</script>

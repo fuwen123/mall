@@ -1,0 +1,66 @@
+<include file="public/header" title="{$level_info.level_name}"/>
+<style>
+    html,body,div,p{
+        font-size: .6rem;
+    }
+    a{
+        color: steelblue;
+    }
+    img{
+        max-width: 100%;
+        margin: 0.1rem 0;
+    }
+    .title{
+        font-size: 1rem;
+        padding: 0.8rem 0.5rem 0.2rem;
+        text-align: center;
+    }
+    .state{
+        color: #aaa;
+        font-size: .6rem;
+        margin: 0.4rem 0.8rem 0.6rem;
+    }
+    .content{
+        font-size: .65rem;
+        padding: 0.2rem;
+        line-height: 0.95rem;
+    }
+    .source{
+        font-size: .65rem;
+        margin: 1rem 0.5rem 1.5rem;
+    }
+    strong {
+        font-size: 0.5rem;
+    }
+.loginsingup-input{width:100%;position: fixed; left: 0; bottom: 0.32rem;}
+</style>
+
+<div class="classreturn loginsignup ">
+    <div class="content">
+        <div class="ds-in-bl return">
+            <a href="javascript:history.back(-1);"><img src="__STATIC__/images/return.png" alt="返回"></a>
+        </div>
+        <div class="ds-in-bl search center">
+            <span>{$level_info.level_name}</span>
+        </div>
+
+    </div>
+</div>
+<div class="content">
+    {$level_info.level_intro|htmlspecialchars_decode}
+</div>
+<if condition="$level_type lt $level_info['level_type']">
+<div class="loginsingup-input">
+    <div class="lsu-submit usedeb">
+        <input type="button" value="立即加盟" onclick="window.location.href='/mobile/Payment/buy_upgrade?level_id={$level_info[level_id]}&pay_code=weixin'">
+
+		<!--<if condition="$level_info['level_id'] == 1">-->
+		<!--<input type="button" value="立即加盟" onclick="window.location.href='/mobile/goods/goodsinfo/id/323'">-->
+		<!--<else>-->
+		<!--<input type="button" value="立即加盟" onclick="window.location.href='/mobile/Payment/buy_upgrade?level_id={$level_info[level_id]}&pay_code=weixin'">-->
+		<!--</if>-->
+    </div>
+</div>
+</if>
+</body>
+</html>

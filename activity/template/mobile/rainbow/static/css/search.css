@@ -1,0 +1,35 @@
+/*分类商品列表goodsList  start*/
+.classreturn .content .return,.classreturn .content .menu{
+    margin-top: .65rem;
+}
+.classreturn .content .search{
+    margin-top: .35rem;
+}
+.sc_list .deleshow .weight .add_cart{
+    margin-top: 0;
+    margin-left: .2rem;
+}
+.sc_list .deleshow .prices{
+    left: 0 !important;
+}
+.podee .cart-concert-btm .fl ul li a span{
+    left: 50% !important;
+    z-index: 2;
+}
+.sc_list .deleshow .weight .add_cart img{
+    margin-top: .2rem;
+}
+.sc_list .deleshow .prices{
+    position: absolute;
+    top: 3rem;
+    margin-top: 0 !important;
+}
+.sc_list .deleshow .weight{
+    position: absolute;
+    top: 4rem;
+    width: 9rem;
+}
+.sc_list .deleshow .weight span{
+    float: left;
+}
+/*分类商品列表goodsList  end*/

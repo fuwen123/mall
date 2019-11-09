@@ -1,1 +1,7 @@
 /shop/runtime
+/shop/application/database.php
+/shop/application/config.php
+activity/runtime/
+activity/application/config.php
+activity/application/database.php
+activity/public/upload

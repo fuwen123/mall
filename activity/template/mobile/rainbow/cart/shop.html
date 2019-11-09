@@ -1,0 +1,42 @@
+<include file="public/header" title="门店地址" body="g4"/>
+<include file="public/header_nav" title="门店地址" href="javascript:void(0);" back="back"/>
+<script type="text/javascript" src="//api.map.baidu.com/api?ak={$tpshop_config.basic_bd_ak}&type=lite&v=1.0"></script>
+<div id="map">
+    <!--地图定位弹窗s-->
+    <div class="pop-prkage-wraps p prkage-wraps-map">
+        <div class="z-Package-hrader Package-hrader-absolute">
+            <i class="z-Package-icon Package-icon-map" id="map_back"></i>
+            <h5>门店地址</h5>
+        </div>
+        <div id="container" style="width:16rem;height: 20.2666rem;border:#ccc solid 1px;"></div>
+        <div class="parkage-plat-cont">
+            <div class="parkage-plat-title p">
+                <i class="fl"></i>
+                <p class="fl" id="shop_name">{$shop.shop_name}</p>
+            </div>
+            <ul class="parkage-plat-ul">
+                <li id="shop_address_text">{$shop.full_address}</li>
+                <li>电话：<em id="phone">{$shop.phone}</em></li>
+                <li id="work_time_desc">营业时间：{$shop.work_time}<span>{$shop.work_day}</span></li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function()
+        {
+            var lnt = {$shop.longitude};
+            var lat = {$shop.latitude};
+            map = new BMap.Map("container");//在百度地图容器中创建一个地图
+            var poi = new BMap.Point(lnt, lat);//定义一个中心点坐标
+            map.centerAndZoom(poi, 17);//设定地图的中心点和坐标并将地图显示在地图容器中
+            //创建检索信息窗口对象
+            var marker = new BMap.Marker(poi); //创建marker对象
+            map.addOverlay(marker); //在地图中添加marker
+        })
+    </script>
+    <!--地图定位弹窗e-->
+</div>
+
+</body>
+</html>

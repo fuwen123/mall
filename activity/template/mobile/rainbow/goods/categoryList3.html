@@ -1,0 +1,189 @@
+<include file="public/header" title="所有分类"/>
+<script type="text/javascript" src="__PUBLIC__/static/js/layui/layui.js?v=2.3.0"></script>
+<script src="__PUBLIC__/static/js/layuifun.js"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC__/category/stair1.css"/>
+
+<div class="classreturn">
+    <div class="content">
+        <div class="ds-in-bl return">
+            <a href="javascript:history.back(-1);"><img src="__STATIC__/images/return.png" alt="返回"></a>
+        </div>
+        <div class="ds-in-bl search">
+            <form action="" method="post">
+                <div class="sear-input">
+                    <a href="{:U('Goods/ajaxSearch')}">
+                        <input type="text" value="" placeholder="请输入您所搜索的商品">
+                    </a>
+                </div>
+            </form>
+        </div>
+        <div class="ds-in-bl menu">
+            <a href="javascript:void(0);"><img src="__STATIC__/images/class1.png" alt="菜单"></a>
+        </div>
+    </div>
+</div>
+
+<!--顶部隐藏菜单-s-->
+<include file="public/top_nav"/>
+<!--顶部隐藏菜单-e-->
+<div class="mask-filter-div"></div>
+<!-- 1级分类页面-->
+<div class="stair-w">
+    <div class="scroll-container stair-list-left">
+        <ul class="stair-l-scroll" id="view-1">
+        </ul>
+    </div>
+    <div class="scroll-container stair-list-right">
+        <div class="stair-r-scroll" id="view-2">
+            <ul>
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+<!-- 1级分类页面e-->
+
+<div id="add_cart" desc="加入购物车">
+
+</div>
+<!--选择属性的弹窗-s-->
+<form name="buy_goods_form" method="post" id="buy_goods_form">
+
+</form>
+<!--选择属性的弹窗-e-->
+<!--底部导航-start-->
+<include file="public/footer_nav"/>
+<!--底部导航-end-->
+<script>
+    $(function () {
+
+        // 使用这个
+        $('.stair-l-scroll').on('click', 'li', function () {
+            $(this).children('a').addClass('b-red').css('color','#FF0000').parent().siblings().children('a').removeClass('b-red').css('color','#232326')
+            $(this).children('a').css('backgroundColor','#ffffff').parent().siblings().children('a').css('backgroundColor','#F1F1F1')
+
+            $(this).children().parent().siblings().children().css('color', '#000000')
+            $('.stair-r-scroll').children().css('display', 'none').eq($(this).index()).css('display', 'block');
+        })
+
+        //动态获取滑动窗口高度
+        $('.stair-list-left').css('height', $(window).height())
+        $('.stair-list-right').css('height', $(window).height())
+
+
+        ajax_html_tpl('{:U('Goods/ajax_category',['category'=>3])}', {}, '#tpl_msg_2', '#view-2')
+    });
+    function ajax_html_tpl(url, where, from, to) {
+        //$(to).html('')
+        $.ajax({
+            type: "get",
+            url: url,
+            data: where,
+            dataType: "json",
+            success: function (res) {
+                //console.log('ajax_html_tpl', res)
+                if (res.status == 1) {
+                    // 展示
+                    html_tpl(from, to, res)
+                    html_tpl('#tpl_msg_1', '#view-1', res,function(){
+                        $('.stair-l-scroll li').eq(0).children('a').addClass('b-red');
+                    });
+                } else {
+                    console.log('ajax_html_tpl status=0', res)
+                    //alert('获取动态失败，请稍等再试!');
+                }
+            }
+        });
+    }
+    /*function addCart(goods_id){
+        $.ajax({
+            type: "POST",
+            url: "{:U('Goods/add_cart_info')}",
+            data: {"id":goods_id},
+            dataType: "text",
+            success: function (res) {
+                //console.log('ajax_html_tpl', res)
+                $("#add_cart").html(res)
+            }
+        });
+    }*/
+</script>
+<script id="tpl_msg_1" type="text/html" desc="">
+    {{# layui.each(d.category1, function(index1, item1){ }}
+    <li>
+        <a href="javascript:void(0);" data-id="{{item1.id}}">{{item1.mobile_name}}</a>
+    </li>
+    {{# }); }}
+</script>
+<script id="tpl_msg_2" type="text/html" desc="">
+    {{# layui.each(d.category1, function(index1, item1){ }}
+    <ul>
+        {{# layui.each(d.goods, function(index2, item2){ }}
+        {{# if(item1.id == item2.cat_id){ }}
+        <li>
+            <a class="cmd-img cmd-comm" href="/Mobile/goods/goodsInfo/id/{{item2.goods_id}}.html"><img
+                    src="{{item2.original_img}}" alt="" style="width: 100%;height: 100%;"></a>
+
+            <div class="cmd-comm cmd-title">
+                <div>
+                    <a href="/Mobile/goods/goodsInfo/id/{{item2.goods_id}}.html"><span class="str-product">{{item2.goods_name}}</span></a>
+                </div>
+                <div class="str-prices">
+                    <p><span>￥</span><b>{{item2.shop_price}}元</b></p>
+                </div>
+                <p class="str-evaluate">
+                    <span class="fg">已售出{{item2.sales_sum}}件</span>
+
+                    <span class="add_cart"><a href="#" onclick="addCart('{{item2.goods_id}}')"><img
+                            src="__STATIC__/category/cart.png" alt=""></a></span>
+                </p>
+            </div>
+        </li>
+        {{# } }}
+        {{# }); }}
+        <li style="border: none;"></li>
+    </ul>
+    {{# }); }}
+</script>
+
+<!--goodsinfo的js-->
+
+
+<script src="/public/js/locationJson.js"></script>
+<script src="__PUBLIC__/js/mobile_common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__STATIC__/js/mobile-location.js"></script>
+<include file="public/wx_share"/>
+<!--优惠卷弹窗打开和关闭-->
+<script type="text/javascript">
+    $(document).on("click","#zYHJ-POP",function  () {
+        $("#recive_aready_pop").show();
+    })
+    // 关闭加入购物车
+    $(document).on("click","#recive_aready_pop .xxgro",function  () {
+        $("#recive_aready_pop").hide();
+        $('.mask-filter-div').hide();
+    })
+    function addCart(goods_id){
+        $.post("{:U('Mobile/Goods/goodsinfolist')}",{'id':goods_id},function(res){
+            $('#buy_goods_form').html(res);
+            $('#join_cart').text('确定');
+            $('#join_cart').width('100%').show();
+            $('#join_cart').attr('data-id',1);
+            $('.choose_shop_aready').show();
+            $('.podee').hide();
+            $('.mask-filter-div').show();
+            setTimeout(function(){
+                $('#join_cart').removeClass('buy_bt_disable')
+            },1000)
+        });
+    }
+</script>
+
+<style type="text/css">
+    .choose_shop_aready{
+        z-index: 9999;
+    }
+</style>
+</body>
+</html>
