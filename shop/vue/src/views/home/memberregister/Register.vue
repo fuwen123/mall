@@ -62,6 +62,19 @@
                 class="submit-btn"
                 @click="submitData">确定</van-button>
 
+    <van-popup v-model="showSlide">
+      <slide-verify :l="42"
+                    :r="10"
+                    :w="310"
+                    :h="155"
+                    slider-text="向右滑动滑块填充拼图"
+                    class="slide-verify"> </slide-verify>
+      <!-- @success="onSuccess"
+                  @fail="onFail"
+                  @refresh="onRefresh" -->
+
+    </van-popup>
+
   </div>
 </template>
 
@@ -69,6 +82,7 @@
 import { mapMutations } from 'vuex'
 import validator from '@/util/validator'
 import { register } from '@/api/memberRegister'
+
 const errMsg = {
   mobile: '请输入正确的手机号',
   password: '请设置登录密码',
@@ -82,6 +96,7 @@ export default {
       return !this.checkData().state
     }
   },
+
   data () {
     return {
       // 表单数据
@@ -92,7 +107,8 @@ export default {
         password1: null, // 确认密码
         invitationCode: null // 邀请人的手机号码
       },
-      agree: false // 同意会员注册协议
+      agree: false, // 同意会员注册协议
+      showSlide: false // 显示滑块验证码
     }
   },
   created: function () {

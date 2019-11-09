@@ -23,6 +23,7 @@
     "vant": "^2.2.12",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10",
+    "vue-monoplasty-slide-verify": "^1.0.5",
     "vue-router": "^3.0.6",
     "vue-scratchcard": "^1.2.0-a",
     "vuex": "^3.1.1",

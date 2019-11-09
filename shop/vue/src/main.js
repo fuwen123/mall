@@ -22,6 +22,9 @@ import './assets/style/common.scss'
 import moment from 'moment'
 import _ from 'underscore'
 
+// 插件
+import SlideVerify from 'vue-monoplasty-slide-verify'
+
 // // mini-ui 组件
 Vue.component(Popup.name, Popup)
 Vue.component(Header.name, Header)
@@ -36,7 +39,9 @@ Vue.component(Radio.name, Radio)
 Vue.component(Field.name, Field)
 Vue.component(Cell.name, Cell)
 
-Vue.use(Vant).use(VueLazyload)
+Vue.use(Vant)
+  .use(VueLazyload)
+  .use(SlideVerify)
 
 // 挂载JS库
 Vue.prototype.utils = utils
