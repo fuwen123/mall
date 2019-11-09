@@ -6,7 +6,18 @@
                  @click-left="onClickLeft"
                  v-if="$route.meta.head && $route.meta.head.show" />
     <!-- 公共头 end -->
-    <router-view ref="childView" />
+
+    <!-- 内容 -->
+    <keep-alive>
+      <!-- 缓存视图 -->
+      <router-view v-if="$route.meta.keepAlive"
+                   ref="childView"></router-view>
+    </keep-alive>
+
+    <!--  非缓存视图 -->
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+
+    <!-- 底部导航 -->
     <div v-if="$route.meta.footer.show"
          class='common-footer-wrap'>
       <mt-tabbar v-model='home_selected'

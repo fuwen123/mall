@@ -1059,3 +1059,9 @@ a {
   padding-top: 50px;
   padding-bottom: 50px;
 }
+
+// 全局的checkbox
+.checkbox /deep/ .van-checkbox__icon--checked .van-icon {
+  background-color: $mainColor;
+  border-color: $mainColor;
+}

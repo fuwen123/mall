@@ -3,8 +3,6 @@ import App from './App.vue'
 import 'es6-promise/auto'
 import VueLazyload from 'vue-lazyload'
 
-import moment from 'moment'
-
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
@@ -14,11 +12,15 @@ import router from './router'
 import store from './store'
 import utils from './util/util'
 
+import { Popup, Header, Button, Picker, Spinner, Tabbar, TabItem, Swipe, SwipeItem, Radio, Field, Cell } from 'mint-ui'
+import 'mint-ui/lib/style.css'
+
 import './assets/style/iconfont/iconfont.css'
 import './assets/style/common.scss'
 
-import { Popup, Header, Button, Picker, Spinner, Tabbar, TabItem, Swipe, SwipeItem, Radio, Field, Cell } from 'mint-ui'
-import 'mint-ui/lib/style.css'
+// JS库
+import moment from 'moment'
+import _ from 'underscore'
 
 // // mini-ui 组件
 Vue.component(Popup.name, Popup)
@@ -36,8 +38,10 @@ Vue.component(Cell.name, Cell)
 
 Vue.use(Vant).use(VueLazyload)
 
+// 挂载JS库
 Vue.prototype.utils = utils
 Vue.prototype.$moment = moment
+Vue.prototype._ = _
 Vue.config.productionTip = false
 // import vconsole
 // new VConsole()

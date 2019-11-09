@@ -1,22 +1,12 @@
 <template>
   <div class="distributor-article-list">
-    <div class="common-header-wrap">
-      <mt-header :title="title"
-                 class="common-header">
-        <mt-button slot="left"
-                   icon="back"
-                   @click="$router.go(-1)"></mt-button>
-      </mt-header>
-    </div>
     <div class="content"
          v-html='content'></div>
   </div>
 </template>
 <script>
-import { getDocumentInfo } from '../../../api/homeArticle'
-import { Toast } from 'mint-ui'
+import { getDocumentInfo } from '@/api/homeArticle'
 export default {
-
   name: 'HomeDocument',
   data () {
     return {
@@ -24,14 +14,13 @@ export default {
       content: ''
     }
   },
-
   created: function () {
     let type = this.$route.query.type
     getDocumentInfo(type).then(res => {
-      this.title = res.result.document_title
+      this.$route.meta.head.title = res.result.document_title
       this.content = res.result.document_content
     }).catch(function (error) {
-      Toast(error.message)
+      this.$tosat(error.message)
     })
   }
 

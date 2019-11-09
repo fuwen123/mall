@@ -1,7 +1,8 @@
 const regList = {
   number: new RegExp('^[0-9]*$'),
   email: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/,
-  mobile: /^1[3-9]\d{9}$/
+  mobile: /^1[3-9]\d{9}$/,
+  empty: /^[\s\S]*.*[^\s][\s\S]*$/
 }
 
 /**
