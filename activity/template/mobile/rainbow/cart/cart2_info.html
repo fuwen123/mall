@@ -1,0 +1,95 @@
+<!--配送方式 上门自提s-->
+<div class="z-select-wrap shipping_div">
+    <!--<div class="z-select-title">-->
+        <!--<div class="maleri30">-->
+            <!--选择配送方式-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="maleri30 z-dispatching-wrap">
+        <div class="p z-dispatching border-none">
+            <div class="fl">
+                快速配送
+            </div>
+            <div class="fr">
+                <label class="dispatching-checkbox" >
+                    <div id="express_delivery" class="dispatching-cont z-dispatching-cheng"></div>
+                </label>
+            </div>
+        </div>
+        <div class="z-dispatching-one dispatching-font1" style="display: block;">
+            工作日、双休日与节假日均可送货
+        </div>
+        <if condition="$cartList[0]['goods']['prom_type'] ==8 && $cartList[0]['goods']['prom_id'] gt 0 ">
+        <else />
+            <div class="p z-dispatching ma-top-1" id="door_to_door_div" style="display: none">
+                <div class="fl">
+                    上门自提
+                </div>
+                <div class="fr">
+                    <label class="dispatching-checkbox">
+                        <div id="door_to_door" class="dispatching-cont">
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+            <div class="z-dispatching-one dispatching-font2">
+                选择自提上门点并支付订单>收到提货短信>到自提点提货
+            </div>
+        </if>
+
+
+
+        <div class="dispatching-Package">
+            <!--自提时间-->
+            <div class="invoice list7">
+                <div class="myorder p">
+                    <div class="content30">
+                        <a class="remain">
+                            <div class="order">
+                                <div class="fl">
+                                    <span>自提时间</span>
+                                </div>
+                                <div class="fr">
+                                            <span class="invoice_Package" style="margin-top: 0.6rem;">
+                                                <input type="text" id="date_time_picker_mask" value="<?php echo date('Y-m-d H:00',strtotime('+1 day')); ?>"
+                                                       data-options="{'type':'YYYY-MM-DD hh:mm','beginYear':2018,'endYear':2088}"  >
+                                                <em id="date_time_day"></em>
+                                            </span>
+                                    <i class="Mright" id="dtpm"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!--调用时间插件-->
+            <script>
+                $.date('#date_time_picker_mask');
+                $(document).on('click', '#date_time_day,#dtpm', function () {
+                    $('#date_time_picker_mask').trigger('click');
+                });
+            </script>
+            <!--自提地点-->
+            <div class="invoice list7" id="replace_shop">
+                <div class="myorder p">
+                    <div class="content30">
+                        <a class="remain">
+                            <div class="order">
+                                <div class="fl">
+                                    <span>自提地点</span>
+                                </div>
+                                <div class="fr">
+                                    <span class="invoice_Package select-invoice-Package" style="margin-top: 0.6rem;" id="shop_address"></span>
+                                    <i class="Mright"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--配送方式 上门自提e-->

@@ -1,0 +1,149 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="toolTipLayer" style="position: absolute; z-index: 9999; display: none; visibility: visible; left: 95px; top: 573px;"></div>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>供应商管理 - 基本资料</h3>
+            </div>
+        </div>
+    </div>
+    <form class="form-horizontal" id="suppliersHandle">
+        <input type="hidden" name="suppliers_id" value="{$info.suppliers_id}">
+        <div class="ncap-form-default">
+			<dl class="row">
+				<dt class="tit">
+					<label for="suppliers_account">供应商后台账号</label>
+				</dt>
+				<dd class="opt">
+					<input type="text" name="suppliers_account" maxlength="20"  value="{$info.suppliers_account}" id="suppliers_account" class="input-txt" readonly="readonly">
+					<span class="err" id="err_suppliers_account"></span>
+					<p class="notic">供应商后台账号</p>
+				</dd>
+			</dl>
+			<dl class="row">
+				<dt class="tit">
+					<label for="user_name">会员账号</label>
+				</dt>
+				<dd class="opt">
+					<input type="text" name="user_name" maxlength="20"  value="{$info.email ? $info.email : $info.mobile}" id="user_name" class="input-txt" readonly="readonly">
+					<span class="err" id="err_user_name"></span>
+					<p class="notic">前台用户账号，关联供应商后台账号</p>
+				</dd>
+			</dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="suppliers_name">供应商名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="suppliers_name" value="{$info.suppliers_name}" id="suppliers_name" class="input-txt" readonly="readonly">
+                    <span class="err" id="err_suppliers_name"></span>
+                    <p class="notic">供应商名称只能由平台进行修改</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="suppliers_desc"><em>*</em>供应商描述</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="suppliers_desc" value="{$info.suppliers_desc}" id="suppliers_desc" class="input-txt">
+                    <span class="err" id="err_suppliers_desc"></span>
+                    <p class="notic">供应商描述</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="suppliers_contacts"><em>*</em>供应商联系人</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="suppliers_contacts" value="{$info.suppliers_contacts}" id="suppliers_contacts" class="input-txt">
+                    <span class="err" id="err_suppliers_contacts"></span>
+                    <p class="notic">供应商联系人</p>
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="suppliers_phone"><em>*</em>供应商电话</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" name="suppliers_phone"  value="{$info.suppliers_phone}" id="suppliers_phone" class="input-txt">
+                    <span class="err" id="err_suppliers_phone"></span>
+                    <p class="notic">供应商电话（格式如：1350000000/0755-28600000）</p>
+                </dd>
+            </dl>
+			
+			<dl class="row">
+				<dt class="tit">
+					<label><em>*</em>供应商地址</label>
+				</dt>
+				<dd class="opt">
+					<select name="province_id" id="province" onchange="get_city(this)">
+						<option value="0">请选择</option>
+						<volist name="province_list" id="province">
+							<option <if condition="$info['province_id'] eq $province['id']">selected</if>  value="{$province.id}">{$province.name}</option>
+						</volist>
+					</select>
+					<select name="city_id" id="city" onchange="get_area(this)">
+						<option  value="0">请选择</option>
+						<volist name="city_list" id="city">
+							<option <if condition="$info['city_id'] eq $city['id']">selected</if>  value="{$city.id}">{$city.name}</option>
+						</volist>
+					</select>
+					<select name="district_id" id="district">
+						<option  value="0">请选择</option>
+						<volist name="district_list" id="district">
+							<option <if condition="$info['district_id'] eq $district['id']">selected</if>  value="{$district.id}">{$district.name}</option>
+						</volist>
+					</select>
+					<span class="err" id="err_province_id"></span>
+					<span class="err" id="err_city_id"></span>
+					<span class="err" id="err_district_id"></span>
+				</dd>
+			</dl>
+			<dl class="row">
+				<dt class="tit">
+					<label><em>*</em>详细地址</label>
+				</dt>
+				<dd class="opt">
+					<input type="text" name="supplier_address" value="{$info.supplier_address}" class="input-txt">
+					<span class="err" id="err_supplier_address"></span>
+				</dd>
+			</dl>
+            <div class="bot"><a href="JavaScript:void(0);" onclick="adsubmit();" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    function adsubmit(){
+		$('span.err').hide();
+		url = "{:U('System/editSupplier')}";
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: $('#suppliersHandle').serialize(),
+			async:false,
+			dataType: "json",
+			error: function () {
+				layer.alert("服务器繁忙, 请联系管理员!");
+			},
+			success: function (data) {
+				if (data.status == 1) {
+					layer.msg(data.msg,{icon: 1,time: 2000},function(){
+						location.href = "";
+					});
+				} else {
+					$('#submit').attr('disabled',false);
+					$.each(data.result, function (index, item) {
+						var id = index.replace('[]','');
+						$('#err_'+id).text(item).show();
+					});
+					layer.msg(data.msg, {icon: 2,time: 3000});
+				}
+			}
+		});
+	}
+</script>
+</body>

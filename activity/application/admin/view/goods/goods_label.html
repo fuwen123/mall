@@ -1,0 +1,164 @@
+<include file="public/layout" />
+<style>
+    span.type-virtual {
+        background-color: #3598DC;
+        line-height: 16px;
+        color: #FFF;
+        display: inline-block;
+        height: 16px;
+        padding: 1px 4px;
+        margin-right: 2px;
+        box-shadow: inset 1px 1px 0 rgba(255,255,255,0.25);
+        cursor: default;
+    }
+    .hide{
+        display: none;
+    }
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>商品标签</h3>
+                <h5>商品标签管理</h5>
+                <a href="http://help.tp-shop.cn/Index/Help/info/cat_id/5/id/34.html" style="display: {:tpCache('basic.is_manual')?'block':'none'}" class="manual" target="_blank"><i class="fa fa-calendar"></i>帮助手册</a>
+            </div>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation">
+        <div class="bckopa-tips" style="width: 100%">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+                <li>商品标签.</li>
+
+            </ul>
+        </div>
+
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle"><h3>商品标签列表</h3></div>
+            <div class="fbutton"><a href="{:U('Admin/goods/addEditGoodsLabel')}"><div class="add" title="添加商品"><span><i class="fa fa-plus"></i>添加商品标签</span></div></a></div>
+            <div class="fbutton hide"><a href="javascript:;" onclick="publicHandleAll('del')"><div class="add" title="批量删除"><span>批量删除</span></div></a></div>
+            <!--<div class="fbutton hide"><a href="{:U('Admin/Goods/initGoodsSearchWord')}"><div class="add" title="初始化商品搜索关键词"><span>初始化商品搜索关键词</span></div></a></div>-->
+            <a href="" class="refresh-date"><div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div></a>
+
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col6" onclick="checkAllSign(this)">
+                            <div style="width: 24px;"><i class="ico-check"></i></div>
+                        </th>
+
+
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: left; width: 200px;" class="" onClick="sort('goods_name');">商品标签名称</div>
+                        </th>
+
+                        <!--<th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 50px;" class="" onClick="sort('sort');">排序</div>
+                        </th>-->
+                        <th align="left" abbr="article_title" axis="col6" class="">
+                            <div style="text-align: left; width:200px;" class="">操作</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <!--<div class="tDiv">
+          <div class="tDiv2">
+            <div class="fbutton">
+              <a href="{:U('Admin/goods/addEditGoods')}">
+              <div class="add" title="添加商品">
+                <span><i class="fa fa-plus"></i>添加商品</span>
+              </div>
+              </a>
+              </div>
+            <div class="fbutton">
+                <a href="{:U('Admin/Goods/initGoodsSearchWord')}">
+                    <div class="add" title="初始化商品搜索关键词">
+                        <span><i class="fa fa-plus"></i>初始化商品搜索关键词</span>
+                    </div>
+                </a>
+            </div>
+            <div class="fbutton">
+              <a href="javascript:;" onclick="publicHandleAll('del')">
+                  <div class="add" title="批量删除">
+                      <span>批量删除</span>
+                  </div>
+              </a>
+            </div>
+          </div>
+          <div style="clear:both"></div>
+        </div>-->
+        <div class="bDiv" style="height: auto;">
+            <!--ajax 返回 -->
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0" data-url="{:U('admin/goods/delGoodsLabel')}"></div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        // 刷选条件 鼠标 移动进去 移出 样式
+        $(".hDivBox > table > thead > tr > th").mousemove(function(){
+            $(this).addClass('thOver');
+        }).mouseout(function(){
+            $(this).removeClass('thOver');
+        });
+
+        // 表格行点击选中切换
+        $(document).on('click','#flexigrid > table>tbody >tr',function(){
+            $(this).toggleClass('trSelected');
+            var checked = $(this).hasClass('trSelected');
+            $(this).find('input[type="checkbox"]').attr('checked',checked);
+        });
+    });
+
+    $(document).ready(function () {
+        // ajax 加载商品列表
+        ajax_get_table('search-form2', 1);
+
+    });
+
+    // ajax 抓取页面 form 为表单id  page 为当前第几页
+    function ajax_get_table(form, page) {
+        cur_page = page; //当前页面 保存为全局变量
+        $.ajax({
+            type: "GET",
+            url: "/index.php?m=Admin&c=goods&a=ajaxGoodsLabel&isajax=1&p=" + page,
+            data: $('#' + form).serialize(),
+            dataType : 'html',
+            success: function (data) {
+                $("#flexigrid").html('');
+                $("#flexigrid").append(data);
+            }
+        });
+    }
+
+    // 点击排序
+    function sort(field)
+    {
+        $("input[name='orderby1']").val(field);
+        var v = $("input[name='orderby2']").val() == 'desc' ? 'asc' : 'desc';
+        $("input[name='orderby2']").val(v);
+        ajax_get_table('search-form2',cur_page);
+    }
+</script>
+</body>
+</html>

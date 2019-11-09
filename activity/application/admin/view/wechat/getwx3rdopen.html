@@ -1,0 +1,179 @@
+<include file="public/layout"/>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <div class="subject">
+                <h3>公众号设置</h3>
+                <h5>我的开放平台</h5>
+            </div>
+            <ul class="tab-base nc-row">
+                <li><a href="{:U('wechat/third_authorization')}" >
+                    <span>公众号授权</span></a>
+                </li> 
+                <li><a href="{:U('wechat/getWx3rdOpen')}" class="current">
+                    <span>我的开放平台</span></a>
+                </li>             
+            </ul>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div id="explanation" class="explanation">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+              <li style="color:red;">请注意：</li>
+              <li style="color:red;">第三方平台在获得此权限后，可以代替已授权的公众号/小程序创建开放平台帐号或进行绑定/解绑操作,创建的开放平台仅有绑定作用，不可用于登录</li>                     
+              <li style="color:red;">公众号只可将此权限集授权给一个第三方平台，授权互斥</li>
+              <li style="color:red;">公众号作为主体，申请的小程序需在公众号主体下注册或者关联小程序，开放平台绑定才具有意义</li>
+              <li style="color:red;">该开放平台仅用于授权公众号和授权小程序绑定，获取微信返回的uniondId区分用户唯一账号，避免产生俩个用户账号。</li>
+              <li style="color:red;">如果授权公众号/小程序已创建开放平台绑定关联了账号，可不用操作该页面功能，避免产生冲突</li>
+            </ul>
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <div class="authorization_before">
+		    <notempty name="open">
+			      <span class="autbe_tips">你已授权绑定并且成功开通了开放平台账号 , 开放平台appid为 : {$open.open_appid}</span>
+				            <div class="autbe_btn" style="margin-top: 20px;">
+				      			<div class="page">   				  
+								        <div class="ncap-form-default">
+								            <dl class="row">
+								                <dt class="tit">公众号</dt>
+								                <dd class="opt">
+								                    <div class="onoff">
+								                        <label for="switch1"  class="cb-enable  <if condition="$open.wechat_public_authorizer.open_bind eq 1">selected</if>">已绑定</label>
+								                        <label for="switch0"  class="cb-disable <if condition="$open.wechat_public_authorizer.open_bind eq 0">selected</if>">未绑定</label>
+								                        <input type="radio" class="bind_public" id="switch1"  name="pswitch"  value="1" <if condition="$open.wechat_public_authorizer.open_bind eq 1">checked="checked"</if>>
+								                        <input type="radio" class="bind_public" id="switch0" name="pswitch"  value="0" <if condition="$open.wechat_public_authorizer.open_bind eq 0">checked="checked"</if> >
+								                    </div>
+								                </dd>
+								            </dl>	
+								              <dl class="row">
+								                <dt class="tit">小程序</dt>
+								                <dd class="opt">
+								                    <div class="onoff">
+								                        <label for="switch3" class="cb-enable  <if condition="$open.mini_app.open_bind eq 1">selected</if>">已绑定</label>
+								                        <label for="switch2" class="cb-disable <if condition="$open.mini_app.open_bind eq 0">selected</if>">未绑定</label>
+								                        <input type="radio" class="bind_miniapp"  id="switch3"  name="mswitch" value="1" <if condition="$open.mini_app.open_bind eq 1">checked="checked"</if>>
+								                        <input type="radio" class="bind_miniapp" id="switch2"  name="mswitch" value="0" <if condition="$open.mini_app.open_bind eq 0">checked="checked"</if> >
+								                    </div>
+								                </dd>
+								         </dl>						           				
+								</div> 
+				       </div>
+		    <else />
+		      <span class="autbe_tips">暂未开通开放平台账号</span>
+		            <img src="__PUBLIC__/static/images/wechatpay.png">
+		            <b>开放平台账号</b>
+		            <div class="autbe_btn">                
+		                <a href="javascript:;" class="ncap-btn-big ncap-btn-green" onclick="createOpen();">创建</a>
+		            </div>
+			   
+		      </notempty>    
+   		 </div>
+ 	</div>
+<script>
+
+	//绑定公众号或小程序
+	var is_ajax_p = true;
+	var p = "{$open.wechat_public_authorizer.open_bind}";
+	var m = "{$open.mini_app.open_bind}";
+	
+	$('.bind_public').click(function(){	
+		console.log(111)
+		if(!is_ajax_p || p == $(this).val()){
+			return false;
+		}		
+		is_ajax_p = false;
+		var data = 'state=1';	
+		if( $(this).val() == 0){
+			data += '&status=0'
+		}else{
+			data += '&status=1'
+		}
+	
+	    $.ajax({
+            url:"{:U('wechat/bindWx3rdOpen')}",
+            data:data ,
+            type: 'post',
+            dataType: 'json',
+            success: function(data){    
+            	console.log(data)
+            	is_ajax_p = true;      
+                if (data.status === 1) {
+                	p = (p == 1 ? 0 : 1)
+                	layer.alert(data.msg, {icon:1});
+                    //window.open(data.result);
+                } else {
+                    var msg = (typeof data.status === 'undefined') ? '系统繁忙，请联系客服' : data.msg;
+                    return layer.alert(msg, {icon:2});
+                }
+            }
+        }); 
+	})
+	
+	var is_ajax_m = true;
+	$('.bind_miniapp').click(function(){	
+		if(!is_ajax_m || m == $(this).val()){
+			return false;
+		}		
+		is_ajax_m = false;
+		var data = 'state=2';		
+		if( $(this).val() == 0){
+			data += '&status=0'
+		}else{
+			data += '&status=1'
+		}
+	    $.ajax({
+            url:"{:U('wechat/bindWx3rdOpen')}",
+            data:data ,
+            type: 'post',
+            dataType: 'json',
+            success: function(data){            	
+            	is_ajax_m = true;      
+                if (data.status === 1) {
+                	m = (m == 1 ? 0 : 1)
+                	layer.alert(data.msg, {icon:1});
+                    //window.open(data.result);
+                } else {
+                    var msg = (typeof data.status === 'undefined') ? '系统繁忙，请联系客服' : data.msg;
+                    return layer.alert(msg, {icon:2});
+                }
+            }
+        }); 
+	})
+	
+
+    function createOpen(){
+        layer.confirm('确定开通开放平台？', {icon: 3, title:'提示'}, function (index) {
+            layer.close(index);
+            $.ajax({
+                url: "{:U('wechat/regWx3rdOpen')}",
+                data:'state=1',
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 1) {
+                        layer.msg(data.msg, {time: 1000, icon: 1}, function () {
+                            window.location.reload(true);
+                        });
+                    } else {
+                        var msg = (typeof data.status === 'undefined') ? '系统繁忙，请联系客服' : data.msg;
+                        return layer.alert(msg, {icon: 2});
+                    }
+                },
+                error: function () {
+                    layer.alert('系统繁忙，请联系客服', {icon: 2});
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

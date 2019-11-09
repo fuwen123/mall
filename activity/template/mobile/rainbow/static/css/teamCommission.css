@@ -1,0 +1,131 @@
+header {
+  height: 1.17333333rem;
+  width: 100%;
+  background-color: #fe4646;
+}
+header .back {
+  float: left;
+  width: 0.29333333rem;
+  height: 1.17333333rem;
+  background: url("../images/distrbut/back@2x.png") no-repeat left center;
+  background-size: contain;
+}
+header .details {
+  float: right;
+  height: 100%;
+  line-height: 1.17333333rem;
+  font-size: 0.34666667rem;
+  color: #fff;
+}
+header h1 {
+  padding-left: 1.22666667rem;
+  padding-right: 1.22666667rem;
+  font-size: 0.48rem;
+  color: #fff;
+  text-align: center;
+  height: 1.17333333rem;
+  line-height: 1.17333333rem;
+}
+.accumulative {
+  height: 2.72rem;
+  background: url("../images/distrbut/team_bg@2x.png") no-repeat center bottom;
+  background-size: cover;
+  overflow: hidden;
+}
+.accumulative em {
+  display: block;
+  margin-top: 0.56rem;
+  text-align: center;
+  color: #fff;
+  font-size: 0.64rem;
+}
+.accumulative span {
+  display: block;
+  font-size: 0.32rem;
+  text-align: center;
+  margin-top: 0.06666667rem;
+  color: #fff;
+}
+.commission_list ul {
+  background-color: #fff;
+  margin-bottom: 0.21333333rem;
+}
+.commission_list ul li {
+  height: 1.41333333rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.commission_list ul li:last-child {
+  border-bottom: 0;
+}
+.commission_list ul li .commission_list_title {
+  font-size: 0.37333333rem;
+  color: #1c1c1c;
+  float: left;
+  padding-left: 0.74666667rem;
+  height: 1.41333333rem;
+  line-height: 1.41333333rem;
+  position: relative;
+}
+.commission_list ul li .commission_list_data {
+  color: #1f1f1f;
+  font-size: 0.37333333rem;
+  float: right;
+  height: 1.41333333rem;
+  line-height: 1.41333333rem;
+}
+.commission_list ul li .red {
+  color: #fe4646;
+}
+.commission_list ul .commission_list_title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1.41333333rem;
+  width: 0.53333333rem;
+  background: url("../images/distrbut/charge_icon@2x.png") no-repeat center center;
+  background-size: contain;
+}
+.commission_list .using_commission li:nth-child(1) .commission_list_title::before {
+  background-image: url("../images/distrbut/apply_icon@2x.png");
+}
+.commission_list .using_commission li:nth-child(2) .commission_list_title::before {
+  background-image: url("../images/distrbut/circle_icon@2x.png");
+}
+.commission_list .using_commission li:nth-child(3) .commission_list_title::before {
+  background-image: url("../images/distrbut/noavail_icon@2x.png");
+}
+.commission_list .using_commission li:nth-child(4) .commission_list_title::before {
+  background-image: url("../images/distrbut/cash_icon@2x.png");
+}
+.commission_list .other_commission li:nth-child(1) .commission_list_title::before {
+  background-image: url("../images/distrbut/delivery_icon@2x.png");
+}
+.commission_list .other_commission li:nth-child(2) .commission_list_title::before {
+  background-image: url("../images/distrbut/wind_icon@2x.png");
+}
+.apply_cash {
+  padding-top: 0.48rem;
+  height: 5.06666667rem;
+  background-color: #fff;
+}
+.apply_cash p {
+  color: #666;
+  font-size: 0.32rem;
+}
+.apply_cash p span {
+  color: #fe4646;
+}
+.apply_cash a {
+  margin-top: 0.93333333rem;
+  display: block;
+  height: 1.06666667rem;
+  width: 100%;
+  border-radius: 0.53333333rem;
+  background-color: #fe4646;
+  color: #fff;
+  font-size: 0.4rem;
+  line-height: 1.06666667rem;
+  text-align: center;
+}
+/*# sourceMappingURL=teamCommission.css.map */

@@ -1,0 +1,191 @@
+<include file="public/layout" />
+<style>
+    .flexigrid .sDiv2{
+        border: none;
+    }
+    .flexigrid .sDiv2 .select{
+        border: 1px solid #D7D7D7;
+        border-radius: 4px;
+    }
+    .flexigrid .sDiv2 .qsbox{
+        border: 1px solid #D7D7D7;
+        border-radius: 4px;
+    }
+</style>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+  <div class="fixed-bar">
+    <div class="item-title">
+      <div class="subject">
+        <h3>退货退款管理</h3>
+        <h5>商品订单退货申请及审核处理</h5>
+      </div>
+    </div>
+      <a href="http://help.tp-shop.cn/Index/Help/info/cat_id/5/id/45.html" style="display: {:tpCache('basic.is_manual')?'block':'none'}"  class="manual" target="_blank"><i class="fa fa-calendar"></i>退换货单手册</a>
+  </div>
+  <!-- 操作说明 -->
+  <div id="explanation" class="explanation">
+   	 <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+              <li>买家提交的退货申请, 商家同意并平台审核通过之后, 以余额的方式返回到用户账户上.</li>
+              <li>当审核通过以后，收取到客户的货物，再进行下一步发货操作</li>
+              <li>在同意审核以后直接就可以退款给客户（注意：在同意用户退款退款之后，请先确认是否收到用户退还的货物，再进行下一步退款操作）</li>
+              <li>支付原路退回：用户如何支付，就如何退还给到用户。</li>
+              <li>退款到用户余额：无论用户选择何种支付方式，都是退款到用户商城账户里。</li>
+            </ul>
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+  </div>
+  <div class="flexigrid">
+    <div class="mDiv">
+      <div class="ftitle">
+        <h3>待处理的线上实物交易订单退货列表</h3>
+        <h5>(共{$page->totalRows}条记录)</h5>
+      </div>
+      <a href="" class="refresh-date"><div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div></a>
+        <div class="fbutton"> <a href="javascript:exportReport()"><div class="add" title="选定行数据导出excel文件,如果不选中行，将导出列表所有数据"><span><i class="fa fa-plus"></i>导出数据</span></div></a> </div>
+        <div class="fbutton"><a href="javascript:;" onclick="publicHandleAll('del')"><div class="add" title="批量删除"><span>批量删除</span></div></a></div>
+	   <form class="navbar-form form-inline"  method="post" name="search-form2" id="search-form2">
+	  		<input type="hidden" name="order_by" value="id">
+            <input type="hidden" name="sort" value="desc">
+          <input type="hidden" name="order_ids" value="">
+            <input type="hidden" name="user_id" value="{$_GET[user_id]}">
+            <!--用于查看结算统计 包含了哪些订单-->
+            <input type="hidden" value="{$_GET['order_statis_id']}" name="order_statis_id" />
+      <div class="sDiv">
+        <div class="sDiv2">
+        	<select name="status" class="select">
+                    <option value="">处理状态</option>
+                    <option value="-2">服务单取消</option>
+                    <option value="-1">审核失败</option>
+                    <option value="0">待审核</option>
+                    <option value="1">审核通过</option>
+                    <option value="2">已发货</option>
+                    <option value="4">换货完成</option>
+                    <option value="5">退款完成</option>
+            </select>
+          </div>
+          <div class="sDiv2">
+          <input type="text" size="30" name="order_sn" class="qsbox" placeholder="订单编号">
+          <input type="button" onclick="ajax_get_table('search-form2',1)"  class="btn" value="搜索">
+        </div>
+      </div>
+     </form>
+    </div>
+    <div class="hDiv">
+      <div class="hDivBox">
+        <table cellspacing="0" cellpadding="0">
+          <thead>
+	        	<tr>
+	              <th class="sign" axis="col0">
+	                <div style="width: 24px;"><i class="ico-check"></i></div>
+	              </th>
+	              <th align="left" abbr="order_sn" axis="col3" class="">
+	                <div style="text-align: left; width: 160px;" class="">订单编号</div>
+	              </th>
+	              <th align="left" abbr="consignee" axis="col4" class="">
+	                <div style="text-align: left; width: 260px;" class="">商品名称</div>
+	              </th>
+	              <th align="center" abbr="article_show" axis="col5" class="">
+	                <div style="text-align: center; width: 100px;" class="">类型</div>
+	              </th>
+	              <th align="center" abbr="article_time" axis="col6" class="">
+	                <div style="text-align: center; width: 160px;" class="">申请日期</div>
+	              </th>
+	              <th align="center" abbr="article_time" axis="col6" class="">
+	                <div style="text-align: center; width: 100px;" class="">状态</div>
+	              </th>
+	              <th align="center" abbr="article_time" axis="col6" class="">
+	                <div style="text-align: center; width: 120px;" class="">操作</div>
+	              </th>
+	              <th style="width:100%" axis="col7">
+	                <div></div>
+	              </th>
+	            </tr>
+	          </thead>
+        </table>
+      </div>
+    </div>
+    <div class="bDiv" style="height: auto;">
+      <div id="flexigrid" cellpadding="0" cellspacing="0" border="0" data-url="{:U('admin/Order/delReturnList')}">
+        
+      </div>
+      <div class="iDiv" style="display: none;"></div>
+    </div>
+    <!--分页位置--> 
+   	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+	    ajax_get_table('search-form2',1);
+	
+	 	//点击刷新数据
+		$('.fa-refresh').click(function(){
+			location.href = location.href;
+		});
+        $('.ico-check ' , '.hDivBox').click(function(){
+            $('tr' ,'.hDivBox').toggleClass('trSelected' , function(index,currentclass){
+                var hasClass = $(this).hasClass('trSelected');
+                $('tr' , '#flexigrid').each(function(){
+                    if(hasClass){
+                        $(this).addClass('trSelected');
+                    }else{
+                        $(this).removeClass('trSelected');
+                    }
+                });
+            });
+        });
+	});
+	// ajax 抓取页面
+	function ajax_get_table(tab,page){
+	    cur_page = page; //当前页面 保存为全局变量
+	        $.ajax({
+	            type : "POST",
+	            url:"/index.php/Admin/order/ajax_return_list/p/"+page,//+tab,
+	            data : $('#'+tab).serialize(),// 你的formid
+	            success: function(data){
+	                $("#flexigrid").html('');
+	                $("#flexigrid").append(data);
+                    $('#flexigrid > table>tbody >tr').click(function(){
+                        $(this).toggleClass('trSelected');
+                    })
+	            }
+	        });
+	}
+	
+	function delfunc(obj){
+		    var url = $(obj).attr('data-url'); 
+			layConfirm('确定要删除吗?' , function(){
+				location.href = url;
+			}); 
+	}
+
+    function exportReport(){
+        var selected_ids = '';
+        $('.trSelected' , '#flexigrid').each(function(i){
+            selected_ids += $(this).data('order-id')+',';
+        });
+        // if(!selected_ids){
+        //     layer.msg('未选择订单', {icon: 2, time: 1000});
+        //     return false;
+        // }
+        if(selected_ids != ''){
+            $('input[name="order_ids"]').val(selected_ids.substring(0,selected_ids.length-1));
+        } else {
+			$('input[name="order_ids"]').val('');
+		}
+        $('#search-form2').attr('action','/index.php/admin/Order/export_return_order');
+        $('#search-form2').submit();
+        $('#search-form2').attr('action','/index.php/admin/Order/index');
+    }
+	
+
+</script>
+</body>
+</html>

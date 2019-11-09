@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'es6-promise/auto'
+import VueLazyload from 'vue-lazyload'
 
 import moment from 'moment'
 
@@ -32,7 +33,8 @@ Vue.component(SwipeItem.name, SwipeItem)
 Vue.component(Radio.name, Radio)
 Vue.component(Field.name, Field)
 Vue.component(Cell.name, Cell)
-Vue.use(Vant)
+
+Vue.use(Vant).use(VueLazyload)
 
 Vue.prototype.utils = utils
 Vue.prototype.$moment = moment
@@ -41,7 +43,7 @@ Vue.config.productionTip = false
 // new VConsole()
 
 router.afterEach((to, from) => {
-  document.title = to.meta.title || '蜂鸟智慧商圈' // title 更改
+  document.title = to.meta.head.title || '蜂鸟智慧商圈' // title 更改
   // document.body.className = to.meta.body || '' // 动态改变 body class
 })
 

@@ -1,0 +1,185 @@
+<include file="public/header" title="所有分类"/>
+<style>
+	<!--width: 3.63rem;-->
+    .classlist .fl ul li a{
+        width: 3.63rem;
+        height: 2.56rem;
+		
+		  text-overflow:none !important;
+    }
+    .classlist .fr .branchList .tp-bann img{
+        height: 3.84rem;
+    }
+    .classlist .fr .branchList .tp-class-list h4{
+        height: 1.47rem;
+        line-height: 1.47rem;
+    }
+    .classlist .fr .branchList .tp-class-list ul{
+        margin-bottom: 0.341rem;
+    }
+    .classlist .fr .branchList .tp-class-list ul li a p{
+        font-size: 0.47rem;
+        color: #666666;
+        margin: 0.26rem 0;
+        margin-bottom: 0;
+        <!--height: 0.939rem;-->
+		height: 0.47rem;
+        margin-bottom: 0.469rem;
+        height: 0.47rem;
+        margin-bottom: 0.469rem;
+		display:block;
+    }
+    .branchList-cont{
+        /*display: -webkit-box;*/
+        overflow-y: auto;
+        overflow-x:hidden;
+        -webkit-overflow-scrolling:touch;
+        height: 24.5rem;
+        width: 11.5rem;
+    }
+
+   <!--width: 3.35rem;-->
+    .classlist .fl ul li a p{
+        width: 3rem;
+        width: 3.35rem;
+        width: 3.35rem !important;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .classlist .fl ul li a p.br{
+         text-overflow:ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+	.classlist .fr .branchList .tp-class-list ul li{
+		overflow:hidden;
+		white-space:nowrap;
+		overflow:elipsis !important;
+	}
+	
+	
+	.content{
+		margin:0;
+	}
+
+	
+</style>
+    <div class="classreturn">
+        <div class="content">
+            <div class="ds-in-bl return">
+                <a href="javascript:history.back(-1);"><img src="__STATIC__/images/return.png" alt="返回"></a>
+            </div>
+            <div class="ds-in-bl search">
+                <form action="" method="post">
+                    <div class="sear-input">
+                        <a href="{:U('Goods/ajaxSearch')}">
+                            <input type="text" value="" placeholder="请输入您所搜索的商品">
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="ds-in-bl menu">
+                <a href="javascript:void(0);"><img src="__STATIC__/images/class1.png" alt="菜单"></a>
+            </div>
+        </div>
+    </div>
+    <!--顶部隐藏菜单-s-->
+    <include file="public/top_nav"/>
+    <!--顶部隐藏菜单-e-->
+
+    <div class="flool classlist">
+        <div class="fl category1 h-category1">
+            <ul>
+                <assign name="m" value="0"/>
+                <foreach name="goods_category_tree" item="vo" key="k">
+                    <if condition="$vo[level] eq 1">
+                        <li >
+                           <a href="javascript:void(0);" <if condition="$m eq 0"></if>data-id="{$m++}"><p>{$vo['mobile_name']|getSubstr=0,12}</p></a>
+                        </li>
+                    </if>
+                </foreach>
+            </ul>
+        </div>
+        <div class="fr category2">
+            <assign name="j" value="0"/>
+            <foreach name="goods_category_tree" key="kk" item="vo">
+                <div class="branchList" >
+                    <!--广告图-s-->
+                    <div class="tp-bann"  data-id="{$j++}">
+                        <adv  limit="1" item="v" pid="401">
+                            <a href="{$v.ad_link}&suggestion=540*180" <if condition="$v['target'] eq 1">target="_blank"</if> >
+                            <img src="{$v[ad_code]}" title="{$v[title]}" style="{$v[style]}">
+                            </a>
+                        </adv>
+                    </div>
+                    <!--广告图-e-->
+                    <div class="branchList-cont">
+
+	                    <!--分类-s-->
+	                    <div class="tp-class-list">
+	                        <foreach name="vo.tmenu" item="v2" key="k2">
+	                                <h4><a href="{:U('Mobile/Goods/goodsList',array('id'=>$v2[id]))}" >{$v2['mobile_name']}</a></h4>
+	                                <ul class="tp-category">
+	                                    <foreach name="v2.sub_menu" item="v3">
+	                                            <li>
+	                                                <a href="{:U('Mobile/Goods/goodsList',array('id'=>$v3[id]))}">
+	                                                    <img src="{$v3['image']|default='__STATIC__/images/zy.png'}"/>
+	                                                    <p>{$v3['mobile_name']}</p>
+	                                                </a>
+	                                            </li>
+	                                    </foreach>
+	                                </ul>
+	                        </foreach>
+	                    </div>
+                    <!--分类-e-->
+                    </div>
+                </div>
+            </foreach>
+        </div>
+    </div>
+<!--底部导航-start-->
+<include file="public/footer_nav"/>
+<!--底部导航-end-->
+<script>
+    $(function () {
+		function a(){
+			//左侧最多五字，超出省略号
+			$('.classlist .fl ul li a p').each(function(){
+				str = $(this).text();
+				if(str.length>5){
+					newStr = str.slice(0,5);
+					$(this).text(newStr+'...')
+				}
+			});
+			
+		}
+		a();
+        //点击切换2 3级分类
+        var array=new Array();
+        $('.category1 li').each(function(){
+            array.push($(this).position().top-0);
+        });
+        $('.branchList').eq(0).show().siblings().hide();
+        $('.category1 li').click(function() {
+            $(this).css('backgroundColor','#f4f5f7').siblings().css('backgroundColor','#ffffff')
+            $(this).children('a').css('color','#FF0000').parent().siblings().children('a').css('color','#232326')
+            $(this).find('p').addClass('br').siblings().find('p').removeClass('br')
+            $(this).children("a").children('p').addClass("br").parent().parent().siblings().children("a").children('p').removeClass("br")
+            var index = $(this).index() ;
+            $('.category1').delay(200).animate({scrollTop:array[index]},300);
+            $(this).addClass('cur').siblings().removeClass();
+            $('.branchList').eq(index).show().siblings().hide();
+            $('.category2').scrollTop(0);
+		
+			a();
+        });
+        $("html,body").css("overflow","hidden");
+    });
+	
+    $('.category1 li').eq(0).find('p').addClass('br')
+			
+	
+</script>
+	</body>
+</html>

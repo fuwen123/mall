@@ -1,0 +1,176 @@
+<include file="public/layout" />
+<body style="background-color: #FFF; overflow: auto;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title">
+            <a class="back" href="javascript:history.back();" title="返回"><i class="fa fa-arrow-circle-o-left"></i></a>
+            <div class="subject">
+                <h3>小程序体验者</h3>
+                <h5>小程序体验者绑定/解绑</h5>
+            </div>
+            <ul class="tab-base nc-row">
+                <ul class="tab-base nc-row">
+                    <li><a href="{:U('miniapp/index')}">
+                        <span>小程序授权</span></a>
+                    </li>
+                    <li><a href="{:U('miniapp/tester')}" class="current">
+                        <span>体验者设置</span></a>
+                    </li>
+                    <li><a href="{:U('miniapp/release_manage')}">
+                        <span>上线管理</span></a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+    <!-- 操作说明 -->
+    <div class="explanation" id="explanation">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+                <li>在小程序发布前是没法使用小程序的，如果想先试用一下的话，请绑定对方的微信号作为体验者，提前体验小程序。</li>
+                <li>绑定之后，对方需要在手机微信上确认一下，否则可能出现无权限体验的情况。</li>
+                <li>如果体验者还没有微信号，请在手机微信中进入个人信息进行设置。</li>
+            </ul>
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <form method="post" id="tester">
+        <input type="hidden" name="miniapp_id" value="{$Request.param.miniapp_id}"/>
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label>体验者微信号</label>
+                </dt>
+                <dd class="opt">
+                    <input name="wechat_id" class="input-txt" type="text"/>
+                    <p class="notic">请输入体验者的微信号【请填写手机上微信的"我"头像旁边的微信号】</p>
+                </dd>
+            </dl>
+            <div class="bot">
+                <a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" id="bind_tester">绑 定</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>体验者列表</h3>
+                <h5>(共<span id="count">{:count($miniapp.testers)}</span>条记录)</h5>
+            </div>
+            <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th align="left"  axis="col3" class="">
+                            <div style="text-align: center; width: 300px;" class="">体验者微信号</div>
+                        </th>
+                        <th align="center" axis="col1" class="handle">
+                            <div style="text-align: center; width: 100px;">操作</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;" id="ajax_return">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody>
+                    <empty name="miniapp.testers">
+                        <tr data-id="0">
+                            <td class="no-data" align="center" axis="col0" colspan="50">
+                                <i class="fa fa-exclamation-circle"></i>没有符合条件的记录
+                            </td>
+                        </tr>
+                    <else/>
+                        <volist name="miniapp.testers" id="item">
+                            <tr data-id="{$item}">
+                                <td align="left" class="">
+                                    <div style="text-align: center; width: 300px;">{$item}</div>
+                                </td>
+                                <td align="center" class="handle">
+                                    <div style="text-align: center; width: 100px;">
+                                        <a class="btn blue unbind_tester" href="javascript:;"><i class="fa fa-user-times"></i>解绑</a>
+                                    </div>
+                                </td>
+                                <td align="" class="" style="width: 100%;">
+                                    <div>&nbsp;</div>
+                                </td>
+                            </tr>
+                        </volist>
+                    </empty>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.fa-refresh').click(function(){
+            location.href = location.href;
+        });
+    });
+    $(document).on("click", '#bind_tester', function (e) {
+        var wechat_id = $('input[name=wechat_id]').val();
+        layer.confirm("确定绑定微信号为："+wechat_id+"吗？", function(){
+            $.ajax({
+                url: "{:U('miniapp/bindTester')}",
+                type: 'POST',
+                data: $('#tester').serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 1) {
+                        layer.msg(data.msg, {time: 1000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.alert(data.msg, {icon: 2});
+                    }
+                },
+                error: function () {
+                    layer.alert('服务器繁忙！', {icon: 2});
+                }
+            });
+        });
+    })
+    $(document).on("click", '.unbind_tester', function (e) {
+        var wechat_id = $(this).parent().parent().parent().data('id');
+        layer.confirm("确定解绑微信号为："+wechat_id+"吗？", function(){
+            $.ajax({
+                url: "{:U('miniapp/unbindTester')}",
+                type: 'POST',
+                data: {wechat_id:wechat_id},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 1) {
+                        layer.msg(data.msg, {time: 1000, icon: 1}, function () {
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.alert(data.msg, {icon: 2});
+                    }
+                },
+                error: function () {
+                    layer.alert('服务器繁忙！', {icon: 2});
+                }
+            });
+        });
+    })
+
+</script>
+</html>

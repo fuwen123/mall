@@ -1,0 +1,287 @@
+<include file="public/layout"/>
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
+<body style="background-color: rgb(255, 255, 255); overflow: auto; cursor: default; -moz-user-select: inherit;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page" style="padding: 0 1% 0 1%;">
+    <div class="flexigrid">
+        <div class="mDiv">
+            <div class="ftitle">
+                <h3>砍价徬列表</h3>
+                <h5>(共{$pager->totalRows}条记录)</h5>
+            </div>
+            <div class="fbutton" style="margin-right: 20px">
+                <a href="http://help.tp-shop.cn/Index/Help/info/cat_id/5/id/47.html" target="_blank">
+                    <div class="add" title="帮助">
+                        <span>帮助</span>
+                    </div>
+                </a>
+            </div>
+            <a href="" style="float: left">
+                <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+            </a>
+        </div>
+        <div class="hDiv">
+            <div class="hDivBox">
+                <table cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th class="sign" axis="col0">
+                            <div style="width: 24px;"><i class="ico-check"></i></div>
+                        </th>
+                        <th align="left" abbr="id" axis="col3" class="">
+                            <div style="text-align: left; width: 50px;" class="">活动ID</div>
+                        </th>
+                        <th align="left" abbr="article_title" axis="col3" class="">
+                            <div style="text-align: left; width: 240px;" class="">发起者</div>
+                        </th>
+                        <th align="left" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: left; width: 50px;" class="">商品数量</div>
+                        </th>
+                        <th align="left" abbr="ac_id" axis="col4" class="">
+                            <div style="text-align: center; width: 120px;" class="">帮忙次数</div>
+                        </th>
+                        <th align="center" abbr="article_show" axis="col5" class="">
+                            <div style="text-align: center; width: 120px;" class="">剩余的价格</div>
+                        </th>
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 120px;" class="">创建时间</div>
+                        </th>
+
+                        <th align="center" abbr="article_time" axis="col6" class="">
+                            <div style="text-align: center; width: 50px;" class="">状态</div>
+                        </th>
+                        <th align="left" axis="col1" class="handle">
+                            <div style="text-align: center; width: 150px;">操作</div>
+                        </th>
+                        <th style="width:100%" axis="col7">
+                            <div></div>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="bDiv" style="height: auto;">
+            <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+                <table>
+                    <tbody>
+                    <foreach name="prom_list" item="vo" key="k">
+                        <tr>
+                            <td class="sign">
+                                <div style="width: 24px;"><i class="ico-check"></i></div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 50px;">{$vo.id}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: left; width: 240px;">{$vo['users']['nickname']}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 50px;">{$vo.goods_num}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 120px;">{$vo.cut_count}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width:120px;">{$vo.end_price}</div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 120px;">{$vo.add_time|date='Y-m-d H:i:s',###}
+                                </div>
+                            </td>
+                            <td align="left" class="">
+                                <div style="text-align: center; width: 50px;">{$vo['is_end']?'已完成':'进行中'}
+                                </div>
+                            </td>
+
+                            <td align="left" class="handle">
+                                <div style="text-align: left; width: 150px; max-width:170px;">
+                                    <a class="btn blue" onclick="bargain_list(this)" data-id="{$vo['id']}"><i
+                                            class="fa fa-pencil-square-o"></i>砍价徬</a>
+                                </div>
+                            </td>
+                            <td align="" class="" style="width: 100%;">
+                                <div>&nbsp;</div>
+                            </td>
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="iDiv" style="display: none;"></div>
+        </div>
+        <!--分页位置-->
+        {$page}
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        // 表格行点击选中切换
+        $('#flexigrid > table>tbody >tr').click(function () {
+            $(this).toggleClass('trSelected');
+        });
+
+        // 点击刷新数据
+        $('.fa-refresh').click(function () {
+            location.href = location.href;
+        });
+    });
+
+    // 修改指定表的指定字段值 包括有按钮点击切换是否 或者 排序 或者输入框文字
+    function changeTableVal2(table, id_name, id_value, field, obj, yes, no, status) {
+        if (status == '进行中') {
+            layer.confirm('活动进行中，确认关闭？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                var value = $(obj).val();
+                if (yes == '' || typeof(yes) == 'undefined') yes = '是';
+                if (no == '' || typeof(no) == 'undefined') no = '否';
+                if ($(obj).hasClass('yes')) // 图片点击是否操作
+                {
+                    $(obj).removeClass('no').addClass('yes');
+                    $(obj).html("<i class='fa fa-check-circle'></i>" + yes + "");
+                    value = 1;
+                } else if ($(obj).hasClass('yes')) { // 图片点击是否操作
+                    $(obj).removeClass('yes').addClass('no');
+                    $(obj).html("<i class='fa fa-ban'></i>" + no + "");
+                    value = 0;
+                }
+
+                $.ajax({
+                    url: "/index.php?m=Admin&c=PromotionBargain&a=change_prom_is_end&id=" + id_value,
+                    dataType: 'JSON',
+                    success: function (data) {
+                        console.log(data)
+                        if (data.status == 1) {
+                            if (!$(obj).hasClass('no') && !$(obj).hasClass('yes'))
+                                layer.msg('更新成功', {icon: 1});
+                            window.location.reload();
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                        }
+                    }
+                });
+            }, function (index) {
+                layer.close(index);
+                return false;
+            })
+        } else {
+            var value = $(obj).val();
+            if (yes == '' || typeof(yes) == 'undefined') yes = '是';
+            if (no == '' || typeof(no) == 'undefined') no = '否';
+            if ($(obj).hasClass('yes')) // 图片点击是否操作
+            {
+                $(obj).removeClass('no').addClass('yes');
+                $(obj).html("<i class='fa fa-check-circle'></i>" + yes + "");
+                value = 1;
+            } else if ($(obj).hasClass('yes')) { // 图片点击是否操作
+                $(obj).removeClass('yes').addClass('no');
+                $(obj).html("<i class='fa fa-ban'></i>" + no + "");
+                value = 0;
+            }
+
+            $.ajax({
+                url: "/index.php?m=Admin&c=PromotionBargain&a=change_prom_is_end&id=" + id_value,
+                dataType: 'JSON',
+                success: function (data) {
+                    console.log(data)
+                    if (data.status == 1) {
+                        if (!$(obj).hasClass('no') && !$(obj).hasClass('yes'))
+                            layer.msg('更新成功', {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                }
+            });
+        }
+
+    }
+
+    function changeStatus(status, id, tab) {
+        if (status > 1) {
+            layer.confirm('确认删除？', {btn: ['确定', '取消']}, function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "{:U('Promotion/activity_handle')}",
+                    data: {'id': id, 'tab': tab, 'status': status},
+                    dataType: 'JSON',
+                    success: function (res) {
+                        layer.closeAll();
+                        if (res == 1) {
+                            layer.msg('操作成功', {icon: 1});
+                            window.location.reload();
+                        } else {
+                            layer.msg('操作失败', {icon: 2, time: 2000});
+                        }
+                    }
+                });
+            }, function (index) {
+                layer.close(index);
+                return false;// 取消
+            });
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: "{:U('Promotion/activity_handle')}",
+                data: {'id': id, 'tab': tab, 'status': status},
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res == 1) {
+                        layer.msg('操作成功', {icon: 1});
+                        window.location.reload();
+                    } else {
+                        layer.msg('操作失败', {icon: 2, time: 2000});
+                    }
+                    layer.closeAll();
+                }
+            });
+        }
+    }
+
+    function delfun(obj) {
+        // 删除按钮
+        layer.confirm('确认删除？', {
+            btn: ['确定', '取消'] //按钮
+        }, function () {
+            $.ajax({
+                type: 'post',
+                url: $(obj).attr('data-url'),
+                data: {act: 'del', del_id: $(obj).attr('data-id')},
+                dataType: 'json',
+                success: function (data) {
+                    layer.closeAll();
+                    if (data.status == 1) {
+                        $(obj).parent().parent().parent().remove();
+                    } else {
+                        layer.alert(data.msg, {icon: 2});  //alert('删除失败');
+                    }
+                }
+            })
+        }, function () {
+            layer.closeAll();
+        });
+    }
+
+
+    function bargain_list(obj) {
+        var id = $(obj).data('id');
+        var url = '/index.php?m=Admin&c=PromotionBargain&a=bargain_list&id=' + id;
+        //iframe窗
+        layer.open({
+            type: 2,
+            title: '发起者列表',
+            shadeClose: true,
+            shade: 0.4,
+            area: ['60%', '100%'],
+            content: [url], //iframe的url，no代表不显示滚动条
+            end: function () { //此处用于演示
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

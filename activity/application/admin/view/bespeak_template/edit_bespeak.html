@@ -1,0 +1,150 @@
+<volist name="list['bespeak_template_unit']" id="template_unit" key="k">
+    <if condition="($template_unit['name'] eq 'user_name') || $template_unit['name'] eq 'user_mobile'|| $template_unit['name'] eq 'take_time'">
+        <script>
+            $("input[name='{$template_unit.name}']").attr('data-unit',{$template_unit['template_unit_id']});
+        </script>
+    </if>
+    <if condition="($template_unit['name'] neq 'user_name') && $template_unit['name'] neq 'user_mobile' && $template_unit['name'] neq 'take_time'">
+        <switch name="$template_unit['type']">
+            <case value="1">
+                <!--单文本-->
+                <div class="tpd-edits-hidden " data-eidtid="0">
+                    <div class="js-code-wrap">
+                        <div class="tpd-singleText-cont"><h3 class="singleText-cont-title TextName">{$template_unit['title']}</h3>
+                            <p class="singleText-cont-p">{$template_unit['desc']}</p>
+                            <div class="singleText-cont-input cont-list">
+                                <input type="text" data-unit="{$template_unit['template_unit_id']}" data-sort="{$template_unit['sort']}" data-required="{$template_unit['required']?'required':''}" data-format="{$template_unit['format']}" data-required-title="" placeholder="{$template_unit['placeholder']}">
+                            </div>
+                        </div>
+                    </div>
+                    <i class="tpd-editing-close"></i>
+                    <div class="tpd-edit-module"></div>
+                </div>
+            </case>
+            <case value="2">
+                <!--多行文本-->
+                <div class="tpd-edits-hidden " data-eidtid="1">
+                    <div class="js-code-wrap">
+                        <div class="tpd-multiText-cont">
+                            <h3 class="multiText-cont-title TextName">{$template_unit['title']}</h3>
+                            <div class="multiText-cont-textarea cont-list">
+                                <textarea data-unit="{$template_unit['template_unit_id']}" data-sort="{$template_unit['sort']}"  data-required="{$template_unit['required']?'required':''}" data-format="{$template_unit['format']}" placeholder="{$template_unit['placeholder']}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="tpd-editing-close"></i>
+                    <div class="tpd-edit-module"></div>
+                </div>
+            </case>
+            <case value="3">
+                <!--按钮-->
+                <div class="tpd-edits-hidden " data-eidtid="2">
+                    <div class="js-code-wrap">
+                        <div class="tpd-radioButton-cont">
+                            <h3 class="radioButton-cont-title TextName">{$template_unit['title']}</h3>
+                            <div class="radioButton-cont-list cont-list">
+                                <volist name="template_unit['value_arr']" id="value_v" key="value_k">
+                                    <div class="radioButton-cont-radio" data-unit="{$template_unit['template_unit_id']}" data-sort="{$template_unit['sort']}"  data-required="{$value_k==1 && $template_unit['required']?'required':''}">
+                                        <input type="radio">
+                                        <label>{$value_v}</label>
+                                    </div>
+                                </volist>
+
+                            </div>
+                        </div>
+                    </div>
+                    <i class="tpd-editing-close"></i>
+                    <div class="tpd-edit-module"></div>
+                </div>
+            </case>
+            <case value="4">
+                <!--复选框-->
+                <div class="tpd-edits-hidden " data-eidtid="3">
+                    <div class="js-code-wrap">
+                        <div class="tpd-checkBox-cont">
+                            <h3 class="checkBox-cont-title TextName">{$template_unit['title']}</h3>
+                            <div class="checkBox-cont-list cont-list">
+                                <volist name="template_unit['value_arr']" id="value_v" key="value_k">
+                                    <div class="checkBox-cont-check" data-unit="{$template_unit['template_unit_id']}" data-sort="{$template_unit['sort']}"  data-required="{$value_k==1 && $template_unit['required']?'required':''}">
+                                        <input type="checkbox">
+                                        <label>{$value_v}</label>
+                                    </div>
+                                </volist>
+
+                            </div>
+                        </div>
+                    </div>
+                    <i class="tpd-editing-close"></i>
+                    <div class="tpd-edit-module"></div>
+                </div>
+            </case>
+            <case value="5">
+                <!--下拉框-->
+                <div class="tpd-edits-hidden " data-eidtid="4">
+                    <div class="js-code-wrap">
+                        <div class="tpd-dropDown-cont">
+                            <div class="tpd-dropDown-style">
+                                <div class="tpd-cstyle-select tpd-cdiy-font28">
+                                    <h3 class="dropDown-cont-title TextName">{$template_unit['title']}</h3>
+                                    <div class="tpd-select-wrap">
+                                        <span>{$value_v}</span>
+                                        <ul class="tpd-select-list cont-list">
+                                            <volist name="template_unit['value_arr']" id="value_v" key="value_k">
+                                            <li singletex-li="{$value_v}" data-unit="{$template_unit['template_unit_id']}" data-sort="{$template_unit['sort']}"  data-required="{$value_k==1 && $template_unit['required']?'required':''}">{$value_v}</li>
+                                            </volist>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="tpd-editing-close"></i>
+                    <div class="tpd-edit-module"></div>
+                </div>
+            </case>
+            <case value="6">
+                <!--单张图片-->
+                <div class="tpd-edits-hidden " data-eidtid="5">
+                    <div class="js-code-wrap">
+                        <div class="tpd-picture-cont">
+                            <h3 class="picture-cont-title TextName">{$template_unit['title']}</h3>
+                            <div class="picture-cont-img cont-list">
+                                <a href="" data-unit="{$template_unit['template_unit_id']}" data-sort="{$template_unit['sort']}"  data-upload-num="1" data-required="{$template_unit['required']?'required':''}">+<span>上传图片<span></span></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="tpd-editing-close"></i>
+                    <div class="tpd-edit-module"></div>
+                </div>
+            </case>
+            <case value="7">
+                <!--多张图片-->
+                <div class="tpd-edits-hidden " data-eidtid="5">
+                    <div class="js-code-wrap">
+                        <div class="tpd-picture-cont">
+                            <h3 class="picture-cont-title TextName">{$template_unit['title']}</h3>
+                            <div class="picture-cont-img cont-list">
+                                <a href="" data-unit="{$template_unit['template_unit_id']}" data-sort="{$template_unit['sort']}"  data-upload-num="0" data-required="{$template_unit['required']?'required':''}">+<span>上传图片<span></span></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="tpd-editing-close"></i>
+                    <div class="tpd-edit-module"></div>
+                </div>
+            </case>
+            <case value="8">
+                <!--时间控件-->
+            </case>
+
+            <default/>
+            default
+        </switch>
+    </if>
+</volist>
+
+
+<script>
+
+</script>
+
+

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>促销活动商品列表</title>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/css/tpshop.css" />
+		<script src="__STATIC__/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="{$tpshop_config.shop_info_store_ico|default='/public/static/images/logo/storeico_default.png'}" media="screen"/>
+		<script src="__PUBLIC__/js/global.js"></script>
+		<style type="text/css">
+			.page .fr{float: none;position: relative;left: 50%;right: 50%;margin-left: -350px;}
+			.f-total{margin-top: 10px;}
+			#goods_list{
+				width: 1224px;
+				margin: 0 auto;
+				padding-left: 50px;
+			}
+			#goods_list a{
+				width: 337px;
+				height: 226px;
+				background-color: #ffffff;
+				border-radius: 12px;
+				border: solid 1px #f2f2f2;
+				display: inline-block;
+				padding: 8px 3px 8px 8px;
+				margin-bottom: 20px;
+				margin-right: 45px;
+			}
+			#goods_list a:hover{
+				box-shadow: 0px 3px 10px 0px rgba(81, 81, 81, 0.15);
+			}
+			#goods_list img{
+				object-fit: cover;
+				width: 330px;
+				height: 170px;
+				border-radius: 12px;
+			}
+			#goods_list .cbaudience p:nth-child(1){
+				font-weight: 600;
+				font-size: 16px;
+				color: #202020;
+				position: relative;
+				padding-left: 15px;
+				margin-top: 10px;
+			}
+			#goods_list .cbaudience p:nth-child(1):before{
+				content: "";
+				display: inline-block;
+				width: 4px;
+				height: 16px;
+				background-color: #ff3f3f;
+				border-radius: 2px;
+				position: absolute;
+				top: 4px;
+				left: 2px;
+			}
+			#goods_list .cbaudience p:nth-child(2){
+				font-size: 12px;
+				color: #666;
+				padding-left: 15px;
+				margin-top: 3px;
+			}
+		</style>
+	</head>
+	<body>
+		<include file="public/header" w='w1224'/>
+		<div class="search-box p">
+			<div class="w1224">
+				<div class="search-path fl">
+					<a>全部结果</a>
+					<i class="litt-xyb"></i>
+					<span>促销</span>
+				</div>
+				<!--<div class="search-clear fr">
+					<span><a href="javascript:void(0)">清空筛选条件</a></span>
+				</div>-->
+			</div>
+		</div>
+
+		<div class="search-opt classify">
+			<div class="w1224">
+				<div class="opt-list">
+					<dl class="brand-section">
+						<dt>分类:</dt>
+						<dd class="ri-section">
+							<div class="lf-list">
+								<div class="brand-list">
+									<div class="clearfix p ">
+										<a href="{:U('Home/Activity/promoteList',array('type'=>0))}">
+											<span <if condition="$Request.param.type eq '0' or $Request.param.type eq ''">class="red"</if>>限时折扣</span>
+										</a>
+										<a href="{:U('Home/Activity/promoteList',array('type'=>1))}">
+											<span <if condition="$Request.param.type eq '1'">class="red"</if>>限时优惠</span>
+										</a>
+										<a href="{:U('Home/Activity/promoteList',array('type'=>2))}">
+											<span <if condition="$Request.param.type eq '2'">class="red"</if>>限时促销</span>
+										</a>
+										<a href="{:U('Home/Activity/promoteList',array('type'=>3))}">
+											<span <if condition="$Request.param.type eq '3'">class="red"</if>>买就送</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+
+
+		<!--促销列表-s-->
+		<div id="goods_list">
+			<foreach name="promote" item="list">
+				<a href="{:U('Activity/promote_goods',array('id'=>$list[id]))}">
+					<div class="banner">
+						<img src="{$list[prom_img]}"/>
+					</div>
+					<div class="cbaudience">
+						<div class="maleri30">
+							<p>{$list[title]}</p>
+							<p>时间：{:date('Y-m-d h:m',$list[start_time])} 至 {:date('Y-m-d h:m',$list[end_time])}</p>
+						</div>
+					</div>
+				</a>
+			</foreach>
+		</div>
+		<!--促销列表-e-->
+		<script>
+			// 倒计时
+			function GetRTime2(){
+				//var text = GetRTime('2016/02/27 17:34:00');
+			<foreach name="goodsList" item="v" key="k" >
+				var text{$v[goods_id]} = GetRTime('{$v.end_time|date="Y/m/d H:i:s",###}');
+				$("#surplus_text{$v[goods_id]}").text(text{$v[goods_id]});
+			</foreach>
+			}
+			setInterval(GetRTime2,1000);
+		</script>
+
+		<!--footer-s-->
+		<div class="footer p">
+			<include file="public/footer" />
+			<include file="public/sidebar_cart" />
+		</div>
+		<!--footer-e-->
+		<script src="__STATIC__/js/lazyload.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__STATIC__/js/headerfooter.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

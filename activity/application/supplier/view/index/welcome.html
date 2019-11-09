@@ -1,0 +1,121 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="__PUBLIC__/static/css/index.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/static/css/perfect-scrollbar.min.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/static/css/purebox.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/static/js/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__PUBLIC__/static/js/jquery.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/js/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/static/js/jquery.cookie.js"></script>
+</head>
+
+<body class="iframe_body">
+<div class="warpper">
+	<div class="index-leftpt">
+    	<div class="index-bisinfo">
+        	<h3>基本信息</h3>
+            <div class="bisinfo-con">
+            	<span>供应商名称：<b>{$supplier['suppliers_name']}</b></span>
+                <!--<span>开通时间：<b>2018-01-01至2019-01-01</b></span>-->
+                <!--<span>其他信息：<b>自定义</b></span>-->
+            </div>
+        </div>
+        <div class="index-busiinfo">
+        	<div class="indbus-tit">
+            	<h3>经营概括<a href="javascript:void(0)" id="date-vis"></a></h3>
+                <span>更新时间：<?php echo date('Y-m-d');?><!--<a href="javascript:void(0);">更多数据&gt;&gt;</a>--></span>
+            </div>
+            <div class="busiinfo-con">
+            	<div class="cont h-cont">
+                	<img src="__PUBLIC__/static/images/busiic01.png" alt="">
+                    <span><b onclick="javascript:openItem('index|Order');">{$count.new_order}</b><i>今日订单</i></span>
+                    <!--<span><b>0.00</b><i>今日交易额</i></span>-->
+                    <span><b onclick="javascript:openItem('index|Goods');">{$count.goods}</b><i>商品数量</i></span>
+                </div>
+                <div class="cont diffcolor b-cont">
+                	<img src="__PUBLIC__/static/images/busiic02.png" alt="">
+                    <span><b onclick="javascript:openItem('index|Order');">{$count.handle_order}</b><i>待处理订单</i></span>
+                    <span><b onclick="javascript:openItem('stockList|Goods');">{$count.stock}</b><i>库存预警</i></span>
+                </div>
+            </div>
+        </div>
+        <div class="index-commfunc">
+        	<h3>常用功能</h3>
+            <div class="commfunc-con">
+                <a href="javascript:openItem('index|Goods');"><img src="__PUBLIC__/static/images/commfunc02.png" alt=""><i>商品管理</i></a>
+                <a href="javascript:openItem('index|Order');"><img src="__PUBLIC__/static/images/commfunc03.png" alt=""><i>订单管理</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="index-rightpt">
+    	<!--<div class="index-adpt"><img src="__PUBLIC__/static/images/indexad.png" alt=""></div>-->
+        <!--<div class="index-custom">-->
+        	<!--<span>-->
+            	<!--<img src="__PUBLIC__/static/images/iconcustomer.png" alt="">-->
+                <!--<em><b>遇到问题？</b><i>我们将竭诚为您服务</i></em>-->
+            <!--</span>-->
+            <!--<a href="javascript:void(0);">在线客服</a>-->
+        <!--</div>-->
+        <!--<div class="index-problem">
+        	<h3>常见问题<a href="http://help.tp-shop.cn/Index/Help/channel/cat_id/5.html">更多解答</a></h3>
+            <ul>
+            	<li><a href="http://help.tp-shop.cn/Index/Help/info/cat_id/5/id/594.html">1. 小程序/公众号微信支付对接问题</a></li>
+                <li><a href="http://help.tp-shop.cn/Index/Help/info/cat_id/2/id/380.html">2. 如何发布微信小程序</a></li>
+                <li><a href="http://help.tp-shop.cn/Index/Help/info/cat_id/2/id/494.html">3. 小程序部署与安装</a></li>
+                <li><a href="http://help.tp-shop.cn/Index/Help/info/cat_id/5/id/561.html">4. 如何装修商城首页</a></li>
+            </ul>
+        </div>-->
+        <!--<div class="index-updatelog">-->
+        	<!--<h3>更新日志<a href="javascript:void(0)">更多内容</a></h3>-->
+            <!--<ul>-->
+            	<!--<li><a href="javascript:void(0)">1. 更新日志标题</a></li>-->
+                <!--<li><a href="javascript:void(0)">2. 更新日志</a></li>-->
+                <!--<li><a href="javascript:void(0)">3. 今日更新</a></li>-->
+                <!--<li><a href="javascript:void(0)">4. 日志详情</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    </div>
+</div>
+<script>
+$("#date-vis").addClass("vis");
+$("#date-vis").click(function(){
+	$(this).toggleClass("vis").toggleClass("hid");
+    var data_eyes = {
+        parameter:['{$count.new_order}','{$count.goods}'],
+        ptitle:['今日订单','商品数量'],
+        bSummary:['{$count.handle_order}','{$count.stock}'],
+        bTitle:['待处理订单','库存预警']
+    };
+    var de_html = '<img src="__PUBLIC__/static/images/busiic01.png" alt="">';
+    var b_html = '<img src="__PUBLIC__/static/images/busiic02.png" alt="">';
+    if($(this).hasClass('vis')){
+        for(var i in data_eyes.parameter){
+            de_html += ` <span><b>${data_eyes.parameter[i]}</b><i>${data_eyes.ptitle[i]}</i></span>`
+        }
+        $('.h-cont').html(de_html)
+        for(var i in data_eyes.bSummary){
+            b_html += `<span><b>${data_eyes.bSummary[i]}</b><i>${data_eyes.bTitle[i]}</i></span>`
+        }
+        $('.b-cont').html(b_html)
+    }else{
+        for(var i in data_eyes.parameter){
+            de_html += ` <span><b>**</b><i>${data_eyes.ptitle[i]}</i></span>`
+        }
+        $('.h-cont').html(de_html)
+        for(var i in data_eyes.bSummary){
+            b_html += ` <span><b>**</b><i>${data_eyes.bTitle[i]}</i></span>`
+        }
+        $('.b-cont').html(b_html)
+    }
+});
+
+function openItem(param) {
+    data_str = param.split('|');
+    $.cookie('workspaceParamSupplier', data_str[0] + '|' + data_str[1], { expires: 1 ,path:"/"});
+    top.location.reload();
+}
+</script>
+</body>
+</html>

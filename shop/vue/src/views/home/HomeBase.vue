@@ -1,6 +1,12 @@
 <template>
   <div class="home-base">
-    <router-view />
+    <!-- 公共头 -->
+    <van-nav-bar :title="$route.meta.head.title"
+                 :left-arrow="$route.meta.head.showBack || false"
+                 @click-left="onClickLeft"
+                 v-if="$route.meta.head && $route.meta.head.show" />
+    <!-- 公共头 end -->
+    <router-view ref="childView" />
     <div v-if="$route.meta.footer.show"
          class='common-footer-wrap'>
       <mt-tabbar v-model='home_selected'
@@ -55,6 +61,32 @@ export default {
   },
   created: function () {
 
+  },
+
+  methods: {
+    /**
+     * 点击头部返回
+     */
+    onClickLeft () {
+      let back = this.$route.meta.head.back || -1 // 默认返回上一页
+      if (back === -1) {
+        this.$router.go(back)
+      } else {
+        // back可以是子页面的方法的名称，点击的时候触发子页面方法名
+        this.$refs.childView[back] && this.$refs.childView[back]()
+      }
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/deep/ .van-icon.van-icon-arrow-left {
+  color: #333333 !important;
+}
+
+/deep/ .van-nav-bar__title {
+  color: #000000;
+  font-weight: bold;
+}
+</style>

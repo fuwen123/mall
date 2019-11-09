@@ -1,0 +1,12 @@
+              <foreach name="account_log" item="v">
+                  <div class="fll_acc">
+                      <ul>
+                          <li class="orderid-h">{$v[desc]}</li>
+                          <li class="price-h">
+                              <span>余额：</span><span class="red">{$v[user_money]}</span></li>
+                          <li class="time-h">
+                              <span>{:date('Y-m-d H:i:s',$v[change_time])}</span>
+                          </li>
+                      </ul>
+                  </div>
+              </foreach>

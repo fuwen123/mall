@@ -1,0 +1,375 @@
+<style>
+    .delete{
+        color: #fff;width: 0.2rem;height: 0.2rem;background: red;float: right;
+    }
+    .ul_li li{width: 1.6rem;margin-right: .7rem;height: 1.6rem;}
+    .bookinfo_tp{border-radius: 1rem;}
+    .Package-footer-btn input{width: calc(100% - 2rem); height: 1.8rem; border-radius: 0.9rem; margin: 0 1rem;}
+    .invoice_Package{color: #666;font-size: 0.6rem;}
+    #city{
+        background-color: #fff;
+    }
+    .bookinfo_list{
+        overflow: hidden;
+    }
+    .z-select-wrap{height: 2.34667rem;}
+</style>
+<!--填写预约信息弹窗 s-->
+<div class="pop-prkage-wraps p pop-prkage-ziti" id="bespeak" style="display: none;position: fixed;width: 100%;height: 100%; z-index: 6;top: 0;left: 0;" >
+    <div class="z-Package-hrader">
+        <i class="z-Package-icon Package-icon-close" id="bespeak_close"></i>
+        </a>
+        <h5>填写预约信息</h5>
+    </div>
+
+    <form  id="bespeak_form" enctype="multipart/form-data">
+        <div class="bookinfo_con">
+            <volist name="cartList[0]['goods']['bespeak_template_unit']" id="template_unit" key="k">
+                <switch name="$template_unit['type']">
+                    <case value="1">
+                        <div class="bookinfo_list bookinfo_list_a"><label>{$template_unit['title']}<i>{$template_unit['required']==1?"*":""}</i></label>
+                            <input type="text" name="bespeak_form[{$template_unit['template_unit_id']}]" id="{$template_unit['name']}"  placeholder="{$template_unit['placeholder']}" data-title="{$template_unit['title']}" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}" >
+                        </div>
+                    </case>
+                    <case value="2">
+                        <div class="boookinfo_mesg">
+                            <h3>{$template_unit['title']}:<i style="color: #ff3333">{$template_unit['required']==1?"*":""}</i></h3>
+                            <textarea type="textarea" name="bespeak_form[{$template_unit['template_unit_id']}]" data-title="{$template_unit['title']}" placeholder="{$template_unit['placeholder']}" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}"></textarea>
+                            <!--<span><i>50</i>/50</span>-->
+                        </div>
+                    </case>
+                    <case value="3">
+                        <div class="bookinfo_list bookinfo_radios">
+                            <label >{$template_unit['title']}：<i>{$template_unit['required']==1?"*":""}</i></label>
+                            <volist name="template_unit['value_arr']" id="value_v" key="value_k">
+                                <div class="bookinfo_radios_cont">
+                                    <input type="radio" name="bespeak_form[{$template_unit['template_unit_id']}]"  id="{$template_unit['template_unit_id']}{$value_k}" value="{$value_v}" title="{$value_v}" checked="" data-title="{$template_unit['title']}" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}">
+                                    <label for="{$template_unit['template_unit_id']}{$value_k}">{$value_v}</label>
+                                </div>
+                            </volist>
+                        </div>
+                    </case>
+                    <case value="4">
+                        <div class="bookinfo_list bookinfo_radios checkbox-label">
+                            <label >{$template_unit['title']}：<i>{$template_unit['required']==1?"*":""}</i></label>
+                            <volist name="template_unit['value_arr']" id="value_v" key="value_k">
+                                <div class="bookinfo_radios_cont">
+                                    <input data-unit="bespeak_form[{$template_unit['template_unit_id']}]" type="checkbox" name="bespeak_form[{$template_unit['template_unit_id']}][{$value_k}]" data-title="{$template_unit['title']}" id="{$template_unit['template_unit_id']}{$value_k}" value="{$value_v}" title="{$value_v}" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}">
+                                    <label for="{$template_unit['template_unit_id']}{$value_k}">{$value_v}</label>
+                                </div>
+                            </volist>
+
+                        </div>
+                    </case>
+                    <case value="5">
+                        <div class="bookinfo_list bookinfo_list_select">
+                            <label >{$template_unit['title']}：<i>{$template_unit['required']==1?"*":""}</i></label>
+                            <select id="city" type="select" class="select" data-title="{$template_unit['title']}" name="bespeak_form[{$template_unit['template_unit_id']}]" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}">
+
+                                <option value="">请选择</option>
+                                <volist name="template_unit['value_arr']" id="value_v" key="value_k">
+                                    <option id="{$template_unit['template_unit_id']}{$value_k}" value="{$value_v}" title="{$value_v}">{$value_v}</option>
+                                </volist>
+                            </select>
+                            <i class="bookinfo_list_left"></i>
+                        </div>
+                    </case>
+                    <case value="6">
+                        <div class="bookinfo_list">
+                            <label class="bookinfo_tp_name" >{$template_unit['title']}<i>{$template_unit['required']==1?"*":""}</i></label>
+                            <!--/template/mobile/rainbow/static/images/camera.png-->
+                            <input type="hidden" id="img"  name="bespeak_form[{$template_unit['template_unit_id']}]" data-title="{$template_unit['title']}" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}" >
+                             <input type="file"style="display: none" onchange="up_img(this)" name="bespeak_form[{$template_unit['template_unit_id']}]"  id="{$template_unit['template_unit_id']}"  data-title="{$template_unit['title']}" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}"  accept="image/*"/>
+                            <a class="bookinfo_tp " onclick="click_up(this)" >上传图片 </a>
+                            <ul class="bookinfo_list_Ulimg ul_li" style="width: auto;min-width: 1.6rem;margin:.3rem 0;">
+
+                            </ul>
+                        </div>
+                    </case>
+                   <case value="7">
+                        <!--多张图片-->
+                       <div class="bookinfo_list" style="height: auto;min-height: 2.346667rem;">
+                           <label class="bookinfo_tp_name" >{$template_unit['title']}：<i>{$template_unit['required']==1?"*":""}</i></label>
+                           <input type="hidden" id="imgs"  name="bespeak_form[{$template_unit['template_unit_id']}]" data-title="{$template_unit['title']}" data-verify="{$template_unit['required']?'required':''}{$template_unit['format']?'|':''}{$template_unit['format']?$template_unit[format]:''}" >
+                           <input type="file" style="display: none" multiple onchange="up_img(this)"  id="{$template_unit['template_unit_id']}"  accept="image/*" />
+                           <a class="bookinfo_tp" onclick="click_up(this)"> 上传图片 </a>
+                           <ul class="bookinfo_list_Ulimg">
+
+                           </ul>
+                       </div>
+                    </case>
+                    <case value="8">
+                        <div class="bookinfo_list">
+                            <div class="z-select-wrap">
+                                <!--自提时间-->
+                                <div class="invoice list7" style="height: 2.34667rem;">
+                                    <div class="myorder p" style="border: 0;height: 2.34667rem;">
+                                        <div class="content30" style="height: 2.34667rem;line-height: 2.34667rem;">
+                                            <a class="remain" style="float: none;background: none;">
+                                                <div class="order">
+                                                    <div class="fl">
+                                                        <span>预约时间</span>
+                                                    </div>
+                                                    <div class="fr" style="height: 2.34667rem;margin-top: 0;line-height: 2.34667rem;">
+                                            <span class="invoice_Package" style="height: 2.34667rem;margin-top: 0;line-height: 2.34667rem;font-size: 0.7rem;color: #999;margin-right: 0.2rem;">
+                                                <input type="text" id="date_time_picker_mask" value="" data-options="" style="font-size: 0.7rem;width: 5.8rem;">
+                                                <input type="hidden" name="bespeak_form[{$template_unit['template_unit_id']}]" id="bespeak_form_time" data-verify='' value="" >
+                                                <!--<em id="date_time_day">【星期二】</em>-->
+                                                <em id="date_time_day" style="font-size: 0.7rem;color: #999;">请选择时间</em>
+                                            </span>
+                                                        <i class="Mright" style="background-repeat: no-repeat;background-size:.34133rem .597333rem;width: .34133rem;height: 2.34667rem;display: block;float: left;background-position: center;margin: 0;"></i>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--调用时间插件-->
+                                <script>
+                                    var endY = {$data.time|default=time()|date='Y',###}-0+1;
+                                    var str = "{'type':'YYYY-MM-DD hh:mm','beginYear':{$data.time|default=time()|date='Y',###},'endYear':"+endY+",'limitTime':'today'}";
+                                    $('#date_time_picker_mask').attr('data-options',str);
+                                    $.date('#date_time_picker_mask');
+                                    $(document).on('click', '#date_time_day', function () {
+                                        $('#date_time_picker_mask').trigger('click');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </case>
+
+                    <default />default
+                </switch>
+
+            </volist>
+
+            <div class="Package-footer-btn" style="margin-top: 1.344rem;">
+                <input type="button" onclick="bespeak_sub()" value="确定"/>
+                <label></label>
+            </div>
+        </div>
+    </form>
+</div>
+<!--填写预约信息弹窗 e-->
+
+
+<script>
+    //设置自提时间
+//    function initShopTime() {
+//        var date_time_picker_mask = $('#date_time_picker_mask').val();
+//        date_time_picker_mask += ':00';
+//        date = date_time_picker_mask.replace(/-/g, '/');
+//        var d = new Date(date);
+//        var timestamp = d.getTime().toString().substring(0, 10);
+//        cart2_form.find("input[name='take_time']").val(timestamp);
+//        $('#bespeak_form_time').val(timestampToTime(timestamp));
+//        var weekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+//        var day = weekDay[d.getDay()];
+//        $('#date_time_day').html('【' + day + '】');
+//    }
+</script>
+
+
+
+<script>
+    // 提交订单
+    function bespeak_sub() {
+        if($('#user_name').val()){
+            $("input[name='consignee']").val($('#user_name').val());
+        }
+        if($('#user_mobile').val()){
+            $("input[name='mobile']").val($('#user_mobile').val());
+        }
+        if(!$('#bespeak_form_time').val()){
+            layer.open({content: '请输入预约时间',time:2});
+            return false;
+        }
+		
+		//复选框的required验证
+		var msg = '';
+		$('.checkbox-label :checkbox:first').each(function(){
+			var verify = $(this).data('verify');
+			if (verify == 'required') {
+				var unit = $(this).data('unit');
+				if ($(':checkbox:checked[data-unit="' + unit + '"]').length < 1) {
+					msg = $(this).attr('data-title');
+				}
+			}
+		});
+		if (msg != '') {
+			layer.open({content: msg + '至少选择一个',time:2});
+			return false;
+		}
+		
+        var status = 1;
+        var serializeArray = $('#bespeak_form').serializeArray();
+
+        console.log(serializeArray)
+        $.each(serializeArray,function (i,o) {
+            var name = $("*[name='"+o.name+"']");
+            var verify = name.attr('data-verify');
+            var title = name.attr('data-title');
+            var verify = verify.split('|');//分隔验证规则
+            var value = o.value;
+            //验证必填规则
+            if('required' == verify[0] &&　(value == ''||value == undefined)){
+                layer.open({content: title + '为必填项',time:2});
+                status = 0;
+                return false;
+            }
+            if(name.attr('type')=='textarea' || name.attr('type')=='text'){
+                if(name.val().length >=255){
+                    layer.open({content: title+'不能超过255字符',time:2});
+                    status = 0;
+                    return false;
+                }
+            }
+            if(value){
+                //验证格式规则
+                switch (verify[1]){
+                    case 'mobile':
+                        if(!/^1[34578]\d{9}$/.test(value)){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'phone':
+                        if(!(/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'identity':
+                        if(!(/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'zip_code':
+                        if(!(/^[0-9][0-9]{5}$/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'email':
+                        if(!(/[a-z0-9A-Z_-]+@[a-z0-9A-Z_-]+(\.[a-z]{2,5}){1,2}/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                    case 'url':
+                        if(!(/[a-zA-z]+:\/\/[^\s]*/.test(value))){
+                            layer.open({content: title+'格式不对',time:2});
+                            status = 0;
+                            return false;
+                        }
+                        break;
+                }
+                status = 1;
+            }
+
+        });
+        if(status){
+            $('#bespeak_close').click();
+        }
+    }
+
+
+</script>
+<script>
+    //删除图片
+    function delete_img(e) {
+        var src = $(e).prev().attr('src');
+        console.log(src)
+        var img_arr = $(e).parents('.bookinfo_list').find("input[type='hidden']").val();
+        img_arr = img_arr.split(',');
+        console.log(img_arr)
+        var i = img_arr.indexOf(src);
+        console.log(i)
+        if(i > -1){
+            img_arr.splice(i,1);
+            // img_arr.join(',')
+            $(e).parents('.bookinfo_list').find("input[type='hidden']").val(img_arr.join(','));
+            $(e).parents('.bookinfo_list').find("input[type='hidden']").next().attr('type','text');//改变类型，可以多次上传同一张图片
+            $(e).parents('.bookinfo_list').find("input[type='hidden']").next().attr('type','file');//改变类型，可以多次上传同一张图片
+            $(e).parent().remove();
+        }
+    }
+    function click_up(e) {
+        $(e).parent().find('input').click();
+    }
+    //上传图片
+    function up_img(e) {
+        var id = $(e).attr('id');
+        if(!$(e).attr('multiple') && $('#'+id).parent().find('.bookinfo_list_Ulimg').children().length){
+            $('#'+id).parent().find('.bookinfo_list_Ulimg').text('');
+        }
+        //判断图片
+        if($(e).attr('multiple')){
+            if($('#imgs').val()){
+                var le = $('#imgs').val().split(',').length;
+            }else {
+                var le = 0;
+            }
+            if(e.files.length + le >4){
+                layer.open({content:"最多只能上传4张图片!",time:2});
+                return false;
+            }
+
+        }
+        // $.each(e.files,function (i,o) {
+        //     var rd = new FileReader();//创建文件读取对象
+        //     rd.readAsDataURL(e.files[i]);//文件读取装换为base64类型
+        //     rd.onloadend = function(e) {
+        //         //加载完毕之后获取结果赋值给img
+        //         $('#'+id).parent().find('.bookinfo_list_Ulimg').append('<li><img src="'+this.result+'"><span onclick="delete_img(this)">×</span></li>');
+        //         // $('#'+id).before('<img style="width: 1.6rem;height: 1.6rem;" src="'+this.result+'"> ');
+        //     }
+        // });
+
+        var formData = new FormData();//表单id
+        $.each(e.files,function (i,o) {
+            formData.append('bespeak_img_file[]',e.files[i]);
+        });
+        $.ajax({
+            type: "POST",
+            url: "{:U('mobile/cart/bespeakUpImg')}",
+            data: formData,
+            dataType: "json",
+            async: false,
+            cache: false,  //上传文件不需要缓存
+            contentType: false,
+            processData: false, //因为data值是FormData对象，不需要对数据做处理
+            error: function (data) {
+                alert(JSON.stringify(data));
+                layer.open({content:"服务器繁忙, 请联系管理员!",time:2});
+            },
+            success: function (data) {
+                if (data.status == 1) {
+                    if($(e).attr('multiple')){
+                        if($('#imgs').val()){
+                            $('#imgs').val($('#imgs').val()+','+data.data);
+                        }else{
+                            $('#imgs').val(data.data);
+                        }
+                    }else{
+                        $('#img').val(data.data);
+                    }
+                    $.each(data.data.split(','),function (i,o) {
+                        //加载完毕之后获取结果赋值给img
+                        $('#'+id).parent().find('.bookinfo_list_Ulimg').append('<li><img src="'+o+'"><span onclick="delete_img(this)">×</span></li>');
+                    });
+                }else {
+                    layer.open({content: data.msg, time: 2});
+                }
+            }
+        });
+
+    }
+</script>

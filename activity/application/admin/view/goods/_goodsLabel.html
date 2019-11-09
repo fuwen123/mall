@@ -1,0 +1,162 @@
+<include file="public/layout"/>
+<body style="background-color: #FFF; overflow: auto;">
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="page">
+    <div class="fixed-bar">
+        <div class="item-title"><a class="back" href="javascript:history.back();" title="返回列表"><i
+                class="fa fa-arrow-circle-o-left"></i></a>
+
+            <div class="subject">
+                <h3>商品标签 - 添加修改标签</h3>
+                <h5>添加或编辑商品标签</h5>
+            </div>
+        </div>
+    </div>
+    <div class="explanation" id="explanation">
+        <div class="bckopa-tips">
+            <div class="title">
+                <img src="__PUBLIC__/static/images/handd.png" alt="">
+                <h4 title="提示相关设置操作时应注意的要点">操作提示</h4>
+            </div>
+            <ul>
+                <li>标签名称长度不能超过120个字符</li>
+
+            </ul>
+        </div>
+        <span title="收起提示" id="explanationZoom" style="display: block;"></span>
+    </div>
+    <form action="{:U('Goods/addEditGoodsLabel')}" method="post" class="form-horizontal" id="category_form" onsubmit="return goods_label();">
+        <input type="hidden" name="label_id" value="{$data['label_id']}">
+
+        <div class="ncap-form-default">
+            <dl class="row">
+                <dt class="tit">
+                    <label for="t_mane"><em>*</em>商品标签名称</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" placeholder="名称" class="input-txt" name="label_name"
+                           value="{$data['label_name']}" maxlength="120" id="label_name">
+                    <span class="err" id="err_label_name" style="color:#F00; display:none;"></span>
+
+                    <p class="notic"></p>
+                </dd>
+            </dl>
+
+           <!-- <dl class="row">
+                <dt class="tit">
+                    <label for="t_sort"><em>*</em>排序</label>
+                </dt>
+                <dd class="opt">
+                    <input type="text" class="t_mane" name="sort" id="t_sort" value="{$data['sort']|default=" 50"}">
+                    <span class="err" style="color:#F00; display:none;" id="err_sort_order"></span>
+
+                    <p class="notic">根据排序进行由大到小排列显示。</p>
+                </dd>
+            </dl>-->
+
+            <div class="bot"><a id="submitBtn" class="ncap-btn-big ncap-btn-green" href="JavaScript:void(0);"
+                                onClick="ajax_submit_forms('category_form','{:U('Goods/addEditGoodsLabel?is_ajax=1')}');">确认提交</a>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="{$goods_category_info.id}">
+    </form>
+</div>
+<script>
+    /**
+     * ajax 提交表单 到后台去验证然后回到前台提示错误
+     * 验证通过后,再通过 form 自动提交
+     */
+    var before_request = 1; // 标识上一次ajax 请求有没回来, 没有回来不再进行下一次
+    function ajax_submit_forms(form_id, submit_url) {
+        if($("#label_name").val() == ''){
+            layer.msg('商品标签名称不能空', {
+                icon: 2,   // 成功图标
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            });
+            return;
+        }
+        if (before_request == 0)
+            return false;
+        before_request = 0; // 标识ajax 请求已经发出
+        $("[id^='err_']").hide();  // 隐藏提示
+        $.ajax({
+            type: "POST",
+            url: submit_url,
+            data: $('#' + form_id).serialize(),// 你的formid
+            error: function (request) {
+                alert("服务器繁忙, 请联系管理员!");
+            },
+            success: function (v) {
+                before_request = 1; // 标识ajax 请求已经返回
+                var v = eval('(' + v + ')');
+                // 验证成功提交表单
+                if (v.hasOwnProperty('status')) {
+                    //layer.alert(v.msg);
+                    if (v.status == 1) {
+                        layer.msg(v.msg, {
+                            icon: 1,   // 成功图标
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                        if (v.hasOwnProperty('data')) {
+                            if (v.data.hasOwnProperty('url')) {
+                                location.href = v.data.url;
+                            } else {
+                                location.href = location.href;
+                            }
+                        } else {
+                            location.href = location.href;
+                        }
+                        return true;
+                    }
+                    if (v.status <= 0) {
+                        layer.msg(v.msg, {
+                            icon: 2,   // 成功图标
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                        // 验证失败提示错误
+                        for (var i in v['data']) {
+                            $("#err_" + i).text(v['data'][i]).show(); // 显示对于的 错误提示
+                        }
+                        return false;
+                    }
+                    //return false;
+                }
+                // 验证失败提示错误
+                for (var i in v['data']) {
+                    $("#err_" + i).text(v['data'][i]).show(); // 显示对于的 错误提示
+                }
+            }
+        });
+
+    }
+
+
+    /** 以下是编辑时默认选中某个商品分类*/
+    $(document).ready(function () {
+
+    });
+
+    // 将品牌滚动条里面的 对应分类移动到 最上面
+    //javascript:document.getElementById('category_id_3').scrollIntoView();
+    var typeScroll = 0;
+    function spec_scroll(o) {
+        var id = $(o).val();
+        //if(!$('#type_id_'+id).is('dt')){
+        //return false;
+        //}
+        $('#ajax_brandList').scrollTop(-typeScroll);
+        var sp_top = $('#type_id_' + id).offset().top; // 标题自身往上的 top
+        var div_top = $('#ajax_brandList').offset().top; // div 自身往上的top
+        $('#ajax_brandList').scrollTop(sp_top - div_top); // div 移动
+        typeScroll = sp_top - div_top;
+    }
+
+    function img_call_back(fileurl_tmp) {
+        $("#image").val(fileurl_tmp);
+        $("#img_a").attr('href', fileurl_tmp);
+        $("#img_i").attr('onmouseover', "layer.tips('<img src=" + fileurl_tmp + ">',this,{tips: [1, '#fff']});");
+    }
+</script>
+</body>
+</html>
