@@ -1098,6 +1098,79 @@ function removeEmoji($nickname) {
 }
 
 /**
+ * 事务调用（独立成一个函数，便于debug）.
+ *
+ * @param string $type
+ */
+function _trans($type = 'start')
+{
+    //echo 'transaction: ',$type,PHP_EOL;
+    switch ($type) {
+        case 'start':
+        return Db::startTrans();
+        case 'commit':
+        return Db::commit();
+        case 'rollback':
+        return Db::rollback();
+        default:
+        exception('invalid transaction operation: '.$type);
+    }
+}
+
+/**
+ * 事务快捷操作(支持嵌套).
+ *
+ * @param string $type 事务操作类型。支持的有：start、rollback、commit 分别表示启动事务、回滚事务、提交事务
+ *
+ * @author Wenhui Shen <swh@admpub.com>
+ */
+function trans($type = 'start')
+{
+    static $started = 0;
+    switch ($type) {
+        case 'start':
+        ++$started;
+        if ($started > 1) {
+            return;
+        }
+
+        return _trans($type);
+        case 'commit':
+        --$started;
+        if ($started > 0) {
+            return;
+        }
+
+        return _trans($type);
+        case 'rollback':
+        if ($started == 0) {
+            return;
+        }
+        $started = 0;
+
+        return _trans($type);
+        default:
+        if (is_bool($type)) {
+            if (!$type) {
+                if ($started == 0) {
+                    return;
+                }
+                $started = 0;
+
+                return _trans('rollback');
+            }
+            --$started;
+            if ($started > 0) {
+                return;
+            }
+
+            return _trans('commit');
+        }
+        exception('invalid transaction operation: '.$type);
+    }
+}
+
+/**
  * 截取指定长度的字符
  * @param type $string  内容
  * @param type $start 开始
