@@ -18,7 +18,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "highcharts": "^7.1.2",
     "mint-ui": "^2.2.13",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "underscore": "^1.9.1",
     "vant": "^2.2.12",
     "vconsole": "^3.3.4",
